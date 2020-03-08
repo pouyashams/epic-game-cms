@@ -1,0 +1,286 @@
+:root {
+    --header-color: #587ea5;
+}
+
+/* Absolute Center Spinner */
+.loading {
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: visible;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+/* Transparent Overlay */
+.loading:before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+}
+
+/* :not(:required) hides these rules from IE9 and below */
+.loading:not(:required) {
+    /* hide "loading..." text */
+    font: 0/0 a;
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+}
+.card-wrap {
+    position: relative;
+}.radius {
+    border-radius: 25px;
+}
+.panel-header {
+
+    background: #134E5E;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #71B280, #134E5E);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #71B280, #134E5E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.loading:not(:required):after {
+    content: '';
+    display: block;
+    font-size: 10px;
+    width: 1em;
+    height: 1em;
+    margin-top: -0.5em;
+    -webkit-animation: spinner 1500ms infinite linear;
+    -moz-animation: spinner 1500ms infinite linear;
+    -ms-animation: spinner 1500ms infinite linear;
+    -o-animation: spinner 1500ms infinite linear;
+    animation: spinner 1500ms infinite linear;
+    border-radius: 0.5em;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+    box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+}
+
+/* Animation */
+
+@-webkit-keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@-moz-keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@-o-keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+@keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -ms-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+.textarea-style{
+    height: 20px;
+}
+
+.header-box {
+    background-color: var(--header-color);
+}
+
+@font-face {
+    font-family: 'davat';
+    src: url('../fonts/BDavat.eot');
+    src: url('../fonts/BDavat.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/BDavat.woff2') format('woff2'),
+        url('../fonts/BDavat.woff') format('woff'),
+        url('../fonts/BDavat.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'yekan';
+    src: url('../fonts/BYekan.eot');
+    src: url('../fonts/BYekan.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/BYekan.woff2') format('woff2'),
+        url('../fonts/BYekan.woff') format('woff'),
+        url('../fonts/BYekan.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'yekan', 'Segoe UI',
+        'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif !important;
+    background: url('../images/dark-grey-terrazzo.jpeg') repeat center center
+        fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}
+
+.table td {
+    vertical-align: middle !important;
+}
+
+.table-counter {
+    width: 30px;
+    text-align: center;
+}
+
+.table-checkbox {
+    width: 30px;
+    text-align: center;
+}
+
+.feather {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
+}
+
+/*
+   * Content
+*/
+
+[role='main'] {
+    padding-top: 48px; /* Space for fixed navbar */
+    padding-bottom: 50px;
+}
+
+.copyright {
+    color: white;
+    font-size: 13px;
+}
+
+.socialmedia {
+    color: white;
+}
+
+
+.image-logo {
+    width: 41px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    margin-right: 11px;
+}
+
+#sticky-sidebar {
+    position:fixed;
+    max-width: 20%;
+}
+
+.remove-attribute-icon {
+    width: 30px;
+    font-size: 37px;
+}
+
+.disabled-remove-attribute-icon {
+    width: 30px;
+    font-size: 37px;
+    background-color: #ccc !important;
+}
+
+
+
+div.custom-container {
+    /*background-color: #f3f3f3;*/
+}
+
+svg.custom .node circle {
+    fill: rgba(243, 243, 255, 0.51);
+    stroke: rgba(37, 147, 184, 0.5);
+    stroke-width: 1.5px;
+}
+
+svg.custom .node text {
+    font-size: 17px;
+    background-color: #dee2e6;
+    fill: #000000;
+    font-weight: bold;
+    /*text-shadow: 0 1px 4px black;*/
+}
+
+svg.custom .node {
+    cursor: pointer;
+}
+
+svg.custom path.link {
+    fill: none;
+    stroke: rgba(37, 147, 184, 0.51);
+    stroke-width: 1.5px;
+}
+.bg-color {
+    background-color: #fdfeff !important;
+}
+.btn-m {
+    margin-right: 60px;
+    margin-top: 30px;
+}
+.side-back {
+    background: url('../images/sidebar.jpg')  repeat center center
+    fixed
+}.pointer {
+     cursor: pointer;
+}

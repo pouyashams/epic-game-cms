@@ -6,31 +6,22 @@ class Login extends Component {
     state = {
         username: '',
         password: '',
-        res: ''
     };
-
-
-    makeHeader = async (username, password) => {
-        const token = Buffer.from(`${username}:${password}`, 'utf8').toString('base64');
-        const headers = {'Authorization': `Basic ${token}`};
-        sessionStorage.setItem('header', headers);
-        sessionStorage.setItem('valid', true);
-    };
-
 
     handleSubmit = async e => {
         e.preventDefault();
         try {
             const token = Buffer.from(`${this.state.username}:${this.state.password}`, 'utf8').toString('base64');
             const url = 'https://epicgameservices.ir/login';
-            const data = {};
-            axios.post(url, data, {
+            axios.post(url, {}, {
                 headers: {
                     'Authorization': `Basic ${token}`
                 }
             }).then(response => {
                 if (response.data.success === true) {
-                    this.makeHeader(this.state.username, this.state.password);
+                    sessionStorage.setItem('username', this.state.username);
+                    sessionStorage.setItem('password', this.state.password);
+                    sessionStorage.setItem('valid', true);
                     this.props.history.replace('/');
                 } else {
                     toast.error('نام کاربری یا کلمه عبور اشتباه هست');

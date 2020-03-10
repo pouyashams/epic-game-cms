@@ -12,11 +12,9 @@ import './css/404.css';
 import 'react-toastify/dist/ReactToastify.css';
 import App from './App';
 import 'react-advance-jalaali-datepicker/'
-import * as serviceWorker from './serviceWorker';
 import Login from './components/login';
 import NotFound from './components/notFound';
 import {createBrowserHistory} from "history";
-
 
 const history = createBrowserHistory();
 
@@ -35,5 +33,3 @@ ReactDOM.render(
     ,
     document.getElementById('root')
 );
-
-serviceWorker.unregister();

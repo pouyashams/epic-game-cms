@@ -5,24 +5,6 @@ import "bootstrap-v4-rtl/dist/css/bootstrap.min.css"
 
 class Sidebar extends Component {
 
-    logout = () => {
-        sessionStorage.removeItem("access_token");
-        window.location = '/';
-    };
-
-    hasAuthority = (authority) => {
-        const authorities = JSON.parse(sessionStorage.getItem('authorities'));
-        let foundAuthority = false;
-        if (authorities !== undefined && authorities !== null) {
-            authorities.forEach((authorityInfo) => {
-                if (authorityInfo.authority === authority) {
-                    foundAuthority = true;
-                }
-            });
-        }
-        return foundAuthority;
-    };
-
     render() {
         let count = 1;
         const navLinks = getNavLinks();
@@ -40,15 +22,12 @@ class Sidebar extends Component {
                         <div id="accordion">
                             <span>
                                  <li className="nav-item sidebar-dropdown" data-toggle="collapse" href="#collapseOne"
-                                     key={count++}>
+                                      key={count++}>
                                  <span className="nav-link pointer">
                                      <span className="fa fa-unsorted text-warning"/>
-                                    <span className="icon-title m-2 font-weight-bold text-warning">مدیریت ها</span>
+                                    <span className="icon-title m-2 font-weight-bold text-warning ">مدیریت ها</span>
                                 </span>
                             </li>
-                                {
-                                    console.log(navLinks)
-                                }
                                 {navLinks.map(nav =>
                                     nav.type==="management" ?
                                         <div id="collapseOne" className="collapse" data-parent="#accordion">

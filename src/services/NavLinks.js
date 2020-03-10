@@ -1,7 +1,7 @@
 const navLinks = [
 
     {
-        path: "/product-category",
+        path: "/acount-managemnet",
         name: "مدیریت اکانت",
         icon: "fa fa-gamepad",
         type:"management",

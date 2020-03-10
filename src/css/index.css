@@ -284,3 +284,11 @@ svg.custom path.link {
 }.pointer {
      cursor: pointer;
 }
+ .header-color{
+     background-color: #263238;
+     border-radius: 7px;
+ }
+ .body-color{
+     background-color: #eceff1;
+     border-radius: 7px;
+ }

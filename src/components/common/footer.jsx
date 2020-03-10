@@ -6,7 +6,7 @@ const Footer = () => {
             className="rtl float-left fixed-bottom navbar navbar-dark bg-dark col-md-9 ml-sm-auto col-lg-10 px-4 shadow">
             <div className="copyright">
                 <span className="fa fa-copyright m-1"/>
-                تمامی حقوق این سایت محفوظ میباشید
+                تمامی حقوق این سیستم مدیریت محفوظ میباشید
             </div>
             <div className={"socialmedia"}>
                 <span className="fa fa-instagram m-1"/>

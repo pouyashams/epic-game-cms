@@ -5,6 +5,9 @@ import Sidebar from './components/common/sidebar';
 import Footer from './components/common/footer';
 import {PrivateRoute} from "./components/privateroute";
 import {ToastContainer} from "react-toastify";
+import acountManagement from "./components/acount-management/acount-management"
+import addAcount from "./components/acount-management/add-acount"
+import showAcount from "./components/acount-management/show-acount"
 
 class App extends Component {
     render() {
@@ -20,8 +23,10 @@ class App extends Component {
                     >
                         <Router history={this.props.history}>
                             <Switch>
-                                <PrivateRoute path="/product-category" exact={false} component={""}/>
-                                <PrivateRoute path="/" exact={false} component={""}/>
+                                <PrivateRoute path="/acount-managemnet" exact={false} component={acountManagement}/>
+                                <PrivateRoute path="/add-acount" exact={false} component={addAcount}/>
+                                <PrivateRoute path="/show-acount" exact={false} component={showAcount}/>
+                                <PrivateRoute path="/" exact={false} component={acountManagement}/>
                                 <Redirect to="/not-found"/>
                             </Switch>
                         </Router>

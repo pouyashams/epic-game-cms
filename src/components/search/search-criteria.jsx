@@ -30,12 +30,12 @@ class SearchCriteria extends Component {
         const {searchCriteriaArray, extraActions} = this.props;
         let index = 1;
         return (
-            <div className="col-12 justify-content-center align-items-center text-center">
-                <form className="rtl border m-0 bg-light shadow float-right row w-100 justify-content-start my-3 pb-3">
+            <div className="col-12 justify-content-center align-items-center text-center ">
+                <form className="rtl border m-0  shadow float-right row w-100 justify-content-center my-3 pb-3 body-color">
                     {searchCriteriaArray.map((searchCriteria) => {
                             if (searchCriteria.element === 'input') {
                                 return (
-                                    <div className="form-group col-12 col-sm-6 col-md-3 float-right" key={index++}>
+                                    <div className="form-group col-12 col-sm-6 col-md-3 float-right py-3" key={index++}>
                                         <label>{searchCriteria.label} :</label>
                                         <input className="form-control text-center"
                                                type={searchCriteria.type}
@@ -48,7 +48,7 @@ class SearchCriteria extends Component {
                                 );
                             } else if (searchCriteria.element === 'number') {
                                 return (
-                                    <div className="form-group col-12 col-sm-6 col-md-3 float-right" key={index++}>
+                                    <div className="form-group col-12 col-sm-6 col-md-3 float-right py-3" key={index++}>
                                         <label>{searchCriteria.label} :</label>
                                         <input className="form-control text-center"
                                                type={searchCriteria.type}
@@ -61,7 +61,7 @@ class SearchCriteria extends Component {
                                 );
                             } else if (searchCriteria.element === 'select') {
                                 return (
-                                    <div className="form-group col-12 col-sm-6 col-md-3 float-right" key={index++}>
+                                    <div className="form-group col-12 col-sm-6 col-md-3 float-right py-3" key={index++}>
                                         <label>{searchCriteria.label} :</label>
                                         <select
                                             className="form-control text-center"
@@ -69,7 +69,7 @@ class SearchCriteria extends Component {
                                         >
                                             {searchCriteria.options.map(
                                                 (option) => {
-                                                    return (<option value={option.value}>{option.title}</option>);
+                                                    return (<option selected={option.value===searchCriteria.selected} value={option.value}>{option.title}</option>);
                                                 }
                                             )}
                                         </select>
@@ -77,7 +77,7 @@ class SearchCriteria extends Component {
                                 );
                             } else if (searchCriteria.element === 'date') {
                                 return (
-                                    <div className="form-group col-12 col-sm-6 col-md-3 float-right" key={index++}>
+                                    <div className="form-group col-12 col-sm-6 col-md-3 float-right py-3" key={index++}>
                                         <label>{searchCriteria.label} :</label>
                                         <DatePicker
                                             placeholder={searchCriteria.placeholder}
@@ -93,15 +93,15 @@ class SearchCriteria extends Component {
                     )}
                     <div className="col-12">
                         <div className="row">
-                            <div className="col-4 text-right">
+                            <div className="col-4 text-right py-3">
                                 {extraActions && extraActions.rightActions.length !== 0 ? extraActions.rightActions.map((rightAction) => (
                                     <button className={rightAction.style} data-title={rightAction.title} onClick={rightAction.onclick} key={index++}>
                                         <span className={rightAction.icon}></span>
                                     </button>
                                 )) : null}
                             </div>
-                            <div className="col-4 text-center">
-                                <input type="button" className="btn btn-primary" value="جستجو" onClick={this.search}/>
+                            <div className="col-4 text-center ">
+                                <input type="button" className="btn btn-dark" value="جستجو" onClick={this.search}/>
                             </div>
                             <div className="col-4 text-left">
                                 {extraActions && extraActions.leftActions.length !== 0 ? extraActions.leftActions.map((leftAction) => (

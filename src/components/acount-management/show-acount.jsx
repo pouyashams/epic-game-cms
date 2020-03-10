@@ -55,7 +55,7 @@ class addAcount extends Component {
                             <div className="rtl m-0 float-right row w-100 justify-content-start my-3 pb-3">
                                 <div className="form-group col-12 col-sm-6 col-md-3 float-right">
                                     <label>ایمیل :</label>
-                                    <input className="form-control text-center w-75"
+                                    <input className="form-control text-center w-100"
                                            type={"input"}
                                            placeholder="---"
                                            value={this.state.username}
@@ -63,7 +63,7 @@ class addAcount extends Component {
                                 </div>
                                 <div className="form-group col-12 col-sm-6 col-md-3 float-right">
                                     <label>پسورد :</label>
-                                    <input className="form-control text-center w-75"
+                                    <input className="form-control text-center w-100"
                                            type={"input"}
                                            placeholder="---"
                                            value={this.state.password}

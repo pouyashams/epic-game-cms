@@ -20,6 +20,7 @@ class acountManagement extends Component {
         this.state = {
             pageSize: 5,
             searchResultList: [],
+            progress: false,
         };
         this.onEdit = this.onEdit.bind(this);
         this.onAdd = this.onAdd.bind(this);
@@ -46,102 +47,171 @@ class acountManagement extends Component {
 
     onEdit(searchResult) {
         this.props.history.push({
-            pathname: '/not-found',
+            pathname: '/edit-acount',
             acountInfo: searchResult
         });
     }
 
     onDeActiveInfo = async (searchResult) => {
-        if (searchResult.active){
+        if (searchResult.active) {
+            this.setState({progress: true});
             try {
-            const result = await onDeActive({identifier: parseInt(searchResult.identifier)});
-            if (result.status === 200) {
-                toast.success('اکانت با موفقیت به لیست فروخته شده اضافه شد');
-                document.getElementById("loading").style.display = "none";
+                const result = await onDeActive({identifier: parseInt(searchResult.identifier)});
+                if (result.status === 200) {
+                    toast.success('اکانت با موفقیت به لیست فروخته شده اضافه شد');
+                    this.setState({progress: false});
+                }
+            } catch (ex) {
+                if (ex.response && ex.response.status === 400) {
+                    toast.error('ارتباط با سرور برقرار نشد');
+                    this.setState({progress: false});
+                }
             }
-        } catch (ex) {
-            if (ex.response && ex.response.status === 400) {
-                toast.error('ارتباط با سرور برقرار نشد');
-            }
-        }
-        this.search();
-        document.getElementById("loading").style.display = "none";
-        }else{
+            this.search();
+        } else {
             toast.error('این اکانت فروخته شده و قابلیت فروش ندارد');
         }
     };
 
     onActiveInfo = async (searchResult) => {
-        if (searchResult.active){
+        if (searchResult.active) {
+            this.setState({progress: true});
             try {
                 const result = await onActive({identifier: parseInt(searchResult.identifier)});
                 if (result.status === 200) {
                     toast.success('اکانت با موفقیت پست شد');
-                    document.getElementById("loading").style.display = "none";
+                    this.setState({progress: false});
                 }
             } catch (ex) {
                 if (ex.response && ex.response.status === 400) {
                     toast.error('ارتباط با سرور برقرار نشد');
+                    this.setState({progress: false});
                 }
             }
             this.search();
-            document.getElementById("loading").style.display = "none";
-        }else{
+        } else {
             toast.error('این اکانت فروخته شده و قابلیت پست ندارد');
         }
 
     };
 
     onRemoveInfo = async (searchResult) => {
-        if (searchResult.active){
+        if (searchResult.active) {
+            this.setState({progress: true});
             try {
-            const result = await onRemove({identifier: parseInt(searchResult.identifier)});
-            if (result.status === 200) {
-                toast.success('اکانت با موفقیت از کانال حذف شد');
-                document.getElementById("loading").style.display = "none";
+                const result = await onRemove({identifier: parseInt(searchResult.identifier)});
+                if (result.status === 200) {
+                    toast.success('اکانت با موفقیت از کانال حذف شد');
+                    this.setState({progress: false});
+                }
+            } catch (ex) {
+                if (ex.response && ex.response.status === 400) {
+                    toast.error('ارتباط با سرور برقرار نشد');
+                    this.setState({progress: false});
+                }
             }
-        } catch (ex) {
-            if (ex.response && ex.response.status === 400) {
-                toast.error('ارتباط با سرور برقرار نشد');
-            }
-        }
-        this.search();
-        document.getElementById("loading").style.display = "none";
-        }else{
+            this.search();
+        } else {
             toast.error('این اکانت فروخته شده و قابلیت حذف از کانال ندارد');
         }
     };
 
     postAllAcountInfo = async () => {
+        this.setState({progress: true});
         try {
             const result = await postAllAcount();
             if (result.status === 200) {
                 toast.success('اکانت ها با موفقیت پست شدند');
-                document.getElementById("loading").style.display = "none";
+                this.setState({progress: false});
             }
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
                 toast.error('ارتباط با سرور برقرار نشد');
+                this.setState({progress: false});
             }
         }
         this.search();
-        document.getElementById("loading").style.display = "none";
     };
 
     removeAllAcountInfo = async () => {
+        this.setState({progress: true});
         try {
             const result = await removeAllAcount();
             if (result.status === 200) {
                 toast.success('اکانت ها با موفقیت غیرفعال شدند');
-                document.getElementById("loading").style.display = "none";
+                this.setState({progress: false});
             }
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
                 toast.error('ارتباط با سرور برقرار نشد');
+                this.setState({progress: false});
             }
         }
         this.search();
-        document.getElementById("loading").style.display = "none";
+    };
+
+    search = async (parameters) => {
+        this.setState({progress: true});
+        let data = {
+            active: "true",
+            content: "",
+            identifier: "",
+        };
+        if (parameters !== undefined) {
+            if (parameters.active !== "") {
+                data = {
+                    active: parameters.active,
+                    content: parameters.content,
+                    identifier: parseInt(parameters.identifier),
+                };
+            }
+            else {
+                data = {
+                    active: "true",
+                    content: parameters.content,
+                    identifier: parseInt(parameters.identifier),
+                };
+            }
+        }
+        try {
+            const result = await searchAcount(data);
+            let searchResultList = [];
+            if (result.status === 200) {
+                result.data.data.forEach((dataInfo) => {
+                    let activeText = null;
+                    let activePost = null;
+                    if (dataInfo.active) {
+                        activeText = (<span className="text-success">موجود</span>)
+                    }
+                    else {
+                        activeText = (<span className="text-danger">فروخته شده</span>)
+                    }
+                    if (dataInfo.telegramIdentifiers.length !== 0) {
+                        activePost = (<span className="text-success">پست شده</span>)
+                    } else {
+                        activePost = (<span className="text-danger">پست نشده</span>)
+                    }
+                    searchResultList.push(
+                        {
+                            username: dataInfo.username,
+                            password: dataInfo.password,
+                            content: dataInfo.content,
+                            identifier: dataInfo.identifier,
+                            active: dataInfo.active,
+                            activeText: activeText,
+                            activePost: activePost,
+                        }
+                    )
+                });
+                this.setState({searchResultList});
+                this.setState({progress: false});
+            }
+        } catch (ex) {
+            if (ex.response && ex.response.status === 400) {
+                toast.error('لطفا کلیه موارد را پر کنید');
+                this.setState({progress: false});
+            }
+        }
     };
 
     getSearchCriteriaArray() {
@@ -167,7 +237,7 @@ class acountManagement extends Component {
                 placeholder: "---",
                 defaultValue: "",
                 label: "وضعیت فروش",
-                selected:"true",
+                selected: "true",
                 options: [
                     {
                         value: "true",
@@ -229,67 +299,7 @@ class acountManagement extends Component {
         return headerInfo;
     }
 
-    search = async (parameters) => {
-        let data = {
-            active: "true",
-            content: "",
-            identifier: "",
-        };
-        if (parameters !== undefined) {
-            if (parameters.active!==""){
-                data = {
-                    active: parameters.active,
-                    content: parameters.content,
-                    identifier: parseInt(parameters.identifier),
-                };
-            }
-            else{
-                data = {
-                    active: "true",
-                    content: parameters.content,
-                    identifier: parseInt(parameters.identifier),
-                };
-            }
-        }
-        try {
-            const result = await searchAcount(data);
-            let searchResultList = [];
-            if (result.status === 200) {
-                result.data.data.forEach((dataInfo) => {
-                    let activeText = null;
-                    let activePost = null;
-                    if (dataInfo.active) {
-                        activeText = (<span className="text-success">موجود</span>)
-                    }
-                    else {
-                        activeText = (<span className="text-danger">فروخته شده</span>)
-                    }
-                    if (dataInfo.telegramIdentifiers.length!==0){
-                        activePost = (<span className="text-success">پست شده</span>)
-                    }else {
-                        activePost = (<span className="text-danger">پست نشده</span>)
-                    }
-                    searchResultList.push(
-                        {
-                            username: dataInfo.username,
-                            password: dataInfo.password,
-                            content: dataInfo.content,
-                            identifier: dataInfo.identifier,
-                            active: dataInfo.active,
-                            activeText: activeText,
-                            activePost: activePost,
-                        }
-                    )
-                });
-                this.setState({searchResultList});
-            }
-        } catch (ex) {
-            if (ex.response && ex.response.status === 400) {
-                toast.error('لطفا کلیه موارد را پر کنید');
-            }
-        }
-        document.getElementById("loading").style.display = "none";
-    };
+
     render() {
         const {searchResultList, pageSize} = this.state;
         const searchCriteriaArray = this.getSearchCriteriaArray();
@@ -310,9 +320,19 @@ class acountManagement extends Component {
                            onClick={this.postAllAcountInfo}/>
                     <input type="button" className="btn btn-warning  m-3" value="اضافه کردن اکانت"
                            onClick={this.onAdd}/>
-                    <input type="button" className="btn btn-danger  ml-3" value="غیرفعال کردن تمامی اکانت ها"
+                    <input type="button" className="btn btn-danger  ml-3" value=" حذف تمامی پست ها از کانال"
                            onClick={this.removeAllAcountInfo}/>
                 </span>
+                {this.state.progress ?
+                    <span className="col-12 py-2">
+                      <div className="progress">
+    <div className="progress-bar progress-bar-striped progress-bar-animated bg-warning radius-line"
+         style={{width: "100%", height: "75%"}}/>
+                      </div>
+                </span>
+                    : null
+                }
+
 
             </div>
         );

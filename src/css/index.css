@@ -25,7 +25,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 /* :not(:required) hides these rules from IE9 and below */
@@ -37,15 +37,22 @@
     background-color: transparent;
     border: 0;
 }
+
 .card-wrap {
     position: relative;
-}.radius {
+}
+
+.radius {
     border-radius: 25px;
 }
+.radius-line {
+    border-radius:5px;
+}
+
 .panel-header {
 
-    background: #134E5E;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to left, #71B280, #134E5E);  /* Chrome 10-25, Safari 5.1-6 */
+    background: #134E5E; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #71B280, #134E5E); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to left, #71B280, #134E5E); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
 }
@@ -85,6 +92,7 @@
         transform: rotate(360deg);
     }
 }
+
 @-moz-keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);
@@ -101,6 +109,7 @@
         transform: rotate(360deg);
     }
 }
+
 @-o-keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);
@@ -117,6 +126,7 @@
         transform: rotate(360deg);
     }
 }
+
 @keyframes spinner {
     0% {
         -webkit-transform: rotate(0deg);
@@ -133,8 +143,13 @@
         transform: rotate(360deg);
     }
 }
-.textarea-style{
+
+.textarea-style {
     height: 20px;
+    direction: ltr;
+}
+.dir-text-left{
+    direction: ltr!important;
 }
 
 .header-box {
@@ -145,9 +160,9 @@
     font-family: 'davat';
     src: url('../fonts/BDavat.eot');
     src: url('../fonts/BDavat.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/BDavat.woff2') format('woff2'),
-        url('../fonts/BDavat.woff') format('woff'),
-        url('../fonts/BDavat.ttf') format('truetype');
+    url('../fonts/BDavat.woff2') format('woff2'),
+    url('../fonts/BDavat.woff') format('woff'),
+    url('../fonts/BDavat.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -156,9 +171,9 @@
     font-family: 'yekan';
     src: url('../fonts/BYekan.eot');
     src: url('../fonts/BYekan.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/BYekan.woff2') format('woff2'),
-        url('../fonts/BYekan.woff') format('woff'),
-        url('../fonts/BYekan.ttf') format('truetype');
+    url('../fonts/BYekan.woff2') format('woff2'),
+    url('../fonts/BYekan.woff') format('woff'),
+    url('../fonts/BYekan.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -167,17 +182,16 @@ body {
     margin: 0;
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'yekan', 'Segoe UI',
-        'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-        'Helvetica Neue', sans-serif !important;
-    background: url('../images/dark-grey-terrazzo.jpeg') repeat center center
-        fixed;
+    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif !important;
+    background: url('../images/dark-grey-terrazzo.jpeg') repeat center center fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-        monospace;
+    monospace;
 }
 
 .table td {
@@ -218,7 +232,6 @@ code {
     color: white;
 }
 
-
 .image-logo {
     width: 41px;
     border: 1px solid #e0e0e0;
@@ -227,7 +240,7 @@ code {
 }
 
 #sticky-sidebar {
-    position:fixed;
+    position: fixed;
     max-width: 20%;
 }
 
@@ -241,8 +254,6 @@ code {
     font-size: 37px;
     background-color: #ccc !important;
 }
-
-
 
 div.custom-container {
     /*background-color: #f3f3f3;*/
@@ -271,24 +282,30 @@ svg.custom path.link {
     stroke: rgba(37, 147, 184, 0.51);
     stroke-width: 1.5px;
 }
+
 .bg-color {
     background-color: #fdfeff !important;
 }
+
 .btn-m {
     margin-right: 60px;
     margin-top: 30px;
 }
+
 .side-back {
-    background: url('../images/sidebar.jpg')  repeat center center
-    fixed
-}.pointer {
-     cursor: pointer;
+    background: url('../images/sidebar.jpg') repeat center center fixed
 }
- .header-color{
-     background-color: #263238;
-     border-radius: 7px;
- }
- .body-color{
-     background-color: #eceff1;
-     border-radius: 7px;
- }
+
+.pointer {
+    cursor: pointer;
+}
+
+.header-color {
+    background-color: #263238;
+    border-radius: 7px;
+}
+
+.body-color {
+    background-color: #eceff1;
+    border-radius: 7px;
+}

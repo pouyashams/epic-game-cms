@@ -14,6 +14,10 @@ export function searchAcount(data) {
 export function sendAcount(data) {
     return axios.post('https://epicgameservices.ir/add-account', data, headers);
 }
+export function editAcount(data) {
+    console.log(data,123)
+    return axios.post('https://epicgameservices.ir/update-account', data, headers);
+}
 
 export function postAllAcount() {
     return axios.post('https://epicgameservices.ir/post-accounts', {}, headers);
@@ -28,7 +32,7 @@ export function onActive(data) {
 }
 
 export function onRemove(data) {
-    return axios.post('https://epicgameservices.ir/remove-account',data, headers);
+    return axios.post('https://epicgameservices.ir/remove-account', data, headers);
 }
 
 export function removeAllAcount() {

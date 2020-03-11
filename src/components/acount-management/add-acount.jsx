@@ -13,7 +13,10 @@ class addAcount extends Component {
             username: "",
             password: "",
             content: "",
-            progress:""
+            progress: "",
+            price: "",
+            dolar: "",
+            region: "Region 1",
         }
     };
 
@@ -68,6 +71,11 @@ class addAcount extends Component {
     };
 
     render() {
+        const options = [
+            {name: "Region 1", title: "Region 1"},
+            {name: "Region 2", title: "Region 2"},
+            {name: "Region 3", title: "Region 3"},
+        ];
         return (
             <div
                 className="rtl border bg-light shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
@@ -95,6 +103,35 @@ class addAcount extends Component {
                                            value={this.state.password}
                                            onChange={(e) => this.handelChangeInput(e.target.value, "password")}
                                     />
+                                </div>
+                                <div className="form-group col-sm-6 col-md-2 float-right">
+                                    <label>قیمت :</label>
+                                    <input className="form-control text-left w-100 dir-text-left"
+                                           type={"input"}
+                                           value={this.state.price}
+                                           onChange={(e) => this.handelChangeInput(e.target.value, "price")}
+                                    />
+                                </div>
+                                <div className="form-group  col-sm-6 col-md-2 float-right">
+                                    <label>قیمت دلار :</label>
+                                    <input className="form-control text-left w-100 dir-text-left"
+                                           type={"input"}
+                                           value={this.state.dolar}
+                                           onChange={(e) => this.handelChangeInput(e.target.value, "dolar")}
+                                    />
+                                </div>
+                                <div className="form-group  col-sm-6 col-md-2 float-right ">
+                                    <label>ریجن :</label>
+                                    <select
+                                        className="form-control text-center dir-text-left"
+                                        onChange={(e) => this.handelChangeInput(e.target.value, "region")}
+                                    >
+                                        {options.map(
+                                            (option) => {
+                                                return (<option value={option.value}>{option.title}</option>);
+                                            }
+                                        )}
+                                    </select>
                                 </div>
                                 <label className="col-12 py-2">مشخصات اکانت :</label>
                                 <div className="form-group col-6 float-left ">

@@ -18,8 +18,7 @@ class addAcount extends Component {
         const {acountInfo} = this.props.location;
         if (!acountInfo) return window.history.back();
         this.setState({
-            username: this.getValue(acountInfo.username),
-            password: this.getValue(acountInfo.password),
+            username: this.getValue(acountInfo.username)+":"+this.getValue(acountInfo.password),
             content: this.getValue(acountInfo.content),
         });
 
@@ -53,20 +52,12 @@ class addAcount extends Component {
                     <div className="rtl m-0 float-right row w-100 justify-content-start body-color">
                         <div className="form-group col-12 ">
                             <div className="rtl m-0 float-right row w-100 justify-content-start my-3 pb-3">
-                                <div className="form-group col-12 col-sm-6 col-md-3 float-right">
-                                    <label>ایمیل :</label>
+                                <div className="form-group col-12 col-sm-6 col-md-5 float-right">
+                                    <label>ایمیل و پسورد :</label>
                                     <input className="form-control text-center w-100"
                                            type={"input"}
                                            placeholder="---"
                                            value={this.state.username}
-                                    />
-                                </div>
-                                <div className="form-group col-12 col-sm-6 col-md-3 float-right">
-                                    <label>پسورد :</label>
-                                    <input className="form-control text-center w-100"
-                                           type={"input"}
-                                           placeholder="---"
-                                           value={this.state.password}
                                     />
                                 </div>
                                 <label className="col-12 py-2">مشخصات اکانت :</label>

@@ -110,7 +110,7 @@ class acountManagement extends Component {
                 const result = await updateSchedule({"task": "auto-posting-accounts", "active": false});
                 if (result.status === 200) {
                     toast.success('بات با موفقیت خاموش شد');
-                    this.setState({progress: false ,bot: false});
+                    this.setState({progress: false, bot: false});
                 }
             } catch (ex) {
                 if (ex.response && ex.response.status === 400) {
@@ -408,7 +408,7 @@ class acountManagement extends Component {
                         <input type="button" className="btn btn-primary col-md-2 col-sm-6 my-1" value="خاموش کردن bot"
                                onClick={this.updateScheduleInfo}/>
                         :
-                        <input type="button" className="btn btn-primary col-md-2 col-sm-6 my-1" value="روشن کردن bot"
+                        <input type="button" className="btn btn-color text-white col-md-2 col-sm-6 my-1" value="روشن کردن bot"
                                onClick={this.updateScheduleInfo}/>
                     }
                 </span>
@@ -421,8 +421,6 @@ class acountManagement extends Component {
                 </span>
                     : null
                 }
-
-
             </div>
         );
     }

@@ -21,7 +21,12 @@ class SearchResult extends Component {
         const subSearchResultList = paginate(searchResultList, currentPage, pageSize);
         return subSearchResultList;
     };
-
+    isPhone = () => {
+        return !!(navigator.userAgent.match(/iPhone/i)
+            || navigator.userAgent.match(/iPad/i)
+            || navigator.userAgent.match(/iPod/i)
+            || navigator.userAgent.match(/Android/i));
+    };
 
     render() {
         const {currentPage} = this.state;

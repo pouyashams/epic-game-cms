@@ -13,6 +13,7 @@ class addAcount extends Component {
             username: "",
             password: "",
             content: "",
+            boldText: "",
             progress: "",
             price: "",
             dolar: "",
@@ -51,8 +52,9 @@ class addAcount extends Component {
 
     sendAcountInfo = async () => {
         this.setState({progress: true});
+        const content ="<b>"+this.state.boldText+"</b>".concat("\n"+ this.state.content + "\n\n".concat("🌐"+this.state.region + "\n".concat("💵" + this.state.price + "\xa0\xa0" + this.state.dolar + "$".concat("\xa0".concat("WMZ/BTC")))));
         try {
-            let data = {username: this.state.username, password: this.state.password, content: this.state.content};
+            let data = {username: this.state.username, password: this.state.password, content: content};
             const result = await sendAcount(data);
             if (result.status === 200) {
                 toast.success('اکانت با موفقیت ثبت شد');
@@ -133,13 +135,22 @@ class addAcount extends Component {
                                         )}
                                     </select>
                                 </div>
-                                <label className="col-12 py-2">مشخصات اکانت :</label>
-                                <div className="form-group col-6 float-left ">
+                                <div className="form-group  col-sm-6 col-md-6 float-right ">
+                                    <label className="py-2">مشخصات اکانت (bold) :</label>
+                            <textarea className="form-control textarea-style text-left"
+                                      value={this.state.boldText}
+                                      onChange={(e) => this.handelChangeInput(e.target.value, "boldText")}
+                            />
+                                </div>
+                                <div className="form-group  col-sm-6 col-md-6 float-right ">
+                                    <label className=" py-2">مشخصات اکانت :</label>
                             <textarea className="form-control textarea-style text-left"
                                       value={this.state.content}
                                       onChange={(e) => this.handelChangeInput(e.target.value, "content")}
                             />
                                 </div>
+
+
                             </div>
                         </div>
                         <div className="col-12 p-3 text-center">

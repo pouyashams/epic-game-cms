@@ -10,10 +10,20 @@ import addAcount from "./components/acount-management/add-acount"
 import showAcount from "./components/acount-management/show-acount"
 import editAcount from "./components/acount-management/update-acount"
 
+
 class App extends Component {
+
+    isPhone = () => {
+        return !!(navigator.userAgent.match(/iPhone/i)
+            || navigator.userAgent.match(/iPad/i)
+            || navigator.userAgent.match(/iPod/i)
+            || navigator.userAgent.match(/Android/i));
+    };
+
     render() {
+
         return (
-            <div className="container-fluid rtl">
+            <div className={this.isPhone() ? "rtl" : "container-fluid rtl"}>
                 <Navbar/>
                 <ToastContainer/>
                 <div className="row">
@@ -39,4 +49,5 @@ class App extends Component {
         );
     }
 }
+
 export default withRouter(App);

@@ -9,7 +9,10 @@ import {
     removeAllAcount,
     onDeActive,
     onActive,
-    onRemove
+    onRemove,
+    onDelete,
+    fetchSchedule,
+    updateSchedule,
 } from "../../services/acountService"
 
 
@@ -21,6 +24,7 @@ class acountManagement extends Component {
             pageSize: 5,
             searchResultList: [],
             progress: false,
+            bot: "",
         };
         this.onEdit = this.onEdit.bind(this);
         this.onAdd = this.onAdd.bind(this);
@@ -28,9 +32,21 @@ class acountManagement extends Component {
         this.search = this.search.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        try {
+            const result = await fetchSchedule({"task": "auto-posting-accounts"});
+            if (result.status === 200) {
+                console.log(result.data.data.active);
+                this.setState({progress: false, bot: result.data.data.active});
+            }
+        } catch (ex) {
+            if (ex.response && ex.response.status === 400) {
+                toast.error('ارتباط با سرور برقرار نشد');
+                this.setState({progress: false});
+            }
+        }
         this.search();
-    }
+    };
 
     onAdd() {
         this.props.history.push({
@@ -70,6 +86,63 @@ class acountManagement extends Component {
             this.search();
         } else {
             toast.error('این اکانت فروخته شده و قابلیت فروش ندارد');
+        }
+    };
+
+    updateScheduleInfo = async () => {
+        if (!this.state.bot) {
+            this.setState({progress: true});
+            try {
+                const result = await updateSchedule({"task": "auto-posting-accounts", "active": true});
+                if (result.status === 200) {
+                    toast.success('بات با موفقیت روشن شد');
+                    this.setState({progress: false, bot: true});
+                }
+            } catch (ex) {
+                if (ex.response && ex.response.status === 400) {
+                    toast.error('ارتباط با سرور برقرار نشد');
+                    this.setState({progress: false});
+                }
+            }
+        } else {
+            this.setState({progress: true});
+            try {
+                const result = await updateSchedule({"task": "auto-posting-accounts", "active": false});
+                if (result.status === 200) {
+                    toast.success('بات با موفقیت خاموش شد');
+                    this.setState({progress: false ,bot: false});
+                }
+            } catch (ex) {
+                if (ex.response && ex.response.status === 400) {
+                    toast.error('ارتباط با سرور برقرار نشد');
+                    this.setState({progress: false});
+                }
+            }
+        }
+    };
+
+    onDeleteInfo = async (searchResult) => {
+        if (searchResult.telegram === 0) {
+            if (!searchResult.active) {
+                this.setState({progress: true});
+                try {
+                    const result = await onDelete({identifier: parseInt(searchResult.identifier)});
+                    if (result.status === 200) {
+                        toast.success('اکانت با موفقیت حذف شد');
+                        this.setState({progress: false});
+                    }
+                } catch (ex) {
+                    if (ex.response && ex.response.status === 400) {
+                        toast.error('ارتباط با سرور برقرار نشد');
+                        this.setState({progress: false});
+                    }
+                }
+                this.search();
+            } else {
+                toast.error('این اکانت فروخته نشده است و قابلیت حذف ندارد');
+            }
+        } else {
+            toast.error('پست داخل کانال این اکانت حذف کنید');
         }
     };
 
@@ -200,6 +273,7 @@ class acountManagement extends Component {
                             active: dataInfo.active,
                             activeText: activeText,
                             activePost: activePost,
+                            telegram: dataInfo.telegramIdentifiers.length,
                         }
                     )
                 });
@@ -283,9 +357,15 @@ class acountManagement extends Component {
                 }, {
                     name: 'remove',
                     title: 'فروخته شده',
+                    icon: 'fa fa-download',
+                    style: 'btn btn-color btn-xs',
+                    onclick: this.onDeActiveInfo
+                }, {
+                    name: 'delete',
+                    title: 'حذف کامل',
                     icon: 'fa fa-trash-o',
                     style: 'btn btn-danger btn-xs',
-                    onclick: this.onDeActiveInfo
+                    onclick: this.onDeleteInfo
                 },
             ],
             headerTitleInfos: [
@@ -298,7 +378,6 @@ class acountManagement extends Component {
         };
         return headerInfo;
     }
-
 
     render() {
         const {searchResultList, pageSize} = this.state;
@@ -315,13 +394,23 @@ class acountManagement extends Component {
                 <SearchCriteria onSearch={this.search}
                                 searchCriteriaArray={searchCriteriaArray}/>
                 <SearchResult headerInfo={headerInfo} searchResultList={searchResultList} pageSize={pageSize}/>
-                <span className="pt-4 pb-3">
-                    <input type="button" className="btn btn-success  mr-3" value="پست کردن تمامی اکانت ها"
+                <span className="col-12 pt-4 pb-2">
+                    <input type="button" className="btn btn-success col-md-2 col-sm-6 mr-3 my-1"
+                           value="پست کردن تمامی اکانت ها"
                            onClick={this.postAllAcountInfo}/>
-                    <input type="button" className="btn btn-warning  m-3" value="اضافه کردن اکانت"
+                    <input type="button" className="btn btn-warning col-md-2 col-sm-6 mr-3 my-1"
+                           value="اضافه کردن اکانت"
                            onClick={this.onAdd}/>
-                    <input type="button" className="btn btn-danger  ml-3" value=" حذف تمامی پست ها از کانال"
+                    <input type="button" className="btn btn-danger col-md-2 col-sm-6 mr-3 my-1"
+                           value=" حذف تمامی پست ها از کانال"
                            onClick={this.removeAllAcountInfo}/>
+                    {this.state.bot ?
+                        <input type="button" className="btn btn-primary col-md-2 col-sm-6 my-1" value="خاموش کردن bot"
+                               onClick={this.updateScheduleInfo}/>
+                        :
+                        <input type="button" className="btn btn-primary col-md-2 col-sm-6 my-1" value="روشن کردن bot"
+                               onClick={this.updateScheduleInfo}/>
+                    }
                 </span>
                 {this.state.progress ?
                     <span className="col-12 py-2">

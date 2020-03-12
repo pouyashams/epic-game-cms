@@ -309,3 +309,9 @@ svg.custom path.link {
     background-color: #eceff1;
     border-radius: 7px;
 }
+.btn-color{
+    background-color: #ff6ae9 !important;
+}
+.btn-color:hover{
+    background-color: #d463bf !important;
+}

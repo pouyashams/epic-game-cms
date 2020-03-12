@@ -15,7 +15,6 @@ export function sendAcount(data) {
     return axios.post('https://epicgameservices.ir/add-account', data, headers);
 }
 export function editAcount(data) {
-    console.log(data,123)
     return axios.post('https://epicgameservices.ir/update-account', data, headers);
 }
 
@@ -25,6 +24,15 @@ export function postAllAcount() {
 
 export function onDeActive(data) {
     return axios.post('https://epicgameservices.ir/deActive-account', data, headers);
+}
+export function fetchSchedule(data) {
+    return axios.post('https://epicgameservices.ir/fetch-schedule-task', data, headers);
+}
+export function updateSchedule(data) {
+    return axios.post('https://epicgameservices.ir/update-schedule-task', data, headers);
+}
+export function onDelete(data) {
+    return axios.post('https://epicgameservices.ir/delete-account', data, headers);
 }
 
 export function onActive(data) {

@@ -30,7 +30,7 @@ class Sidebar extends Component {
                             </li>
                                 {navLinks.map(nav =>
                                     nav.type==="management" ?
-                                        <div id="collapseOne" className="collapse" data-parent="#accordion">
+                                        <div id="collapseOne" className="collapse show" data-parent="#accordion">
                                             <li className="nav-item sidebar-dropdown" key={count++}>
                                                 <Link className="nav-link" to={nav.path}>
                                                     <span className={`${nav.icon} text-light`}/>

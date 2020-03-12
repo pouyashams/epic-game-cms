@@ -14,6 +14,7 @@ class updateAcount extends Component {
             password: "",
             content: "",
             id: "",
+            boldText: "",
             progress: ""
         }
     };
@@ -32,11 +33,12 @@ class updateAcount extends Component {
 
     editAcountInfo = async () => {
         this.setState({progress: true});
+        const content ="<b>"+this.state.boldText+"</b>".concat("\n"+ this.state.content);
         try {
             let data = {
                 username: this.state.username,
                 password: this.state.password,
-                content: this.state.content,
+                content: content,
                 identifier: this.state.id
             };
             const result = await editAcount(data);
@@ -94,21 +96,28 @@ class updateAcount extends Component {
                                            onChange={(e) => this.handelChangeInput(e.target.value, "username")}
                                     />
                                 </div>
-                                <div className="form-group col-12 col-sm-6 col-md-3 float-right">
+                                <div className="form-group col-12 col-sm-6 col-md-4 float-right">
                                     <label>پسورد :</label>
-                                    <input className="form-control text-left dir-text-left w-100"
+                                    <input className="form-control text-left dir-text-left w-75"
                                            type={"input"}
                                            placeholder="---"
                                            value={this.state.password}
                                            onChange={(e) => this.handelChangeInput(e.target.value, "password")}
                                     />
                                 </div>
-                                <label className="col-12 py-2">مشخصات اکانت :</label>
-                                <div className="form-group col-6 float-right">
-                            <textarea className="form-control text-left textarea-style"
-                                      value={this.state.content}
-                                      onChange={(e) => this.handelChangeInput(e.target.value, "content")}
-                            />
+                                <div className="form-group col-sm-6 col-md-6 float-right ">
+                                    <label className="py-2">مشخصات اکانت (bold) :</label>
+                                    <textarea className="form-control textarea-style text-left"
+                                              value={this.state.boldText}
+                                              onChange={(e) => this.handelChangeInput(e.target.value, "boldText")}
+                                    />
+                                </div>
+                                <div className="form-group  col-sm-6 col-md-6 float-right ">
+                                    <label className=" py-2">مشخصات اکانت :</label>
+                                    <textarea className="form-control textarea-style text-left"
+                                              value={this.state.content}
+                                              onChange={(e) => this.handelChangeInput(e.target.value, "content")}
+                                    />
                                 </div>
                             </div>
                         </div>

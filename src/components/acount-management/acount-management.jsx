@@ -21,10 +21,11 @@ class acountManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pageSize: 5,
+            pageSize: 10,
             searchResultList: [],
             progress: false,
             bot: "",
+            currentPage: localStorage.getItem('currentPage'),
         };
         this.onEdit = this.onEdit.bind(this);
         this.onAdd = this.onAdd.bind(this);
@@ -87,6 +88,10 @@ class acountManagement extends Component {
         } else {
             toast.error('این اکانت فروخته شده و قابلیت فروش ندارد');
         }
+    };
+
+    setPage = page => {
+        this.setState({currentPage: page});
     };
 
     updateScheduleInfo = async () => {
@@ -250,6 +255,7 @@ class acountManagement extends Component {
             const result = await searchAcount(data);
             let searchResultList = [];
             if (result.status === 200) {
+                console.log(123)
                 result.data.data.forEach((dataInfo) => {
                     let activeText = null;
                     let activePost = null;
@@ -380,7 +386,7 @@ class acountManagement extends Component {
     }
 
     render() {
-        const {searchResultList, pageSize} = this.state;
+        const {searchResultList, pageSize, currentPage} = this.state;
         const searchCriteriaArray = this.getSearchCriteriaArray();
         const headerInfo = this.getResultTableHeader();
 
@@ -393,7 +399,10 @@ class acountManagement extends Component {
                 </div>
                 <SearchCriteria onSearch={this.search}
                                 searchCriteriaArray={searchCriteriaArray}/>
-                <SearchResult headerInfo={headerInfo} searchResultList={searchResultList} pageSize={pageSize}/>
+                <SearchResult headerInfo={headerInfo} searchResultList={searchResultList} pageSize={pageSize}
+                              currentPage={currentPage}
+                              setPage={this.setPage}
+                />
                 <span className="col-12 pt-4 pb-2">
                     <input type="button" className="btn btn-success col-md-2 col-sm-6 mr-3 my-1"
                            value="پست کردن تمامی اکانت ها"
@@ -408,7 +417,8 @@ class acountManagement extends Component {
                         <input type="button" className="btn btn-primary col-md-2 col-sm-6 my-1" value="خاموش کردن bot"
                                onClick={this.updateScheduleInfo}/>
                         :
-                        <input type="button" className="btn btn-color text-white col-md-2 col-sm-6 my-1" value="روشن کردن bot"
+                        <input type="button" className="btn btn-color text-white col-md-2 col-sm-6 my-1"
+                               value="روشن کردن bot"
                                onClick={this.updateScheduleInfo}/>
                     }
                 </span>

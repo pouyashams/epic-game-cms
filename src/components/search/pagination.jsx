@@ -1,8 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
+import {withRouter} from "react-router-dom";
 
-const Pagination = ({ itemCount, pageSize, onPageChange, currentPage }) => {
+const Pagination = ({itemCount, pageSize, onPageChange, currentPage}) => {
     const pageCount = Math.ceil(itemCount / pageSize);
 
     if (pageCount === 1) return null;
@@ -39,4 +40,4 @@ Pagination.propTypes = {
     currentPage: PropTypes.number.isRequired
 };
 
-export default Pagination;
+export default withRouter(Pagination);

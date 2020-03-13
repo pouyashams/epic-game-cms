@@ -13,6 +13,11 @@ import editAcount from "./components/acount-management/update-acount"
 
 class App extends Component {
 
+
+    componentDidMount() {
+        localStorage.setItem('currentPage', 1);
+    }
+
     isPhone = () => {
         return !!(navigator.userAgent.match(/iPhone/i)
             || navigator.userAgent.match(/iPad/i)

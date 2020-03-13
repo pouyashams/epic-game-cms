@@ -25,7 +25,7 @@ class acountManagement extends Component {
             searchResultList: [],
             progress: false,
             bot: "",
-            currentPage: localStorage.getItem('currentPage'),
+            currentPage: sessionStorage.getItem('currentPage'),
         };
         this.onEdit = this.onEdit.bind(this);
         this.onAdd = this.onAdd.bind(this);

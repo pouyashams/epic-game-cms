@@ -11,7 +11,7 @@ class SearchResult extends Component {
     }
 
     handlePageChange = page => {
-        localStorage.setItem('currentPage', page);
+        sessionStorage.setItem('currentPage', page);
         this.props.setPage(page);
     };
 

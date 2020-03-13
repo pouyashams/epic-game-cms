@@ -15,7 +15,7 @@ class App extends Component {
 
 
     componentDidMount() {
-        localStorage.setItem('currentPage', 1);
+        sessionStorage.setItem('currentPage', 1);
     }
 
     isPhone = () => {

@@ -21,7 +21,7 @@ class acountManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pageSize: 10,
+            pageSize: 20,
             searchResultList: [],
             progress: false,
             bot: "",
@@ -439,18 +439,6 @@ class acountManagement extends Component {
                 </span>
                     : null
                 }
-
-                <div id="circle">
-                    <div class="loader">
-                        <div class="loader">
-                            <div class="loader">
-                                <div class="loader">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         );
     }

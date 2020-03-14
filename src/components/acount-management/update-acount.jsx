@@ -96,13 +96,21 @@ class updateAcount extends Component {
                                            onChange={(e) => this.handelChangeInput(e.target.value, "username")}
                                     />
                                 </div>
-                                <div className="form-group col-12 col-sm-6 col-md-4 float-right">
+                                <div className="form-group col-12 col-sm-6 col-md-3 float-right">
                                     <label>پسورد :</label>
-                                    <input className="form-control text-left dir-text-left w-75"
+                                    <input className="form-control text-center w-100"
                                            type={"input"}
                                            placeholder="---"
                                            value={this.state.password}
                                            onChange={(e) => this.handelChangeInput(e.target.value, "password")}
+                                    />
+                                </div>
+                                <div className="form-group col-12 col-sm-6 col-md-3 float-right">
+                                    <label>کد اکانت :</label>
+                                    <input className="form-control text-center w-100"
+                                           type={"input"}
+                                           placeholder="---"
+                                           value={this.state.id}
                                     />
                                 </div>
                                 <div className="form-group col-sm-6 col-md-6 float-right ">

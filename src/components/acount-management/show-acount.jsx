@@ -10,6 +10,7 @@ class addAcount extends Component {
         this.state = {
             username: "",
             password: "",
+            identifier: "",
             content: ""
         }
     };
@@ -20,6 +21,7 @@ class addAcount extends Component {
         this.setState({
             username: this.getValue(acountInfo.username)+":"+this.getValue(acountInfo.password),
             content: this.getValue(acountInfo.content),
+            identifier: this.getValue(acountInfo.identifier),
         });
 
     }
@@ -58,6 +60,14 @@ class addAcount extends Component {
                                            type={"input"}
                                            placeholder="---"
                                            value={this.state.username}
+                                    />
+                                </div>
+                                <div className="form-group col-12 col-sm-6 col-md-3 float-right">
+                                    <label>کد اکانت :</label>
+                                    <input className="form-control text-center w-100"
+                                           type={"input"}
+                                           placeholder="---"
+                                           value={this.state.identifier}
                                     />
                                 </div>
                                 <label className="col-12 py-2">مشخصات اکانت :</label>

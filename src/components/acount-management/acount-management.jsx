@@ -230,12 +230,19 @@ class acountManagement extends Component {
 
     search = async (parameters) => {
         this.setState({progress: true});
+        if (sessionStorage.getItem('activeSearch') === "") {
+            sessionStorage.setItem('activeSearch', "true");
+        }
+        console.log(sessionStorage.getItem('activeSearch'),1234);
         let data = {
-            active: "true",
-            content: "",
-            identifier: "",
+            active: sessionStorage.getItem('activeSearch'),
+            content: sessionStorage.getItem('contentSearch'),
+            identifier: parseInt(sessionStorage.getItem('idSearch')),
         };
         if (parameters !== undefined) {
+            sessionStorage.setItem('contentSearch', parameters.content);
+            sessionStorage.setItem('idSearch', parameters.identifier);
+            sessionStorage.setItem('activeSearch', parameters.active);
             if (parameters.active !== "") {
                 data = {
                     active: parameters.active,
@@ -251,6 +258,7 @@ class acountManagement extends Component {
                 };
             }
         }
+        console.log(data)
         try {
             const result = await searchAcount(data);
             let searchResultList = [];
@@ -431,6 +439,18 @@ class acountManagement extends Component {
                 </span>
                     : null
                 }
+
+                <div id="circle">
+                    <div class="loader">
+                        <div class="loader">
+                            <div class="loader">
+                                <div class="loader">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

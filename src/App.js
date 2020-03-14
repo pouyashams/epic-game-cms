@@ -16,6 +16,9 @@ class App extends Component {
 
     componentDidMount() {
         sessionStorage.setItem('currentPage', 1);
+        sessionStorage.setItem('contentSearch',"");
+        sessionStorage.setItem('idSearch',"");
+        sessionStorage.setItem('activeSearch',"true");
     }
 
     isPhone = () => {
@@ -50,6 +53,7 @@ class App extends Component {
                     </main>
                 </div>
                 <Footer/>
+
             </div>
         );
     }

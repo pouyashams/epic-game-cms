@@ -1,65 +1,68 @@
 import axios from "axios/index";
 
-const token = Buffer.from(`${sessionStorage.getItem('username')}:${sessionStorage.getItem('password')}`, 'utf8').toString('base64');
 const headers = {
     headers: {
-        'Authorization': `Basic ${token}`
+        "x-auth": sessionStorage.getItem('token')
     }
 };
 
 export function searchAcount(data) {
-    const token = Buffer.from(`${sessionStorage.getItem('username')}:${sessionStorage.getItem('password')}`, 'utf8').toString('base64');
     const header = {
         headers: {
-            'Authorization': `Basic ${token}`
+            "x-auth": sessionStorage.getItem('token')
         }
     };
-    return axios.post('https://epicgameservices.ir/fetch-accounts', data, header);
+    return axios.post('https://epicgameservices.ir/api/search-post', data, header);
 }
 
 export function sendAcount(data) {
-    return axios.post('https://epicgameservices.ir/add-account', data, headers);
+    return axios.post('https://epicgameservices.ir/api/register-post', data, headers);
 }
 
 export function editAcount(data) {
-    return axios.post('https://epicgameservices.ir/update-account', data, headers);
-}
-
-export function postAllAcount() {
-    return axios.post('https://epicgameservices.ir/post-accounts', {}, headers);
+    return axios.post('https://epicgameservices.ir/api/update-post', data, headers);
 }
 
 export function onDeActive(data) {
-    return axios.post('https://epicgameservices.ir/deActive-account', data, headers);
+    return axios.post('https://epicgameservices.ir/api/sold-post', data, headers);
 }
 
 export function fetchSchedule(data) {
-    const token = Buffer.from(`${sessionStorage.getItem('username')}:${sessionStorage.getItem('password')}`, 'utf8').toString('base64');
     const header = {
         headers: {
-            'Authorization': `Basic ${token}`
+            "x-auth": sessionStorage.getItem('token')
         }
     };
-    return axios.post('https://epicgameservices.ir/fetch-schedule-task', data, header);
+    return axios.post('https://epicgameservices.ir/api/fetch-auto-post-scheduled-task', data, header);
 }
 
 export function updateSchedule(data) {
     return axios.post('https://epicgameservices.ir/update-schedule-task', data, headers);
 }
 
+export function editBot(data) {
+    return axios.post('https://epicgameservices.ir/api/save-or-update-auto-post-scheduled-task', data, headers);
+}
+
 export function onDelete(data) {
-    return axios.post('https://epicgameservices.ir/delete-account', data, headers);
+    return axios.post('https://epicgameservices.ir/api/delete-post', data, headers);
 }
 
 export function onActive(data) {
-    return axios.post('https://epicgameservices.ir/post-account', data, headers);
+    return axios.post('https://epicgameservices.ir/api/send-post', data, headers);
 }
 
 export function onRemove(data) {
-    return axios.post('https://epicgameservices.ir/remove-account', data, headers);
+    return axios.post('https://epicgameservices.ir/api/remove-post', data, headers);
 }
 
-export function removeAllAcount() {
-    return axios.post('https://epicgameservices.ir/remove-accounts', {}, headers);
+
+export function saveOrUpdateDefaultPostAttributes(data) {
+    return axios.post('https://epicgameservices.ir/api/save-or-update-default-post-attributes', data, headers);
+}
+
+
+export function fetchUserDefaultPostAttributes() {
+    return axios.post('https://epicgameservices.ir/api/fetch-user-default-post-attributes', {}, headers);
 }
 

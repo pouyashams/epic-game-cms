@@ -25,40 +25,44 @@ class SearchResult extends Component {
     render() {
         const {currentPage} = this.props;
         const {headerInfo, searchResultList, pageSize} = this.props;
-        const searchResultForThisPage = this.getPageData();
+        // const searchResultForThisPage = this.getPageData();
         let counter = (currentPage - 1) * pageSize;
         let loopCounter = 1;
         return (
-            <div className="col-12 justify-content-center align-items-center text-center table-responsive">
-                <table className="table table-bordered table-striped ">
-                    <thead>
+            <div className="col-12 justify-content-center align-items-center text-center table-responsive pt-3 sc-y-h">
+                <table className="table table-bordered table-striped">
+                    <thead className="bg-dark">
                     <tr>
-                        <th className="hidden-xs table-counter"></th>
+                        <th className="hidden-xs table-counter"/>
                         {headerInfo.showCheckBox ? (
                             <th>
                                 <input type="checkbox" id="checkAll"/>
                             </th>
                         ) : null}
                         {headerInfo.headerTitleInfos.map((headerTitleInfo) => (
-                            <th className="text-center" key={loopCounter++}>{headerTitleInfo.title}</th>
+                            <th className="text-center text-light" key={loopCounter++}>{headerTitleInfo.title}</th>
                         ))}
-                        {headerInfo.actions.map(() =>
+                        {headerInfo.actions.map((action) =>
                             (
-                                <th key={loopCounter++}/>
+                                <th className="text-center text-light" key={loopCounter++}>{action.title}</th>
                             )
-                        )}
+                        )} {headerInfo.dropdowns.map((dropdown) =>
+                        (
+                            <th className="text-center text-light" key={loopCounter++}>{dropdown.title}</th>
+                        )
+                    )}
                     </tr>
                     </thead>
                     <tbody>
-                    {searchResultForThisPage.length === 0 ?
+                    {this.props.searchResultList.length === 0 ?
                         (
                             <tr key={loopCounter++}>
-                                <td colSpan={headerInfo.headerTitleInfos.length + headerInfo.actions.length + 1}>
+                                <td colSpan={headerInfo.headerTitleInfos.length + headerInfo.actions.length + headerInfo.dropdowns.length + 1}>
                                     موردی یافت نشد.
                                 </td>
                             </tr>
                         )
-                        : searchResultForThisPage.map((searchResult) =>
+                        : this.props.searchResultList.map((searchResult) =>
                             (
                                 <tr key={loopCounter++}>
                                     <td className="hidden-xs table-counter">
@@ -81,8 +85,42 @@ class SearchResult extends Component {
                                                         onClick={() => {
                                                             action.onclick(searchResult)
                                                         }}>
-                                                    <span className={action.icon} title={action.title}></span>
+                                                    <span className={action.icon} title={action.title}/>
                                                 </button>
+                                            </td>
+                                        )
+                                    )}
+                                    {headerInfo.dropdowns.map((dropdown) =>
+                                        (
+                                            <td key={loopCounter++}>
+                                                <div className="dropdown">
+                                                    <button className={`w-38 ${dropdown.style}`}
+                                                            id={dropdown.id}
+                                                            data-title={dropdown.title}
+                                                            data-toggle="dropdown"
+                                                            aria-haspopup="true"
+                                                            aria-expanded="false"
+                                                    >
+                                                        <span className={dropdown.icon} title={dropdown.title}/>
+                                                    </button>
+                                                    <div className="dropdown-menu" aria-labelledby={dropdown.id}>
+                                                        {dropdown.item.map((itemInfo) =>
+                                                            (
+                                                                <label className="dropdown-item pointer"
+                                                                       onClick={() => {
+                                                                           itemInfo.onclick(searchResult)
+                                                                       }}
+                                                                >
+                                                                    <span className={`pl-10 ${itemInfo.icon}`}/>
+                                                                    {itemInfo.itemTitle}
+                                                                </label>
+
+
+                                                            )
+                                                        )
+                                                        }
+                                                    </div>
+                                                </div>
                                             </td>
                                         )
                                     )}
@@ -91,15 +129,15 @@ class SearchResult extends Component {
                         )
                     }
                     </tbody>
-
                 </table>
+
                 {searchResultList.length !== 0 ? (
-                    <Pagination
-                        itemCount={searchResultList.length}
-                        pageSize={pageSize}
-                        currentPage={currentPage}
-                        onPageChange={this.handlePageChange}
-                    />
+                        <Pagination
+                            itemCount={this.props.count}
+                            pageSize={pageSize}
+                            currentPage={currentPage}
+                            onPageChange={this.handlePageChange}
+                        />
                 ) : null}
             </div>
         );
@@ -108,3 +146,7 @@ class SearchResult extends Component {
 }
 
 export default withRouter(SearchResult);
+
+
+
+

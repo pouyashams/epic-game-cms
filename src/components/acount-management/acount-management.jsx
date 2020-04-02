@@ -4,15 +4,11 @@ import SearchResult from "../search/search-result";
 import {toast} from 'react-toastify';
 import {withRouter} from 'react-router-dom';
 import {
-    searchAcount,
-    postAllAcount,
-    removeAllAcount,
-    onDeActive,
     onActive,
-    onRemove,
+    onDeActive,
     onDelete,
-    fetchSchedule,
-    updateSchedule,
+    onRemove,
+    searchAcount,
 } from "../../services/acountService"
 
 
@@ -21,10 +17,11 @@ class acountManagement extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pageSize: 20,
+            pageSize: 15,
             searchResultList: [],
             progress: false,
             bot: "",
+            count: "",
             currentPage: sessionStorage.getItem('currentPage'),
         };
         this.onEdit = this.onEdit.bind(this);
@@ -34,18 +31,6 @@ class acountManagement extends Component {
     }
 
     async componentDidMount() {
-        try {
-            const result = await fetchSchedule({"task": "auto-posting-accounts"});
-            if (result.status === 200) {
-                console.log(result.data.data.active);
-                this.setState({progress: false, bot: result.data.data.active});
-            }
-        } catch (ex) {
-            if (ex.response && ex.response.status === 400) {
-                toast.error('ارتباط با سرور برقرار نشد');
-                this.setState({progress: false});
-            }
-        }
         this.search();
     };
 
@@ -70,12 +55,12 @@ class acountManagement extends Component {
     }
 
     onDeActiveInfo = async (searchResult) => {
-        if (searchResult.active) {
+        if (searchResult.status!=="DELETED_POST_STATUS"){
             this.setState({progress: true});
             try {
                 const result = await onDeActive({identifier: parseInt(searchResult.identifier)});
                 if (result.status === 200) {
-                    toast.success('اکانت با موفقیت به لیست فروخته شده اضافه شد');
+                    toast.success('پست با موفقیت به لیست فروخته شده اضافه شد');
                     this.setState({progress: false});
                 }
             } catch (ex) {
@@ -85,55 +70,51 @@ class acountManagement extends Component {
                 }
             }
             this.search();
-        } else {
-            toast.error('این اکانت فروخته شده و قابلیت فروش ندارد');
+        }else{
+            toast.error('پست حذف شده قابل فروش نیست');
         }
+
     };
 
     setPage = page => {
-        this.setState({currentPage: page});
-    };
-
-    updateScheduleInfo = async () => {
-        if (!this.state.bot) {
-            this.setState({progress: true});
-            try {
-                const result = await updateSchedule({"task": "auto-posting-accounts", "active": true});
-                if (result.status === 200) {
-                    toast.success('بات با موفقیت روشن شد');
-                    this.setState({progress: false, bot: true});
-                }
-            } catch (ex) {
-                if (ex.response && ex.response.status === 400) {
-                    toast.error('ارتباط با سرور برقرار نشد');
-                    this.setState({progress: false});
-                }
-            }
-        } else {
-            this.setState({progress: true});
-            try {
-                const result = await updateSchedule({"task": "auto-posting-accounts", "active": false});
-                if (result.status === 200) {
-                    toast.success('بات با موفقیت خاموش شد');
-                    this.setState({progress: false, bot: false});
-                }
-            } catch (ex) {
-                if (ex.response && ex.response.status === 400) {
-                    toast.error('ارتباط با سرور برقرار نشد');
-                    this.setState({progress: false});
-                }
-            }
-        }
+        this.setState({
+            currentPage: page
+        }, () => {
+            this.search();
+        })
     };
 
     onDeleteInfo = async (searchResult) => {
-        if (searchResult.telegram === 0) {
-            if (!searchResult.active) {
+        this.setState({progress: true});
+        try {
+            const result = await onDelete({identifier: parseInt(searchResult.identifier)});
+            if (result.status === 200) {
+                toast.success('پست با موفقیت حذف شد');
+                this.setState({progress: false});
+            }
+        } catch (ex) {
+            if (ex.response && ex.response.status === 400) {
+                toast.error('ارتباط با سرور برقرار نشد');
+                this.setState({progress: false});
+            }
+        }
+        this.search();
+    };
+
+    onActiveInfo = async (searchResult) => {
+        switch (searchResult.status) {
+            case "DELETED_POST_STATUS":
+                toast.error('پست حذف شده قابل پست کردن نمی باشد');
+                break;
+            case "SOLD_POST_STATUS":
+                toast.error('پست فروخته شده قابل پست کردن نمی باشد');
+                break;
+            default:
                 this.setState({progress: true});
                 try {
-                    const result = await onDelete({identifier: parseInt(searchResult.identifier)});
+                    const result = await onActive({identifier: parseInt(searchResult.identifier), silent: false});
                     if (result.status === 200) {
-                        toast.success('اکانت با موفقیت حذف شد');
+                        toast.success('پست با موفقیت پست شد');
                         this.setState({progress: false});
                     }
                 } catch (ex) {
@@ -143,63 +124,42 @@ class acountManagement extends Component {
                     }
                 }
                 this.search();
-            } else {
-                toast.error('این اکانت فروخته نشده است و قابلیت حذف ندارد');
-            }
-        } else {
-            toast.error('پست داخل کانال این اکانت حذف کنید');
         }
     };
 
-    onActiveInfo = async (searchResult) => {
-        if (searchResult.active) {
-            this.setState({progress: true});
-            try {
-                const result = await onActive({identifier: parseInt(searchResult.identifier)});
-                if (result.status === 200) {
-                    toast.success('اکانت با موفقیت پست شد');
-                    this.setState({progress: false});
+    onActiveInfoSilent = async (searchResult) => {
+        switch (searchResult.status) {
+            case "DELETED_POST_STATUS":
+                toast.error('پست حذف شده قابل پست کردن نمی باشد');
+                break;
+            case "SOLD_POST_STATUS":
+                toast.error('پست فروخته شده قابل پست کردن نمی باشد');
+                break;
+            default:
+                this.setState({progress: true});
+                try {
+                    const result = await onActive({identifier: parseInt(searchResult.identifier), silent: true});
+                    if (result.status === 200) {
+                        toast.success('پست با موفقیت پست شد');
+                        this.setState({progress: false});
+                    }
+                } catch (ex) {
+                    if (ex.response && ex.response.status === 400) {
+                        toast.error('ارتباط با سرور برقرار نشد');
+                        this.setState({progress: false});
+                    }
                 }
-            } catch (ex) {
-                if (ex.response && ex.response.status === 400) {
-                    toast.error('ارتباط با سرور برقرار نشد');
-                    this.setState({progress: false});
-                }
-            }
-            this.search();
-        } else {
-            toast.error('این اکانت فروخته شده و قابلیت پست ندارد');
+                this.search();
         }
 
     };
 
     onRemoveInfo = async (searchResult) => {
-        if (searchResult.active) {
-            this.setState({progress: true});
-            try {
-                const result = await onRemove({identifier: parseInt(searchResult.identifier)});
-                if (result.status === 200) {
-                    toast.success('اکانت با موفقیت از کانال حذف شد');
-                    this.setState({progress: false});
-                }
-            } catch (ex) {
-                if (ex.response && ex.response.status === 400) {
-                    toast.error('ارتباط با سرور برقرار نشد');
-                    this.setState({progress: false});
-                }
-            }
-            this.search();
-        } else {
-            toast.error('این اکانت فروخته شده و قابلیت حذف از کانال ندارد');
-        }
-    };
-
-    postAllAcountInfo = async () => {
         this.setState({progress: true});
         try {
-            const result = await postAllAcount();
+            const result = await onRemove({identifier: parseInt(searchResult.identifier)});
             if (result.status === 200) {
-                toast.success('اکانت ها با موفقیت پست شدند');
+                toast.success('پست با موفقیت از کانال حذف شد');
                 this.setState({progress: false});
             }
         } catch (ex) {
@@ -211,92 +171,139 @@ class acountManagement extends Component {
         this.search();
     };
 
-    removeAllAcountInfo = async () => {
-        this.setState({progress: true});
-        try {
-            const result = await removeAllAcount();
-            if (result.status === 200) {
-                toast.success('اکانت ها با موفقیت غیرفعال شدند');
-                this.setState({progress: false});
+    searchData = (parameters) => {
+        let data = "";
+        if (sessionStorage.getItem('parameters') === null && parameters === undefined) {
+            data = {
+                "pagination": {
+                    "maxResult": this.state.pageSize,
+                    "pageNumber": this.state.currentPage
+                },
+                "shouldReturnCount": true
+            };
+        } else if (sessionStorage.getItem('parameters') === null && parameters !== undefined) {
+            let status = null;
+            if (parameters.name !== "" && parameters.name !== undefined) {
+                status = {
+                    name: parameters.name
+                }
             }
-        } catch (ex) {
-            if (ex.response && ex.response.status === 400) {
-                toast.error('ارتباط با سرور برقرار نشد');
-                this.setState({progress: false});
+            data = {
+                "identifier": parameters.identifier,
+                "content": parameters.content,
+                "favourite": parameters.favourite,
+                "pagination": {
+                    "maxResult": this.state.pageSize,
+                    "pageNumber": this.state.currentPage
+                },
+                "status": status,
+                "shouldReturnCount": true
+            };
+            sessionStorage.parameters = JSON.stringify(parameters);
+        } else if (sessionStorage.getItem('parameters') !== null && parameters === undefined) {
+            let parameter = JSON.parse(sessionStorage.parameters);
+            let status = null;
+            if (parameter.name !== "" && parameter.name !== undefined) {
+                status = {
+                    name: parameter.name
+                }
             }
+            data = {
+                "identifier": parameter.identifier,
+                "content": parameter.content,
+                "favourite": parameter.favourite,
+                "pagination": {
+                    "maxResult": this.state.pageSize,
+                    "pageNumber": this.state.currentPage
+                },
+                "status": status,
+                "shouldReturnCount": true
+            };
+        } else if (sessionStorage.getItem('parameters') !== null && parameters !== undefined) {
+            let status = null;
+            if (parameters.name !== "" && parameters.name !== undefined) {
+                status = {
+                    name: parameters.name
+                }
+            }
+            data = {
+                "identifier": parameters.identifier,
+                "content": parameters.content,
+                "favourite": parameters.favourite,
+                "pagination": {
+                    "maxResult": this.state.pageSize,
+                    "pageNumber": this.state.currentPage
+                },
+                "status": status,
+                "shouldReturnCount": true
+            };
+            sessionStorage.parameters = JSON.stringify(parameters);
         }
-        this.search();
+        return data;
+    };
+
+    makeDataForTable = (dataInfo) => {
+        let postStatus = "";
+        let postFavourite = "";
+        switch (dataInfo.status.name) {
+            case "REGISTERED_POST_STATUS":
+                postStatus = <label className="text-warning">ثبت شده</label>;
+                break;
+            case "SENT_POST_STATUS":
+                postStatus = <label className="text-success">پست شده</label>;
+                break;
+            case "DELETED_POST_STATUS":
+                postStatus = <label className="text-primary">حذف شده</label>;
+                break;
+            case "SOLD_POST_STATUS":
+                postStatus = <label className="text-danger">فروخته شده</label>;
+                break;
+            default:
+        }
+        switch (dataInfo.favourite) {
+            case true:
+                postFavourite = <label className="text-success">
+                    برگزیده
+                </label>;
+                break;
+            case false:
+                postFavourite = <label className="text-danger">عادی</label>;
+                break;
+            default:
+        }
+        return {postStatus, postFavourite};
     };
 
     search = async (parameters) => {
         this.setState({progress: true});
-        if (sessionStorage.getItem('activeSearch') === "") {
-            sessionStorage.setItem('activeSearch', "true");
-        }
-        console.log(sessionStorage.getItem('activeSearch'),1234);
-        let data = {
-            active: sessionStorage.getItem('activeSearch'),
-            content: sessionStorage.getItem('contentSearch'),
-            identifier: parseInt(sessionStorage.getItem('idSearch')),
-        };
-        if (parameters !== undefined) {
-            sessionStorage.setItem('contentSearch', parameters.content);
-            sessionStorage.setItem('idSearch', parameters.identifier);
-            sessionStorage.setItem('activeSearch', parameters.active);
-            if (parameters.active !== "") {
-                data = {
-                    active: parameters.active,
-                    content: parameters.content,
-                    identifier: parseInt(parameters.identifier),
-                };
-            }
-            else {
-                data = {
-                    active: "true",
-                    content: parameters.content,
-                    identifier: parseInt(parameters.identifier),
-                };
-            }
-        }
-        console.log(data)
+        const data = this.searchData(parameters);
         try {
             const result = await searchAcount(data);
             let searchResultList = [];
             if (result.status === 200) {
-                console.log(123)
-                result.data.data.forEach((dataInfo) => {
-                    let activeText = null;
-                    let activePost = null;
-                    if (dataInfo.active) {
-                        activeText = (<span className="text-success">موجود</span>)
-                    }
-                    else {
-                        activeText = (<span className="text-danger">فروخته شده</span>)
-                    }
-                    if (dataInfo.telegramIdentifiers.length !== 0) {
-                        activePost = (<span className="text-success">پست شده</span>)
-                    } else {
-                        activePost = (<span className="text-danger">پست نشده</span>)
-                    }
+                this.setState({count: result.data.data.count});
+                result.data.data.searchResultArray.forEach((dataInfo) => {
+                    const dataForTable = this.makeDataForTable(dataInfo);
                     searchResultList.push(
                         {
-                            username: dataInfo.username,
-                            password: dataInfo.password,
-                            content: dataInfo.content,
                             identifier: dataInfo.identifier,
-                            active: dataInfo.active,
-                            activeText: activeText,
-                            activePost: activePost,
-                            telegram: dataInfo.telegramIdentifiers.length,
+                            content: dataInfo.content,
+                            attributes: dataInfo.attributes,
+                            favourite: dataInfo.favourite,
+                            amount: dataInfo.amount,
+                            creationDateTime: dataInfo.creationDateTime,
+                            lastUpdateDateTime: dataInfo.lastUpdateDateTime,
+                            status: dataInfo.status.name,
+                            postStatus: dataForTable.postStatus,
+                            postFavourite: dataForTable.postFavourite,
                         }
                     )
                 });
-                this.setState({searchResultList});
-                this.setState({progress: false});
+                this.setState({searchResultList, progress: false});
             }
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
-                toast.error('لطفا کلیه موارد را پر کنید');
+                toast.error('مشکلی در برقراری با سرور ایجاد شده است');
                 this.setState({progress: false});
             }
         }
@@ -309,45 +316,108 @@ class acountManagement extends Component {
                 element: "input",
                 type: "text",
                 placeholder: "---",
-                label: "کد اکانت",
+                label: "کد پست",
                 defaultValue: ""
             }, {
                 name: "content",
                 element: "input",
                 type: "text",
                 placeholder: "---",
-                label: "اسم بازی",
+                label: "متن پست",
                 defaultValue: ""
             },
             {
-                name: "active",
+                name: "name",
                 element: "select",
                 placeholder: "---",
                 defaultValue: "",
-                label: "وضعیت فروش",
-                selected: "true",
+                label: "وضعیت پست",
                 options: [
                     {
+                        value: "",
+                        title: "انتخاب کنید"
+                    },
+                    {
+                        value: "SENT_POST_STATUS",
+                        title: "پست شده"
+                    },
+                    {
+                        value: "SOLD_POST_STATUS",
+                        title: "فروخته شده"
+                    },
+                    {
+                        value: "REGISTERED_POST_STATUS",
+                        title: "ثبت شده"
+                    },
+                    {
+                        value: "DELETED_POST_STATUS",
+                        title: "حذف شده"
+                    },
+                ]
+            },
+            {
+                name: "favourite",
+                element: "select",
+                placeholder: "---",
+                defaultValue: "",
+                label: "نوع پست",
+                options: [
+                    {
+                        value: "",
+                        title: "انتخاب کنید"
+                    },
+                    {
                         value: "true",
-                        title: "موجود"
+                        title: "برگزیده"
                     },
                     {
                         value: "false",
-                        title: "فروخته شده"
+                        title: "عادی"
                     },
                 ]
             }
         ];
     }
 
+
     getResultTableHeader() {
         let headerInfo = {
             showCheckBox: false,
+            dropdowns: [
+                {
+                    style: 'btn btn-dark btn-xs',
+                    title: 'بیشتر',
+                    icon: "fa fa-ellipsis-v",
+                    id: "1",
+                    item: [
+                        {
+                            itemTitle: "پست کردن بی صدا",
+                            onclick: this.onActiveInfoSilent,
+                            icon: 'fa fa-bell-slash text-success',
+
+                        }, {
+                            itemTitle: "ویرایش پست",
+                            onclick: this.onEdit,
+                            icon: 'fa fa-edit text-primary',
+
+                        }, {
+                            itemTitle: "حذف از کانال ",
+                            icon: 'fa fa-remove text-info',
+                            onclick: this.onRemoveInfo
+                        },
+                        {
+                            itemTitle: "حذف پست",
+                            icon: 'fa fa-trash text-danger',
+                            onclick: this.onDeleteInfo
+                        },
+                    ]
+                }
+            ],
             actions: [
                 {
                     name: 'post',
                     title: 'پست کردن',
-                    icon: 'fa fa-sign-in',
+                    icon: 'fa fa-sign-in text-dark',
                     style: 'btn btn-success btn-xs',
                     onclick: this.onActiveInfo
                 }, {
@@ -356,38 +426,21 @@ class acountManagement extends Component {
                     icon: 'fa fa-eye',
                     style: 'btn btn-warning btn-xs',
                     onclick: this.onShow
-                }, {
-                    name: 'edit',
-                    title: 'ویرایش',
-                    icon: 'fa fa-edit',
-                    style: 'btn btn-primary btn-xs',
-                    onclick: this.onEdit
-                }, {
-                    name: 'deActive',
-                    title: 'حذف از کانال',
-                    icon: 'fa fa-remove',
-                    style: 'btn btn-info btn-xs',
-                    onclick: this.onRemoveInfo
-                }, {
+                },
+                {
                     name: 'remove',
                     title: 'فروخته شده',
-                    icon: 'fa fa-download',
-                    style: 'btn btn-color btn-xs',
-                    onclick: this.onDeActiveInfo
-                }, {
-                    name: 'delete',
-                    title: 'حذف کامل',
-                    icon: 'fa fa-trash-o',
+                    icon: 'fa fa-download text-dark',
                     style: 'btn btn-danger btn-xs',
-                    onclick: this.onDeleteInfo
+                    onclick: this.onDeActiveInfo
                 },
             ],
             headerTitleInfos: [
-                {name: "identifier", title: "کد اکانت"},
-                {name: "username", title: "ایمیل اکانت"},
-                {name: "password", title: "رمز اکانت"},
-                {name: "activeText", title: "وضعیت فروش"},
-                {name: "activePost", title: "وضعیت پست"},
+                {name: "identifier", title: "کد پست"},
+                {name: "creationDateTime", title: "تاریخ ایجاد پست"},
+                {name: "lastUpdateDateTime", title: "تاریخ اخرین بروزرسانی"},
+                {name: "postFavourite", title: "نوع پست"},
+                {name: "postStatus", title: "وضعیت پست"},
             ]
         };
         return headerInfo;
@@ -403,32 +456,19 @@ class acountManagement extends Component {
                 className="rtl bg border shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
                 <div
                     className="col-12 justify-content-center align-items-center text-center header-box text-light header-color">
-                    <h4 className="py-2">مدیریت اکانت</h4>
+                    <h4 className="py-2">مدیریت کانال</h4>
                 </div>
                 <SearchCriteria onSearch={this.search}
                                 searchCriteriaArray={searchCriteriaArray}/>
                 <SearchResult headerInfo={headerInfo} searchResultList={searchResultList} pageSize={pageSize}
                               currentPage={currentPage}
                               setPage={this.setPage}
+                              count={this.state.count}
                 />
-                <span className="col-12 pt-4 pb-2">
+                <span className="col-8 pt-4 pb-2">
                     <input type="button" className="btn btn-success col-md-2 col-sm-6 mr-3 my-1"
-                           value="پست کردن تمامی اکانت ها"
-                           onClick={this.postAllAcountInfo}/>
-                    <input type="button" className="btn btn-warning col-md-2 col-sm-6 mr-3 my-1"
-                           value="اضافه کردن اکانت"
+                           value="اضافه کردن پست"
                            onClick={this.onAdd}/>
-                    <input type="button" className="btn btn-danger col-md-2 col-sm-6 mr-3 my-1"
-                           value=" حذف تمامی پست ها از کانال"
-                           onClick={this.removeAllAcountInfo}/>
-                    {this.state.bot ?
-                        <input type="button" className="btn btn-primary col-md-2 col-sm-6 my-1" value="خاموش کردن bot"
-                               onClick={this.updateScheduleInfo}/>
-                        :
-                        <input type="button" className="btn btn-color text-white col-md-2 col-sm-6 my-1"
-                               value="روشن کردن bot"
-                               onClick={this.updateScheduleInfo}/>
-                    }
                 </span>
                 {this.state.progress ?
                     <span className="col-12 py-2">

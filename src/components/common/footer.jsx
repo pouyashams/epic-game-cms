@@ -9,8 +9,8 @@ const Footer = () => {
                 تمامی حقوق این سیستم مدیریت محفوظ میباشید
             </div>
             <div className={"socialmedia"}>
-                <span className="fa fa-instagram m-1"/>
-                <span className="fa fa-facebook-official m-1"/>
+                <a className="fa fa-instagram pointer m-1 text-white" href="http://instagram.com/epicgameir">{""}</a>
+                <a className="fa fa-telegram pointer text-white m-1" href="https://t.me/joinchat/AAAAAEvgtLthuUjsNZObyg">{""}</a>
             </div>
         </footer>
     );

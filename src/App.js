@@ -8,7 +8,9 @@ import {ToastContainer} from "react-toastify";
 import acountManagement from "./components/acount-management/acount-management"
 import addAcount from "./components/acount-management/add-acount"
 import showAcount from "./components/acount-management/show-acount"
-import editAcount from "./components/acount-management/update-acount"
+import editAcount from "./components/acount-management/edit-acount"
+import editBot from "./components/bot-setting/edit-bot"
+import defaultPostAttributes from "./components/acount-management/default-post-attributes"
 
 
 class App extends Component {
@@ -42,10 +44,12 @@ class App extends Component {
                     >
                         <Router history={this.props.history}>
                             <Switch>
+                                <PrivateRoute path="/default-post-attributes" exact={false} component={defaultPostAttributes}/>
                                 <PrivateRoute path="/acount-managemnet" exact={false} component={acountManagement}/>
                                 <PrivateRoute path="/add-acount" exact={false} component={addAcount}/>
                                 <PrivateRoute path="/show-acount" exact={false} component={showAcount}/>
                                 <PrivateRoute path="/edit-acount" exact={false} component={editAcount}/>
+                                <PrivateRoute path="/edit-bot" exact={false} component={editBot}/>
                                 <PrivateRoute path="/" exact={false} component={acountManagement}/>
                                 <Redirect to="/not-found"/>
                             </Switch>

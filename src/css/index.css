@@ -45,8 +45,13 @@
 .radius {
     border-radius: 25px;
 }
+
 .radius-line {
-    border-radius:5px;
+    border-radius: 5px;
+}
+
+.box-shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .panel-header {
@@ -148,8 +153,14 @@
     height: 20px;
     direction: ltr;
 }
-.dir-text-left{
-    direction: ltr!important;
+
+
+.dir-text-left {
+    direction: ltr !important;
+}
+
+.m-t {
+    margin-top: 30px;
 }
 
 .header-box {
@@ -300,6 +311,28 @@ svg.custom path.link {
     cursor: pointer;
 }
 
+.w-38 {
+    width: 38px;
+}
+
+.pl-10 {
+    padding-left: 10px;
+}
+
+table {
+    border-collapse: collapse !important;
+    /*min-height: 169px !important;*/
+}
+
+table, th, td {
+    border: 1px solid rgba(0, 0, 0, 0.09) !important;
+}
+
+.sc-y-h {
+    overflow-y: hidden;
+    min-height: 170px!important;
+}
+
 .header-color {
     background-color: #263238;
     border-radius: 7px;
@@ -309,9 +342,16 @@ svg.custom path.link {
     background-color: #eceff1;
     border-radius: 7px;
 }
-.btn-color{
+
+.btn-color {
     background-color: #ff6ae9 !important;
 }
-.btn-color:hover{
+
+.btn-color:hover {
     background-color: #d463bf !important;
+}
+
+.dis-hid {
+    opacity: 0;
+    width: 1%;
 }

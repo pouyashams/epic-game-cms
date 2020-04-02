@@ -69,7 +69,7 @@ class SearchCriteria extends Component {
                                         >
                                             {searchCriteria.options.map(
                                                 (option) => {
-                                                    return (<option selected={option.value===searchCriteria.selected} value={option.value}>{option.title}</option>);
+                                                    return (<option value={option.value}>{option.title}</option>);
                                                 }
                                             )}
                                         </select>

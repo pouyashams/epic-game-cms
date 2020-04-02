@@ -10,11 +10,11 @@ const Pagination = ({itemCount, pageSize, onPageChange, currentPage}) => {
     const pages = _.range(1, pageCount + 1);
     return (
         <nav>
-            <ul className="pagination justify-content-center">
+            <ul className=" col-12 pagination justify-content-center pr-0">
                 {pages.map(page => (
                     <li
                         className={
-                            page === currentPage
+                            page === parseInt(currentPage)
                                 ? 'page-item active'
                                 : 'page-item'
                         }

@@ -1,28 +1,38 @@
 import React, {Component} from 'react';
 import {toast, ToastContainer} from 'react-toastify';
 import axios from "axios/index";
+import ReCAPTCHA from "react-google-recaptcha";
+
 
 class Login extends Component {
     state = {
-        username: '',
-        password: '',
+        username: "",
+        password: "",
+        recapcha:""
     };
 
+    onChange = (value) => {
+        this.setState({productItemImageBase64List: value})
+    };
     handleSubmit = async e => {
         e.preventDefault();
         try {
-            const token = Buffer.from(`${this.state.username}:${this.state.password}`, 'utf8').toString('base64');
-            const url = 'https://epicgameservices.ir/login';
-            axios.post(url, {}, {
-                headers: {
-                    'Authorization': `Basic ${token}`
-                }
+            const url = 'https://epicgameservices.ir/api/login';
+            axios.post(url, {
+                "username": this.state.username,
+                "password": this.state.password
             }).then(response => {
-                if (response.data.success === true) {
-                    sessionStorage.setItem('username', this.state.username);
-                    sessionStorage.setItem('password', this.state.password);
-                    sessionStorage.setItem('valid', true);
-                    this.props.history.replace('/');
+                if (response.data.success === true ) {
+                    if (this.state.recapcha!==""){
+                        sessionStorage.setItem('token', response.data.data);
+                        sessionStorage.setItem('valid', true);
+                        sessionStorage.setItem('username', this.state.username);
+                        this.props.history.replace('/');
+                    }
+                    else {
+                        toast.error('بخش من بات نیستم را کامل کنید');
+                    }
+
                 } else {
                     toast.error('نام کاربری یا کلمه عبور اشتباه هست');
                 }
@@ -51,7 +61,7 @@ class Login extends Component {
                 <input
                     type="text"
                     id="inputUsername"
-                    className="form-control my-3 rounded"
+                    className="form-control my-3 rounded dir-text-left text-center"
                     placeholder="نام کاربری"
                     value={this.state.username}
                     onChange={e => this.setState({username: e.target.value})}
@@ -65,12 +75,19 @@ class Login extends Component {
                     type="password"
                     id="inputPassword"
                     autoComplete="off"
-                    className="form-control rounded"
+                    className="form-control rounded dir-text-left text-center"
                     placeholder="کلمه عبور"
                     value={this.state.password}
                     onChange={e => this.setState({password: e.target.value})}
                     required
                 />
+                <div className="pt-2 pb-3">
+                    <ReCAPTCHA
+                        sitekey="6LdWRuYUAAAAAGfiGzmkFtaP7zJ9m3vOlXIoImC8"
+                        onChange={this.onChange}
+                    />
+                </div>
+
 
                 <button className="btn btn-lg btn-primary btn-block" type="submit">
                     ورود

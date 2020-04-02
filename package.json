@@ -1,6 +1,6 @@
 {
   "name": "personal-website",
-  "homepage": "http://panel.epicgameservices.ir",
+  "homepage": "http://portal.epicgameservices.ir",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -17,10 +17,12 @@
     "react-advance-jalaali-datepicker": "^1.2.2",
     "react-dom": "^16.6.0",
     "react-file-base64": "^1.0.3",
+    "react-google-recaptcha": "^2.0.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.5",
     "react-toastify": "^4.4.3",
     "react-tree-graph": "^4.0.1",
+    "suneditor-react": "^2.8.0",
     "utf8": "^3.0.0"
   },
   "scripts": {

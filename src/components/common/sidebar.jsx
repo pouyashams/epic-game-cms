@@ -25,12 +25,33 @@ class Sidebar extends Component {
                                       key={count++}>
                                  <span className="nav-link pointer">
                                      <span className="fa fa-unsorted text-warning"/>
-                                    <span className="icon-title m-2 font-weight-bold text-warning ">مدیریت ها</span>
+                                    <span className="icon-title m-2 font-weight-bold text-warning ">مدیریت تلگرام</span>
                                 </span>
                             </li>
                                 {navLinks.map(nav =>
-                                    nav.type==="management" ?
+                                    nav.type==="telegram-management" ?
                                         <div id="collapseOne" className="collapse show" data-parent="#accordion">
+                                            <li className="nav-item sidebar-dropdown" key={count++}>
+                                                <Link className="nav-link" to={nav.path}>
+                                                    <span className={`${nav.icon} text-light`}/>
+                                                    <span className="icon-title m-2 text-light">{nav.name}</span>
+                                                </Link>
+                                            </li>
+                                        </div>
+                                    : null)}
+                            </span>
+
+                            <span>
+                                 <li className="nav-item sidebar-dropdown" data-toggle="collapse" href="#collapseTwo"
+                                      key={count++}>
+                                 <span className="nav-link pointer">
+                                     <span className="fa fa-unsorted text-warning"/>
+                                    <span className="icon-title m-2 font-weight-bold text-warning ">مدیریت اینستاگرام</span>
+                                </span>
+                            </li>
+                                {navLinks.map(nav =>
+                                    nav.type==="instagram-management" ?
+                                        <div id="collapseTwo" className="collapse" data-parent="#accordion">
                                             <li className="nav-item sidebar-dropdown" key={count++}>
                                                 <Link className="nav-link" to={nav.path}>
                                                     <span className={`${nav.icon} text-light`}/>

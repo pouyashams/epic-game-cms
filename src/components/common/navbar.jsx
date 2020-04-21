@@ -1,15 +1,108 @@
 import React from 'react';
+import "../../css/navbar.css"
+import {Link, withRouter} from "react-router-dom";
+import {logOutAccount} from "../../services/acountService";
+import {toast} from "react-toastify";
+import getNavLinks from './../../services/NavLinks';
+
+const logOut = async () => {
+    try {
+        const result = await logOutAccount();
+        if (result.status === 200) {
+            localStorage.setItem("valid", "false");
+            localStorage.setItem("token", "");
+            localStorage.setItem("username", "");
+            window.location ="/login";
+        }
+    } catch (ex) {
+        if (ex.response && ex.response.status === 400) {
+            toast.error('ارتباط با سرور برقرار نشد');
+        }
+    }
+};
+const showProfile = () => {
+    window.location ="/profile";
+};
+const dropdown = [
+    {
+        onclick: showProfile,
+        title: "مشاهده پروفایل",
+        icon: "fa fa-address-book text-info"
+    },
+    {
+        onclick: logOut,
+        title: "خروج",
+        icon: "fa fa-sign-out text-danger"
+    },
+];
+const navLinks = getNavLinks();
+let count = 1;
 
 const Navbar = () => {
     return (
-        <nav className="rtl navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-            <span className="navbar-brand col-sm-3 col-md-2 mr-0 text-center text-warning">
+        <nav className="rtl navbar navbar-dark fixed-top bg-color-dark flex-md-nowrap shadow py-2 tog-collapse">
+            <h5 className=" ml-3 text-center text-warning">
                 سیستم مدیریت اپیک گیم
-            </span>
+            </h5>
 
+            <div className="row">
+                <div className="dropdown border-top border-bottom radius-circle border-warning py-1 px-user mb-auto">
+                    <span className="text-white pointer" data-toggle="dropdown">
+                     <i className="fa fa-user"/>
+                    </span>
+                    <div className="dropdown-menu dropdown-menu-m bg-dark">
+                        {dropdown.map((itemInfo) =>
+                            (
+                                <label className="dropdown-item pointer text-white dropdown-menu-hover"
+                                       onClick={itemInfo.onclick}
+                                >
+                                    <span className={`pl-10 ${itemInfo.icon}`}/>
+                                    {itemInfo.title}
+                                </label>
+
+
+                            )
+                        )
+                        }
+                    </div>
+                </div>
+                <span className="px-3">
+                      <button className="navbar-toggler mr-2"
+                              type="button" data-toggle="collapse"
+                              data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                              aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="fa fa-navicon mb-1"
+                    />
+                </button>
+                </span>
+            </div>
+            <div className="collapse nav-col ml-3" id="navbarSupportedContent">
+                <span>
+                                 <span className="nav-item sidebar-dropdown" data-toggle="collapse" href="#collapseOne"
+                                       key={count++}>
+                                 <span className="nav-link pointer">
+                                     <span className="fa fa-unsorted text-warning"/>
+                                    <span className="icon-title m-2 font-weight-bold text-warning ">مدیریت تلگرام</span>
+                                </span>
+                            </span>
+                    {navLinks.map(nav =>
+                        nav.type === "telegram-management" ?
+                            // show in class name
+                            <div id="collapseOne" className="collapse"
+                                 data-parent="#accordion">
+                                                            <span className="nav-item " key={count++}>
+                                                                <Link className="nav-link" to={nav.path}>
+                                                                    <span className={`${nav.icon} text-light`}/>
+                                                                    <span
+                                                                        className="icon-title m-2 text-light">{nav.name}</span>
+                                                                </Link>
+                                                            </span>
+                            </div>
+                            : null)}
+                            </span>
+            </div>
         </nav>
-
     );
 };
 
-export default Navbar;
+export default withRouter(Navbar);

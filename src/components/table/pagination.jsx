@@ -1,20 +1,19 @@
 import React from 'react';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import {withRouter} from "react-router-dom";
 
-const Pagination = ({itemCount, pageSize, onPageChange, currentPage}) => {
+const Pagination = ({ itemCount, pageSize, onPageChange, currentPage }) => {
     const pageCount = Math.ceil(itemCount / pageSize);
 
     if (pageCount === 1) return null;
     const pages = _.range(1, pageCount + 1);
     return (
-        <div className="table-responsive">
-            <ul className=" col-12 pagination justify-content-center pr-0">
+        <nav>
+            <ul className="pagination justify-content-center">
                 {pages.map(page => (
                     <li
                         className={
-                            page === parseInt(currentPage)
+                            page === currentPage
                                 ? 'page-item active'
                                 : 'page-item'
                         }
@@ -29,7 +28,7 @@ const Pagination = ({itemCount, pageSize, onPageChange, currentPage}) => {
                     </li>
                 ))}
             </ul>
-        </div>
+        </nav>
     );
 };
 
@@ -40,4 +39,4 @@ Pagination.propTypes = {
     currentPage: PropTypes.number.isRequired
 };
 
-export default withRouter(Pagination);
+export default Pagination;

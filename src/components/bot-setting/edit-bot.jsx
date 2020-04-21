@@ -5,7 +5,7 @@ import {toast} from 'react-toastify';
 import {editBot, fetchSchedule} from '../../services/acountService';
 
 
-class addAcount extends Component {
+class EditBot extends Component {
 
     constructor(props) {
         super(props);
@@ -21,18 +21,29 @@ class addAcount extends Component {
 
     async componentDidMount() {
         this.setState({progress: true});
-
         try {
             const result = await fetchSchedule({});
             if (result.status === 200) {
-                this.setState({
-                    interval: result.data.data.interval,
-                    numberOfNormalPost: result.data.data.numberOfNormalPost,
-                    numberOfFavouritePost: result.data.data.numberOfFavouritePost,
-                    silent: result.data.data.silent,
-                    active: result.data.data.active,
-                });
-                this.setState({progress: false});
+                console.log(result.data.data)
+                if (this.hasValue(result.data.data)) {
+                    this.setState({
+                        interval: result.data.data.interval,
+                        numberOfNormalPost: result.data.data.numberOfNormalPost,
+                        numberOfFavouritePost: result.data.data.numberOfFavouritePost,
+                        silent: result.data.data.silent,
+                        active: result.data.data.active,
+                        progress: false
+                    });
+                } else {
+                    this.setState({
+                        interval: 10,
+                        numberOfNormalPost: 1,
+                        numberOfFavouritePost: 2,
+                        silent: true,
+                        active: false,
+                        progress: false
+                    });
+                }
             }
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
@@ -40,7 +51,6 @@ class addAcount extends Component {
                 this.setState({progress: false});
             }
         }
-        this.setState({});
     }
 
     hasValue(field) {
@@ -61,25 +71,50 @@ class addAcount extends Component {
 
 
     sendBotInfo = async () => {
-        this.setState({progress: true});
         const data = {
             "interval": this.state.interval,
             "numberOfNormalPost": this.state.numberOfNormalPost,
             "numberOfFavouritePost": this.state.numberOfFavouritePost,
-            "silent": this.state.silent,
-            "active": this.state.active
+            "silent": (this.state.silent === "true" || this.state.silent === true),
+            "active": (this.state.active === "true" || this.state.active === true)
         };
-        try {
-            const result = await editBot(data);
-            if (result.status === 200) {
-                toast.success('نظیمات بات با موفقیت ثبت شد');
-                this.setState({progress: false});
+        console.log(data)
+        if (this.isValidToSend(data)) {
+            this.setState({progress: true});
+            try {
+                const result = await editBot(data);
+                if (result.status === 200) {
+                    toast.success('تنظیمات بات با موفقیت ثبت شد');
+                    this.setState({progress: false});
+                }
+            } catch (ex) {
+                if (ex.response && ex.response.status === 400) {
+                    toast.error('ارتباط با سرور برقرار نشد');
+                    this.setState({progress: false});
+                }
             }
-        } catch (ex) {
-            if (ex.response && ex.response.status === 400) {
-                toast.error('ارتباط با سرور برقرار نشد');
-                this.setState({progress: false});
-            }
+        }
+
+    };
+
+    isValidToSend = (data) => {
+        if (!this.hasValue(data.interval)) {
+            toast.error('زمان چرخه پست را وارد کنید');
+            return false
+        } else if (!this.hasValue(data.numberOfNormalPost)) {
+            toast.error('تعداد پست عادی را وارد کنید');
+            return false
+        } else if (!this.hasValue(data.numberOfFavouritePost)) {
+            toast.error('تعداد پست برگزیده را وارد کنید');
+            return false
+        } else if (!this.hasValue(data.silent)) {
+            toast.error('نوع نوتیفیکیشن را انتخاب کنید');
+            return false
+        } else if (!this.hasValue(data.active)) {
+            toast.error('وضعیت بات را انتخاب کنید');
+            return false
+        } else {
+            return true
         }
     };
 
@@ -89,8 +124,8 @@ class addAcount extends Component {
             {value: false, title: "غیرفعال"},
         ];
         const silents = [
-            {value: true, title: "با صدا"},
-            {value: false, title: "بی صدا"},
+            {value: false, title: "با صدا"},
+            {value: true, title: "بی صدا"},
         ];
         return (
             <div
@@ -179,6 +214,6 @@ class addAcount extends Component {
     };
 }
 
-export default withRouter(addAcount);
+export default withRouter(EditBot);
 
 

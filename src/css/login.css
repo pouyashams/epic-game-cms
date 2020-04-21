@@ -1,41 +1,360 @@
-html,
-body {
-    height: 100%;
+.blue-bg {
+    background: #025ab4; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover, #025ab4 1%, #1c2b5a 100%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(1%, #025ab4), color-stop(100%, #1c2b5a)); /* Chrome,Safari4+ */
+    background: -o-radial-gradient(center, ellipse cover, #025ab4 1%, #1c2b5a 100%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover, #025ab4 1%, #1c2b5a 100%); /* IE10+ */
+    background: radial-gradient(ellipse at center, #025ab4 1%, #1c2b5a 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#025ab4', endColorstr='#1c2b5a', GradientType=1); /* IE6-9 fallback on horizontal gradient */
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
 }
 
-body {
-    align-items: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #f5f5f5;
+[class*="fontawesome-"]:before {
+    font-family: 'FontAwesome', sans-serif;
 }
 
-.form-signin {
+
+input {
+    border: none;
+    -webkit-appearance: none;
+}
+
+p {
+    line-height: 1.5em;
+}
+
+
+.container {
+    left: 50%;
+    position: fixed;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+#login form {
+    width: 250px;
+}
+
+#login, .logo {
+    display: inline-block;
+    width: 40%;
+}
+
+#login {
+    border-right: 1px solid #fff;
+    padding-right: 35px;
+    padding-left: 35px;
     width: 100%;
-    max-width: 330px;
-    padding: 15px;
-    margin: auto;
 }
-.form-signin .checkbox {
-    font-weight: 400;
+
+.logo {
+    color: #fff;
+    font-size: 50px;
+    line-height: 125px;
 }
-.form-signin .form-control {
+
+#login form span.fa {
+    background-color: #fff;
+    border-radius: 3px 0px 0px 3px;
+    color: #000;
+    display: block;
+    float: left;
+    height: 50px;
+    font-size: 24px;
+    line-height: 50px;
+    text-align: center;
+    width: 50px;
+}
+
+#login form input {
+    height: 50px;
+}
+
+fieldset {
+    padding: 0;
+    border: 0;
+    margin: 0;
+
+}
+
+#login form input[type="text"], input[type="password"] {
+    background-color: #fff !important;
+    border-radius: 0px 3px 3px 0px !important;
+    color: #000 !important;
+    margin-bottom: 1em !important;
+    padding: 0 16px !important;
+    width: 200px !important;
+}
+
+.radius {
+    border-radius: 5px !important;
+}
+
+#login form input[type="submit"] {
+    border-radius: 3px!important;
+    -moz-border-radius: 3px !important;
+    -webkit-border-radius: 3px !important;
+    background-color: #000000 ;
+    color: #eee ;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    padding: 0px 10px !important;
+    height: 30px !important;
+}
+
+#login form input[type="submit"]:hover {
+    background-color: #d44179;
+}
+
+#login > p {
+    text-align: center;
+}
+
+#login > p span {
+    padding-left: 5px;
+}
+
+.middle {
+    display: flex;
+    width: 400px;
+}
+
+.ml-6 {
+    margin-left: 112px;
+}
+
+
+.translate-login {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-65%, -75%);
+}
+
+.translate-title-phone {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -100%);
+}
+
+@media (min-width: 576px) {
+    .translate-login {
+        position: absolute;
+        left: 79%;
+        top: 50%;
+        transform: translate(-65%, -75%);
+    }
+}
+
+@media (min-width: 768px) {
+    .translate-login {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-65%, -75%);
+    }
+}
+
+@media (min-width: 992px) {
+    .translate-login {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-65%, -75%);
+    }
+}
+
+@media (min-width: 1200px) {
+    .translate-login {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-65%, -75%);
+    }
+}
+
+
+.text-d:hover {
+    color: #070707 !important;
+}
+
+.p-1px {
+    padding-top: 1px !important;
+}
+
+.p-lt {
+    padding-top: 0px;
+    padding-left: 40px;
+}
+
+.anime {
+    animation: mymove;
+    animation-duration: 3s;
+}
+
+.f-r {
+    float: right !important;
+}
+
+.f-l {
+    float: right !important;
+}
+
+@keyframes mymove {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.title-login {
+    font-weight: bold;
+    font-size: 32px;
+    color: white;
+}
+
+.title-login-phone {
+    font-weight: bold;
+    font-size: 27px;
+    color: white;
+}
+
+.anime-text {
     position: relative;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
+    animation: mymoveText;
+    animation-duration: 1s;
 }
-.form-signin .form-control:focus {
-    z-index: 2;
+
+@keyframes mymoveText {
+    from {
+        top: -130px;
+    }
+    to {
+        top: 0px;
+    }
 }
-.form-signin input[type='email'] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+
+
+#login-phone form {
+    width: 250px;
 }
-.form-signin input[type='password'] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+
+#login-phone, .logo {
+    display: inline-block;
+    width: 40%;
+}
+
+#login-phone {
+    width: 100%;
+}
+
+#login-phone form span.fa {
+    background-color: #fff;
+    border-radius: 3px 0px 0px 3px;
+    color: #000;
+    display: block;
+    float: left;
+    height: 50px;
+    font-size: 24px;
+    line-height: 50px;
+    text-align: center;
+    width: 50px;
+}
+
+#login-phone form input {
+    height: 50px;
+}
+
+#login-phone form input[type="text"], input[type="password"] {
+    background-color: #fff;
+    border-radius: 0px 3px 3px 0px;
+    color: #000;
+    margin-bottom: 1em;
+    padding: 0 16px;
+    width: 200px;
+}
+
+#login-phone form input[type="submit"] {
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    background-color: #000000;
+    color: #eee;
+    font-weight: bold;
+    /* margin-bottom: 2em; */
+    text-transform: uppercase;
+    padding: 5px 10px;
+    height: 30px;
+}
+
+#login-phone form input[type="submit"]:hover {
+    background-color: #d44179;
+}
+
+#login-phone > p {
+    text-align: center;
+}
+
+#login-phone > p span {
+    padding-left: 5px;
+}
+
+
+.translate-login-phone {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -75%);
+}
+
+@media (min-width: 576px) {
+    .translate-login-phone {
+        position: absolute;
+        left: 79%;
+        top: 50%;
+        transform: translate(-65%, -75%);
+    }
+}
+
+@media (min-width: 768px) {
+    .translate-login-phone {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-65%, -75%);
+    }
+}
+
+@media (min-width: 992px) {
+    .translate-login-phone {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-65%, -75%);
+    }
+}
+
+@media (min-width: 1200px) {
+    .translate-login-phone {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-65%, -75%);
+    }
+}
+
+.timer-style {
+    width: 100%;
+    text-align: right;
+    display: inline-block;
+    margin-top: 40px;
 }

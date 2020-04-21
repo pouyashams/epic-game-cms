@@ -3,14 +3,16 @@ import {Switch, Redirect, Router, withRouter} from 'react-router-dom';
 import Navbar from './components/common/navbar';
 import Sidebar from './components/common/sidebar';
 import Footer from './components/common/footer';
-import {PrivateRoute} from "./components/privateroute";
+import {PrivateRoute} from "./components/start-setting/privateroute";
 import {ToastContainer} from "react-toastify";
-import acountManagement from "./components/acount-management/acount-management"
-import addAcount from "./components/acount-management/add-acount"
-import showAcount from "./components/acount-management/show-acount"
-import editAcount from "./components/acount-management/edit-acount"
+import postManagement from "./components/post-management/post-management"
+import addPost from "./components/post-management/add-post"
+import showPost from "./components/post-management/show-post"
+import showHistory from "./components/post-management/show-history"
+import editPost from "./components/post-management/edit-post"
 import editBot from "./components/bot-setting/edit-bot"
-import defaultPostAttributes from "./components/acount-management/default-post-attributes"
+import defaultPostAttributes from "./components/post-management/default-post-attributes"
+import profile from "./components/profile/profile"
 
 
 class App extends Component {
@@ -18,9 +20,9 @@ class App extends Component {
 
     componentDidMount() {
         sessionStorage.setItem('currentPage', 1);
-        sessionStorage.setItem('contentSearch',"");
-        sessionStorage.setItem('idSearch',"");
-        sessionStorage.setItem('activeSearch',"true");
+        sessionStorage.setItem('contentSearch', "");
+        sessionStorage.setItem('idSearch', "");
+        sessionStorage.setItem('activeSearch', "true");
     }
 
     isPhone = () => {
@@ -45,12 +47,14 @@ class App extends Component {
                         <Router history={this.props.history}>
                             <Switch>
                                 <PrivateRoute path="/default-post-attributes" exact={false} component={defaultPostAttributes}/>
-                                <PrivateRoute path="/acount-managemnet" exact={false} component={acountManagement}/>
-                                <PrivateRoute path="/add-acount" exact={false} component={addAcount}/>
-                                <PrivateRoute path="/show-acount" exact={false} component={showAcount}/>
-                                <PrivateRoute path="/edit-acount" exact={false} component={editAcount}/>
+                                <PrivateRoute path="/post-management" exact={false} component={postManagement}/>
+                                <PrivateRoute path="/profile" exact={false} component={profile}/>
+                                <PrivateRoute path="/add-post" exact={false} component={addPost}/>
+                                <PrivateRoute path="/show-post" exact={false} component={showPost}/>
+                                <PrivateRoute path="/show-history" exact={false} component={showHistory}/>
+                                <PrivateRoute path="/edit-post" exact={false} component={editPost}/>
                                 <PrivateRoute path="/edit-bot" exact={false} component={editBot}/>
-                                <PrivateRoute path="/" exact={false} component={acountManagement}/>
+                                <PrivateRoute path="/" exact={false} component={postManagement}/>
                                 <Redirect to="/not-found"/>
                             </Switch>
                         </Router>

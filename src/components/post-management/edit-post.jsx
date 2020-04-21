@@ -6,7 +6,7 @@ import {editAcount} from '../../services/acountService';
 import SunEditor from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 
-class addAcount extends Component {
+class EditPost extends Component {
 
     constructor(props) {
         super(props);
@@ -36,7 +36,7 @@ class addAcount extends Component {
             )
         });
         this.setState({
-            contentText: this.getValue(acountInfo.content).toString(),
+            contentText: this.getValue(acountInfo.originalContent),
             inputList: attributes,
             favoriteType: this.getValue(acountInfo.favourite),
             price: this.getValue(acountInfo.amount),
@@ -46,7 +46,7 @@ class addAcount extends Component {
 
     handleChange = (content) => {
         this.setState({
-            content: content.toString().split("<p>").join("").split("</p>").join("\n")
+            content: content
         })
     };
 
@@ -83,6 +83,7 @@ class addAcount extends Component {
     };
 
     makeData = () => {
+        console.log(1)
         let data = "";
         let attributes = [];
         this.state.inputList.forEach((attribute) => {
@@ -91,16 +92,73 @@ class addAcount extends Component {
                 value: attribute.value
             });
         });
+        const content = this.state.content;
+        console.log(this.makeContent(content),11111111);
         data = {
             identifier: this.state.id,
-            content: this.state.content,
+            originalContent: content,
+            content: this.makeContent(content),
             amount: parseInt(this.state.price),
             favourite: this.state.favoriteType,
             attributes: attributes
         };
-
         return data;
     };
+
+    makeContent = (content) => {
+
+        return content.toString()
+            .split("<div></div>").join("")
+            .replace(/<div><\s*a[^>]*>/gi, "")
+            .split("</a></div>").join("\n")
+            .replace(/<\s*a[^>]*>/gi, "")
+            .replace(/<\s*span[^>]*>/gi, "")
+            .split("</a>").join("")
+            .split("</span>").join("")
+
+            .split("<h1>").join("")
+            .split("<h2>").join("<p>")
+            .split("<h3>").join("<p>")
+            .split("<h4>").join("<p>")
+            .split("<h5>").join("<p>")
+            .split("<h6>").join("<p>")
+            .split("<h7>").join("<p>")
+            .split("</h1>").join("\n")
+            .split("</h2>").join("</p>")
+            .split("</h3>").join("</p>")
+            .split("</h4>").join("</p>")
+            .split("</h5>").join("</p>")
+            .split("</h6>").join("</p>")
+            .split("</h7>").join("</p>")
+
+            .split("<div>").join("<p>")
+            .split("</div>").join("</p>")
+
+            .split("<p><br></p>").join("\n")
+
+            .split("<em><br></em>").join("")
+            .split("<ins><br></ins>").join("")
+            .split("<strong><br></strong>").join("")
+            .split("<del><br></del>").join("")
+
+            .split("<em></em>").join("")
+            .split("<ins></ins>").join("")
+            .split("<strong></strong>").join("")
+            .split("<del></del>").join("")
+
+            .split("<div></div>").join("")
+
+            .split("<p></p>").join("")
+
+            .split("<p>").join("")
+            .split("</p>").join("\n")
+
+            .split("<br>").join("")
+            .split("&nbsp;").join(" ");
+    };
+
+
+
 
     sendAcountInfo = async () => {
         this.setState({progress: true});
@@ -108,7 +166,7 @@ class addAcount extends Component {
         try {
             const result = await editAcount(data);
             if (result.status === 200) {
-                toast.success('تغییرات با موفقیت ثبت شد');
+                toast.success('تغییرات با موفقیت ثبDSFLIOGYUAYSIHDOPK[BLPFDJOHSVGHCت شد');
                 window.history.back();
                 this.setState({progress: false});
             }
@@ -218,14 +276,14 @@ class addAcount extends Component {
                                             </div>
                                         </div>
                                     ))}
-                                <div className="form-group col-12 float-right">
+                                <div className="form-group col-12 float-right pt-5">
                                     <label>متن پست :</label>
                                 <SunEditor
                                     onChange={this.handleChange}
                                     setContents={this.state.contentText}
-                                    setOptions={{
-                                        buttonList: [["undo", "redo"], ["bold", "underline", "italic", "strike"]]
-                                    }}
+                                    // setOptions={{
+                                    //     buttonList: [["undo", "redo"], ["bold", "underline", "italic", "strike"]]
+                                    // }}
                                     setDefaultStyle="direction: ltr !important; min-height: 200px;"
                                 />
                                 </div>
@@ -263,6 +321,6 @@ class addAcount extends Component {
     };
 }
 
-export default withRouter(addAcount);
+export default withRouter(EditPost);
 
 

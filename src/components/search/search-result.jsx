@@ -26,11 +26,16 @@ class SearchResult extends Component {
         const {currentPage} = this.props;
         const {headerInfo, searchResultList, pageSize} = this.props;
         // const searchResultForThisPage = this.getPageData();
-        let counter = (currentPage - 1) * pageSize;
+        let num = currentPage;
+        if (num === null || num === 0) {
+            num = 1
+        }
+        let counter = (num - 1) * pageSize;
         let loopCounter = 1;
         return (
-            <div className="col-12 justify-content-center align-items-center text-center table-responsive pt-3 sc-y-h">
-                <table className="table table-bordered table-striped">
+            <div className="col-12 justify-content-center align-items-center text-center  pt-3 sc-y-h scroll-x-off"
+            >
+                <table className="table table-responsive table-bordered table-striped ">
                     <thead className="bg-dark">
                     <tr>
                         <th className="hidden-xs table-counter"/>
@@ -132,12 +137,12 @@ class SearchResult extends Component {
                 </table>
 
                 {searchResultList.length !== 0 ? (
-                        <Pagination
-                            itemCount={this.props.count}
-                            pageSize={pageSize}
-                            currentPage={currentPage}
-                            onPageChange={this.handlePageChange}
-                        />
+                    <Pagination
+                        itemCount={this.props.count}
+                        pageSize={pageSize}
+                        currentPage={currentPage}
+                        onPageChange={this.handlePageChange}
+                    />
                 ) : null}
             </div>
         );

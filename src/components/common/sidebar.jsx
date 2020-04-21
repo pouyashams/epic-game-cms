@@ -4,7 +4,6 @@ import getNavLinks from './../../services/NavLinks';
 import "bootstrap-v4-rtl/dist/css/bootstrap.min.css"
 
 class Sidebar extends Component {
-
     render() {
         let count = 1;
         const navLinks = getNavLinks();
@@ -22,14 +21,14 @@ class Sidebar extends Component {
                         <div id="accordion">
                             <span>
                                  <li className="nav-item sidebar-dropdown" data-toggle="collapse" href="#collapseOne"
-                                      key={count++}>
+                                     key={count++}>
                                  <span className="nav-link pointer">
                                      <span className="fa fa-unsorted text-warning"/>
                                     <span className="icon-title m-2 font-weight-bold text-warning ">مدیریت تلگرام</span>
                                 </span>
                             </li>
                                 {navLinks.map(nav =>
-                                    nav.type==="telegram-management" ?
+                                    nav.type === "telegram-management" ?
                                         <div id="collapseOne" className="collapse show" data-parent="#accordion">
                                             <li className="nav-item sidebar-dropdown" key={count++}>
                                                 <Link className="nav-link" to={nav.path}>
@@ -38,29 +37,29 @@ class Sidebar extends Component {
                                                 </Link>
                                             </li>
                                         </div>
-                                    : null)}
+                                        : null)}
                             </span>
 
-                            <span>
-                                 <li className="nav-item sidebar-dropdown" data-toggle="collapse" href="#collapseTwo"
-                                      key={count++}>
-                                 <span className="nav-link pointer">
-                                     <span className="fa fa-unsorted text-warning"/>
-                                    <span className="icon-title m-2 font-weight-bold text-warning ">مدیریت اینستاگرام</span>
-                                </span>
-                            </li>
-                                {navLinks.map(nav =>
-                                    nav.type==="instagram-management" ?
-                                        <div id="collapseTwo" className="collapse" data-parent="#accordion">
-                                            <li className="nav-item sidebar-dropdown" key={count++}>
-                                                <Link className="nav-link" to={nav.path}>
-                                                    <span className={`${nav.icon} text-light`}/>
-                                                    <span className="icon-title m-2 text-light">{nav.name}</span>
-                                                </Link>
-                                            </li>
-                                        </div>
-                                    : null)}
-                            </span>
+                            {/*<span>*/}
+                            {/*     <li className="nav-item sidebar-dropdown" data-toggle="collapse" href="#collapseTwo"*/}
+                            {/*          key={count++}>*/}
+                            {/*     <span className="nav-link pointer">*/}
+                            {/*         <span className="fa fa-unsorted text-warning"/>*/}
+                            {/*        <span className="icon-title m-2 font-weight-bold text-warning ">مدیریت اینستاگرام</span>*/}
+                            {/*    </span>*/}
+                            {/*</li>*/}
+                            {/*    {navLinks.map(nav =>*/}
+                            {/*        nav.type==="instagram-management" ?*/}
+                            {/*            <div id="collapseTwo" className="collapse" data-parent="#accordion">*/}
+                            {/*                <li className="nav-item sidebar-dropdown" key={count++}>*/}
+                            {/*                    <Link className="nav-link" to={nav.path}>*/}
+                            {/*                        <span className={`${nav.icon} text-light`}/>*/}
+                            {/*                        <span className="icon-title m-2 text-light">{nav.name}</span>*/}
+                            {/*                    </Link>*/}
+                            {/*                </li>*/}
+                            {/*            </div>*/}
+                            {/*        : null)}*/}
+                            {/*</span>*/}
 
                         </div>
                     </ul>

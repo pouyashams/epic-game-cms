@@ -10,10 +10,7 @@ class DefaultPostAttributes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            inputList: [{
-                id: 1,
-                title: ""
-            }],
+            inputList: [],
         };
     };
 

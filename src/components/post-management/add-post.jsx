@@ -7,7 +7,7 @@ import SunEditor from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 
 
-class addAcount extends Component {
+class AddPost extends Component {
 
     constructor(props) {
         super(props);
@@ -19,11 +19,7 @@ class addAcount extends Component {
             region: "Region 1",
             dataType: "auto",
             favoriteType: true,
-            inputList: [{
-                id: 1,
-                title: "",
-                value: ""
-            }],
+            inputList: [],
         };
     };
 
@@ -92,10 +88,11 @@ class addAcount extends Component {
                 value: attribute.value
             });
         });
-        if (sessionStorage.getItem('username') === "epicgame") {
-            const content =this.state.content + "\n\n".concat("🌐" + this.state.region + "\n".concat("💵" + this.state.price + "\xa0\xa0" + this.state.dolar + "$".concat("\xa0".concat("WMZ/BTC"))));
+        if (sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi") {
+            const content = this.state.content + "<p><br></p>".concat("🌐" + this.state.region + "\n".concat("💵" + this.state.price + "\xa0\xa0" + this.state.dolar + "$".concat("\xa0".concat("WMZ/BTC").concat("\n".concat("👨‍💻@EGseller")))));
             data = {
-                content: content,
+                originalContent: this.delDiv(content),
+                content: this.makeContent(content),
                 favourite: this.state.favoriteType,
                 amount: parseInt(this.state.price.split(',').join('')),
                 attributes: attributes
@@ -103,7 +100,8 @@ class addAcount extends Component {
         } else {
             const content = this.state.content;
             data = {
-                content: content,
+                originalContent: this.delDiv(content),
+                content: this.makeContent(content),
                 favourite: this.state.favoriteType,
                 amount: parseInt(this.state.price.split(',').join('')),
                 attributes: attributes
@@ -112,7 +110,48 @@ class addAcount extends Component {
         return data;
     };
 
-    sendAcountInfo = async () => {
+    makeContent = (content) => {
+
+        return content.toString()
+            // .replace(/<\s*a[^>]*>/gi, "")
+            // .split("</a>").join("")
+            // .split("<div>").join("<p>")
+            // .split("</div>").join("</p>")
+            .split("<p><br></p>").join("\n")
+            // .split("<h1>").join("<p>")
+            // .split("<h2>").join("<p>")
+            // .split("<h3>").join("<p>")
+            // .split("<h4>").join("<p>")
+            // .split("<h5>").join("<p>")
+            // .split("<h6>").join("<p>")
+            // .split("<h7>").join("<p>")
+            // .split("<h8>").join("<p>")
+            // .split("</h1>").join("</p>")
+            // .split("</h2>").join("</p>")
+            // .split("</h3>").join("</p>")
+            // .split("</h4>").join("</p>")
+            // .split("</h5>").join("</p>")
+            // .split("</h6>").join("</p>")
+            // .split("</h7>").join("</p>")
+            // .split("</h8>").join("</p>")
+            // .split("<div><br></div>").join("")
+            .split("<em><br></em>").join("")
+            .split("<ins><br></ins>").join("")
+            .split("<strong><br></strong>").join("")
+            .split("<del><br></del>").join("")
+            .split("<em></em>").join("")
+            // .split("<div></div>").join("")
+            // .split("<p></p>").join("")
+            .split("<ins></ins>").join("")
+            .split("<strong></strong>").join("")
+            .split("<del></del>").join("")
+            .split("<p>").join("")
+            .split("</p>").join("\n")
+            .split("<br>").join("")
+            .split("&nbsp;").join(" ");
+    };
+
+    sendAccountInfo = async () => {
         this.setState({progress: true});
         const data = this.makeData();
         try {
@@ -133,6 +172,10 @@ class addAcount extends Component {
     cancel = () => {
         window.history.back();
     };
+    delDiv = (content) => {
+        return content.toString()
+            .split("<div><br></div>").join("")
+    };
 
     addTitle = () => {
         const inputList = [];
@@ -149,11 +192,10 @@ class addAcount extends Component {
             value: ""
         });
         this.setState({inputList})
-
     };
     handleChange = (content) => {
         this.setState({
-            content: content.toString().split("<p>").join("").split("</p>").join("\n")
+            content: content
         })
     };
 
@@ -198,7 +240,7 @@ class addAcount extends Component {
                                 </select>
                             </div>
                             {
-                                sessionStorage.getItem('username') === "epicgame" ?
+                                sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi" ?
                                     <div className="col-12">
                                         <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
                                             <label>ریجن :</label>
@@ -277,24 +319,24 @@ class addAcount extends Component {
                                             </div>
                                         </div>
                                     ))}
-                                <div className="form-group col-12 float-right">
+                                <div className="form-group col-12 float-right pt-5">
                                     <label>متن پست :</label>
                                     <SunEditor
                                         onChange={this.handleChange}
+                                        setContents={this.state.contentText}
                                         setOptions={{
                                             buttonList: [["undo", "redo"], ["bold", "underline", "italic", "strike"]]
                                         }}
                                         setDefaultStyle="direction: ltr !important; min-height: 200px;"
                                     />
                                 </div>
-
                             </div>
                         </div>
 
                         <div className="col-12 p-3 text-center">
                             <input type="button" className="btn btn-success mr-3" value="انجام عملیات"
                                    onClick={() => {
-                                       this.sendAcountInfo()
+                                       this.sendAccountInfo()
                                    }}/>
                             <input type="button" className="btn btn-warning mr-3" value="اضافه کردن"
                                    onClick={() => {
@@ -322,6 +364,6 @@ class addAcount extends Component {
     };
 }
 
-export default withRouter(addAcount);
+export default withRouter(AddPost);
 
 

@@ -3,9 +3,10 @@ import "../../css/textArea.css"
 import {withRouter} from 'react-router-dom';
 import SunEditor from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
+import {toast} from 'react-toastify';
 
 
-class addAcount extends Component {
+class ShowPost extends Component {
 
     constructor(props) {
         super(props);
@@ -22,6 +23,7 @@ class addAcount extends Component {
             inputList: [],
             attributes: [],
             favourite: "",
+            id: ""
         };
     };
 
@@ -46,8 +48,8 @@ class addAcount extends Component {
         });
 
         this.setState({
-            content: this.getValue(acountInfo.content),
-            attributes: attributes,
+            attributes,
+            content: this.getValue(acountInfo.originalContent),
             favoriteType: favoriteType,
             price: this.getValue(acountInfo.amount),
             id: this.getValue(acountInfo.identifier),
@@ -70,6 +72,16 @@ class addAcount extends Component {
         window.history.back();
     };
 
+
+    copyText = (text) => {
+        let copyText = document.getElementById(text);
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+        toast.success('کپی شد');
+
+    };
+
     render() {
         return (
             <div
@@ -83,11 +95,11 @@ class addAcount extends Component {
                         className="rtl m-0 float-right row w-100 justify-content-start body-color box-shadow my-4 border radius-line">
                         <div className="form-group col-12 justify-content-center">
                             <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
-                                    <label>نوع پست :</label>
-                                    <input className="form-control text-center w-100 dir-text-left"
-                                           type={"input"}
-                                           value={this.state.favoriteType}
-                                    />
+                                <label>نوع پست :</label>
+                                <input className="form-control text-center w-100 dir-text-left"
+                                       type={"input"}
+                                       value={this.state.favoriteType}
+                                />
                             </div>
                             <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
                                 <label>قیمت :</label>
@@ -96,9 +108,46 @@ class addAcount extends Component {
                                        value={this.state.price}
                                 />
                             </div>
+                            <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
+                                <label>کد پست :</label>
+                                <input className="form-control text-center w-100 dir-text-left"
+                                       type={"input"}
+                                       value={this.state.id}
+                                />
+                            </div>
+                            {
+                                sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi" ?
+                                    <div className="form-group  col-sm-6 col-md-6 float-right pt-3"
+                                         style={{
+                                             marginTop: "6px"
+                                         }}>
+                                        <input className="dis-hid" type="text"
+                                               value="https://account.sonyentertainmentnetwork.com/liquid/cam/devices/device-list.action?category=psn&displayNavigation=false"
+                                               id="login"/>
+                                        <input type="button" className="btn btn-success mr-4 " value="login"
+                                               onClick={() => {
+                                                   this.copyText("login")
+                                               }}/>
+                                        <input className="dis-hid" type="text" value="http://my.playstation.com/"
+                                               id="playstation"/>
+                                        <input type="button" className="btn btn-primary mr-4" value="playstation"
+                                               onClick={() => {
+                                                   this.copyText("playstation")
+                                               }}/>
+                                        <input className="dis-hid" type="text"
+                                               value="https://id.sonyentertainmentnetwork.com/id/tv/signin/?ui=ds&hidePageElements=noAccountSection%2CtroubleSigningInLink&service_logo=ps&smcid=tv%3Apsvue#/signin"
+                                               id="email"/>
+                                        <input type="button" className="btn btn-danger mr-4" value="email"
+                                               onClick={() => {
+                                                   this.copyText("email")
+                                               }}/>
+                                    </div>
+                                    : null
+                            }
                         </div>
+
                         <div className="form-group col-12 ">
-                            <div className="rtl m-0 float-right row w-100 justify-content-start my-1 pb-3">
+                            <div className="rtl m-0 float-right row w-100 justify-content-start my-1 pb-3 ml-2">
                                 {this.state.attributes.map(
                                     (attribute) => (
                                         <div className="form-group col-12 col-sm-6 col-md-3 float-right ">
@@ -109,6 +158,27 @@ class addAcount extends Component {
                                             />
                                         </div>
                                     ))}
+
+                                {sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi" ?
+                                    <div className="form-group col-12 col-sm-6 col-md-3 float-right"
+                                         style={{marginTop: "32px"}}>
+                                        {console.log(this.state.attributes)}
+                                        {this.state.attributes.length !== 0 ?
+                                            <div>
+                                                <input className="dis-hid" type="text"
+                                                       value={this.state.attributes[0].value + ":" + this.state.attributes[1].value}
+                                                       id="copy"/>
+                                                <input type="button" className="btn btn-warning" style={{height: "95%"}}
+                                                       value="copy"
+                                                       onClick={() => {
+                                                           this.copyText("copy")
+                                                       }}/>
+                                            </div>
+                                            : null}
+
+                                    </div>
+                                    : null}
+
                             </div>
 
                         </div>
@@ -150,6 +220,6 @@ class addAcount extends Component {
     };
 }
 
-export default withRouter(addAcount);
+export default withRouter(ShowPost);
 
 

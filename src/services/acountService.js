@@ -1,68 +1,126 @@
 import axios from "axios/index";
 
-const headers = {
-    headers: {
-        "x-auth": sessionStorage.getItem('token')
+const getWithExpiry = (key) => {
+    const itemStr = localStorage.getItem(key);
+    if (!itemStr) {
+        return false
     }
+    const item = JSON.parse(itemStr);
+    const now = new Date();
+    if (now.getTime() > item.expiry) {
+        localStorage.removeItem(key);
+        return false
+    }
+    return item.value
 };
 
 export function searchAcount(data) {
     const header = {
         headers: {
-            "x-auth": sessionStorage.getItem('token')
+            "x-auth": getWithExpiry("token")
         }
     };
     return axios.post('https://epicgameservices.ir/api/search-post', data, header);
 }
 
 export function sendAcount(data) {
-    return axios.post('https://epicgameservices.ir/api/register-post', data, headers);
+    const header = {
+        headers: {
+            "x-auth": getWithExpiry("token")
+        }
+    };
+    return axios.post('https://epicgameservices.ir/api/register-post', data, header);
 }
 
 export function editAcount(data) {
-    return axios.post('https://epicgameservices.ir/api/update-post', data, headers);
+    const header = {
+        headers: {
+            "x-auth": getWithExpiry("token")
+        }
+    };
+    return axios.post('https://epicgameservices.ir/api/update-post', data, header);
+}
+
+export function logOutAccount() {
+    const header = {
+        headers: {
+            "x-auth": getWithExpiry("token")
+        }
+    };
+    return axios.post('https://epicgameservices.ir/api/logout',{}, header);
 }
 
 export function onDeActive(data) {
-    return axios.post('https://epicgameservices.ir/api/sold-post', data, headers);
+    const header = {
+        headers: {
+            "x-auth": getWithExpiry("token")
+        }
+    };
+    return axios.post('https://epicgameservices.ir/api/sold-post', data, header);
 }
 
 export function fetchSchedule(data) {
     const header = {
         headers: {
-            "x-auth": sessionStorage.getItem('token')
+            "x-auth": getWithExpiry("token")
         }
     };
     return axios.post('https://epicgameservices.ir/api/fetch-auto-post-scheduled-task', data, header);
 }
 
-export function updateSchedule(data) {
-    return axios.post('https://epicgameservices.ir/update-schedule-task', data, headers);
-}
-
 export function editBot(data) {
-    return axios.post('https://epicgameservices.ir/api/save-or-update-auto-post-scheduled-task', data, headers);
+    const header = {
+        headers: {
+            "x-auth": getWithExpiry("token")
+        }
+    };
+    return axios.post('https://epicgameservices.ir/api/save-or-update-auto-post-scheduled-task', data, header);
 }
 
 export function onDelete(data) {
-    return axios.post('https://epicgameservices.ir/api/delete-post', data, headers);
+    const header = {
+        headers: {
+            "x-auth": getWithExpiry("token")
+        }
+    };
+    return axios.post('https://epicgameservices.ir/api/delete-post', data, header);
 }
 
 export function onActive(data) {
-    return axios.post('https://epicgameservices.ir/api/send-post', data, headers);
+    const header = {
+        headers: {
+            "x-auth": getWithExpiry("token")
+        }
+    };
+    return axios.post('https://epicgameservices.ir/api/send-post', data, header);
 }
 
 export function onRemove(data) {
-    return axios.post('https://epicgameservices.ir/api/remove-post', data, headers);
+    const header = {
+        headers: {
+            "x-auth": getWithExpiry("token")
+        }
+    };
+    return axios.post('https://epicgameservices.ir/api/remove-post', data, header);
 }
-
 
 export function saveOrUpdateDefaultPostAttributes(data) {
-    return axios.post('https://epicgameservices.ir/api/save-or-update-default-post-attributes', data, headers);
+    const header = {
+        headers: {
+            "x-auth": getWithExpiry("token")
+        }
+    };
+    return axios.post('https://epicgameservices.ir/api/save-or-update-default-post-attributes', data, header);
 }
-
 
 export function fetchUserDefaultPostAttributes() {
-    return axios.post('https://epicgameservices.ir/api/fetch-user-default-post-attributes', {}, headers);
+    const header = {
+        headers: {
+            "x-auth": getWithExpiry("token")
+        }
+    };
+    return axios.post('https://epicgameservices.ir/api/fetch-user-default-post-attributes', {}, header);
 }
+
+
 

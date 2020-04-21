@@ -12,7 +12,7 @@ import {
 } from "../../services/acountService"
 
 
-class acountManagement extends Component {
+class PostManagement extends Component {
 
     constructor(props) {
         super(props);
@@ -28,6 +28,7 @@ class acountManagement extends Component {
         this.onAdd = this.onAdd.bind(this);
         this.onShow = this.onShow.bind(this);
         this.search = this.search.bind(this);
+        this.onShowHistory = this.onShowHistory.bind(this);
     }
 
     async componentDidMount() {
@@ -36,26 +37,33 @@ class acountManagement extends Component {
 
     onAdd() {
         this.props.history.push({
-            pathname: '/add-acount',
+            pathname: '/add-post',
         });
     }
 
     onShow(searchResult) {
         this.props.history.push({
-            pathname: '/show-acount',
+            pathname: '/show-post',
             acountInfo: searchResult
         });
     }
 
     onEdit(searchResult) {
         this.props.history.push({
-            pathname: '/edit-acount',
+            pathname: '/edit-post',
             acountInfo: searchResult
         });
     }
 
+    onShowHistory(searchResult) {
+        this.props.history.push({
+            pathname: '/show-history',
+            historyInfo: searchResult
+        });
+    }
+
     onDeActiveInfo = async (searchResult) => {
-        if (searchResult.status!=="DELETED_POST_STATUS"){
+        if (searchResult.status !== "DELETED_POST_STATUS") {
             this.setState({progress: true});
             try {
                 const result = await onDeActive({identifier: parseInt(searchResult.identifier)});
@@ -70,7 +78,7 @@ class acountManagement extends Component {
                 }
             }
             this.search();
-        }else{
+        } else {
             toast.error('پست حذف شده قابل فروش نیست');
         }
 
@@ -170,23 +178,35 @@ class acountManagement extends Component {
         }
         this.search();
     };
+    hasValue(field) {
+        return field !== null && field !== undefined && field !== "";
+    };
 
     searchData = (parameters) => {
         let data = "";
         if (sessionStorage.getItem('parameters') === null && parameters === undefined) {
+            let pageNumber = 1;
+            if (this.hasValue(this.state.currentPage)) {
+                pageNumber = this.state.currentPage
+            }
             data = {
                 "pagination": {
                     "maxResult": this.state.pageSize,
-                    "pageNumber": this.state.currentPage
+                    "pageNumber": pageNumber
                 },
                 "shouldReturnCount": true
             };
-        } else if (sessionStorage.getItem('parameters') === null && parameters !== undefined) {
+        }
+        else if (sessionStorage.getItem('parameters') === null && parameters !== undefined) {
             let status = null;
+            let pageNumber = 1;
             if (parameters.name !== "" && parameters.name !== undefined) {
                 status = {
                     name: parameters.name
                 }
+            }
+            if (this.hasValue(this.state.currentPage)) {
+                pageNumber = this.state.currentPage
             }
             data = {
                 "identifier": parameters.identifier,
@@ -194,19 +214,24 @@ class acountManagement extends Component {
                 "favourite": parameters.favourite,
                 "pagination": {
                     "maxResult": this.state.pageSize,
-                    "pageNumber": this.state.currentPage
+                    "pageNumber": pageNumber
                 },
                 "status": status,
                 "shouldReturnCount": true
             };
             sessionStorage.parameters = JSON.stringify(parameters);
-        } else if (sessionStorage.getItem('parameters') !== null && parameters === undefined) {
+        }
+        else if (sessionStorage.getItem('parameters') !== null && parameters === undefined) {
             let parameter = JSON.parse(sessionStorage.parameters);
             let status = null;
+            let pageNumber = 1;
             if (parameter.name !== "" && parameter.name !== undefined) {
                 status = {
                     name: parameter.name
                 }
+            }
+            if (this.hasValue(this.state.currentPage)) {
+                pageNumber = this.state.currentPage
             }
             data = {
                 "identifier": parameter.identifier,
@@ -214,17 +239,22 @@ class acountManagement extends Component {
                 "favourite": parameter.favourite,
                 "pagination": {
                     "maxResult": this.state.pageSize,
-                    "pageNumber": this.state.currentPage
+                    "pageNumber": pageNumber
                 },
                 "status": status,
                 "shouldReturnCount": true
             };
-        } else if (sessionStorage.getItem('parameters') !== null && parameters !== undefined) {
+        }
+        else if (sessionStorage.getItem('parameters') !== null && parameters !== undefined) {
             let status = null;
+            let pageNumber = 1;
             if (parameters.name !== "" && parameters.name !== undefined) {
                 status = {
                     name: parameters.name
                 }
+            }
+            if (this.hasValue(this.state.currentPage)) {
+                pageNumber = this.state.currentPage
             }
             data = {
                 "identifier": parameters.identifier,
@@ -232,7 +262,7 @@ class acountManagement extends Component {
                 "favourite": parameters.favourite,
                 "pagination": {
                     "maxResult": this.state.pageSize,
-                    "pageNumber": this.state.currentPage
+                    "pageNumber": pageNumber
                 },
                 "status": status,
                 "shouldReturnCount": true
@@ -286,7 +316,9 @@ class acountManagement extends Component {
                     const dataForTable = this.makeDataForTable(dataInfo);
                     searchResultList.push(
                         {
+                            originalContent: dataInfo.originalContent,
                             identifier: dataInfo.identifier,
+                            publishHistory: dataInfo.publishHistory,
                             content: dataInfo.content,
                             attributes: dataInfo.attributes,
                             favourite: dataInfo.favourite,
@@ -434,6 +466,13 @@ class acountManagement extends Component {
                     style: 'btn btn-danger btn-xs',
                     onclick: this.onDeActiveInfo
                 },
+                {
+                    name: 'history',
+                    title: 'تاریخچه',
+                    icon: 'fa fa-book text-dark',
+                    style: 'btn btn-primary btn-xs',
+                    onclick: this.onShowHistory
+                },
             ],
             headerTitleInfos: [
                 {name: "identifier", title: "کد پست"},
@@ -484,4 +523,4 @@ class acountManagement extends Component {
     }
 }
 
-export default withRouter(acountManagement);
+export default withRouter(PostManagement);

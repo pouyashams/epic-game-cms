@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import DatePicker from "../SimpleDatePicker";
+import DatePicker from "../date-picker/SimpleDatePicker";
 
 class SearchCriteria extends Component {
 

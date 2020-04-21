@@ -1,7 +1,7 @@
 const navLinks = [
 
     {
-        path: "/acount-managemnet",
+        path: "/post-management",
         name: "مدیریت کانال",
         icon: "fa fa-telegram",
         type: "telegram-management",
@@ -18,17 +18,17 @@ const navLinks = [
         icon: "fa fa-cog",
         type: "telegram-management",
     },
-    {
-        path: "/not-found",
-        name: "به زودی",
-        icon: "fa fa-question",
-        type: "instagram-management",
-    },{
-        path: "/not-found",
-        name: "به زودی",
-        icon: "fa fa-question",
-        type: "instagram-management",
-    },
+    // {
+    //     path: "/not-found",
+    //     name: "به زودی",
+    //     icon: "fa fa-question",
+    //     type: "instagram-management",
+    // },{
+    //     path: "/not-found",
+    //     name: "به زودی",
+    //     icon: "fa fa-question",
+    //     type: "instagram-management",
+    // },
 
 
 ];

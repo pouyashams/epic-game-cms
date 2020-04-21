@@ -46,6 +46,22 @@
     border-radius: 25px;
 }
 
+.p {
+    border-radius: 100px !important;
+}
+
+.radius-circle {
+    border-radius: 14px;
+}
+
+.dropdown-menu-m {
+    margin-right: -126px !important;
+}
+
+.dropdown-menu-hover:hover {
+    background-color: rgba(7, 7, 7, 0.35) !important;
+}
+
 .radius-line {
     border-radius: 5px;
 }
@@ -157,6 +173,15 @@
 
 .dir-text-left {
     direction: ltr !important;
+}
+
+.dir-text-right {
+    direction: rtl !important;
+}
+
+.px-user {
+    padding-right: 10px;
+    padding-left: 10px;
 }
 
 .m-t {
@@ -298,6 +323,10 @@ svg.custom path.link {
     background-color: #fdfeff !important;
 }
 
+.bg-color-dark {
+    background-color: rgb(37, 37, 37) !important;
+}
+
 .btn-m {
     margin-right: 60px;
     margin-top: 30px;
@@ -315,6 +344,14 @@ svg.custom path.link {
     width: 38px;
 }
 
+.w-10 {
+    width: 10%;
+}
+
+.ml-7 {
+    margin-right: 66px;
+}
+
 .pl-10 {
     padding-left: 10px;
 }
@@ -330,7 +367,7 @@ table, th, td {
 
 .sc-y-h {
     overflow-y: hidden;
-    min-height: 170px!important;
+    min-height: 170px !important;
 }
 
 .header-color {
@@ -354,4 +391,51 @@ table, th, td {
 .dis-hid {
     opacity: 0;
     width: 1%;
+}
+
+.timer {
+    width: 30%;
+    text-align: center;
+    display: inline-block;
+    background: #000000;
+    color: white;
+    height: 29px
+}
+
+
+.progress-anime {
+    position: relative;
+    animation-name: mymoveProgress;
+    animation-duration: 1500ms;
+    animation-delay: -2s;
+    animation-iteration-count: infinite;
+    left: -100%;
+}
+
+@keyframes mymoveProgress {
+    from {
+        left: -100%;
+    }
+    to {
+        left: 110%;
+    }
+}
+
+.notification-anime {
+    position: relative;
+    animation-name: mymoveNotification;
+    animation-duration: 1s;
+}
+
+@keyframes mymoveNotification {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.scroll-x-off {
+    overflow-x: hidden !important;
 }

@@ -12,15 +12,15 @@ import './css/404.css';
 import 'react-toastify/dist/ReactToastify.css';
 import App from './App';
 import 'react-advance-jalaali-datepicker/'
-import Login from './components/login';
-import NotFound from './components/notFound';
+import Login from './components/start-setting/login';
+import NotFound from './components/not-found/notFound';
 import {createBrowserHistory} from "history";
 
 const history = createBrowserHistory();
 
 ReactDOM.render(
     <div>
-        <div className="loading" id="loading" style={{display:"none"}}></div>
+        <div className="loading" id="loading" style={{display:"none"}}/>
         <Router history={history}>
             <Switch>
                 <Route path="/login" component={Login}/>

@@ -28,16 +28,16 @@ class ShowPost extends Component {
     };
 
     componentDidMount() {
-        const {acountInfo} = this.props.location;
-        if (!acountInfo) return window.history.back();
+        const {accountInfo} = this.props.location;
+        if (!accountInfo) return window.history.back();
         let attributes = [];
-        let favoriteType = "";
-        if (this.getValue(acountInfo.favourite)) {
+        let favoriteType;
+        if (this.getValue(accountInfo.favourite)) {
             favoriteType = "برگزیده"
         } else {
             favoriteType = "عادی"
         }
-        this.getValue(acountInfo.attributes).forEach((attribute) => {
+        this.getValue(accountInfo.attributes).forEach((attribute) => {
             attributes.push(
                 {
                     "id": attributes.length + 1,
@@ -49,10 +49,10 @@ class ShowPost extends Component {
 
         this.setState({
             attributes,
-            content: this.getValue(acountInfo.originalContent),
+            content: this.getValue(accountInfo.originalContent),
             favoriteType: favoriteType,
-            price: this.getValue(acountInfo.amount),
-            id: this.getValue(acountInfo.identifier),
+            price: this.getValue(accountInfo.amount),
+            id: this.getValue(accountInfo.identifier),
         });
     }
 
@@ -94,21 +94,21 @@ class ShowPost extends Component {
                     <div
                         className="rtl m-0 float-right row w-100 justify-content-start body-color box-shadow my-4 border radius-line">
                         <div className="form-group col-12 justify-content-center">
-                            <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
+                            <div className="form-group col-lg-2 col-md-3 col-sm-12  float-right pt-3 ml-2">
                                 <label>نوع پست :</label>
                                 <input className="form-control text-center w-100 dir-text-left"
                                        type={"input"}
                                        value={this.state.favoriteType}
                                 />
                             </div>
-                            <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
+                            <div className="form-group  col-lg-2 col-md-3 col-sm-12 float-right pt-3 ml-2">
                                 <label>قیمت :</label>
                                 <input className="form-control text-center w-100 dir-text-left"
                                        type={"input"}
                                        value={this.state.price}
                                 />
                             </div>
-                            <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
+                            <div className="form-group  col-lg-2 col-md-3 col-sm-12 col-md-2 float-right pt-3 ml-2">
                                 <label>کد پست :</label>
                                 <input className="form-control text-center w-100 dir-text-left"
                                        type={"input"}
@@ -117,30 +117,41 @@ class ShowPost extends Component {
                             </div>
                             {
                                 sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi" ?
-                                    <div className="form-group  col-sm-6 col-md-6 float-right pt-3"
+                                    <div className="form-group col-md-6 float-right pt-3 row"
                                          style={{
                                              marginTop: "6px"
                                          }}>
-                                        <input className="dis-hid" type="text"
-                                               value="https://account.sonyentertainmentnetwork.com/liquid/cam/devices/device-list.action?category=psn&displayNavigation=false"
-                                               id="login"/>
-                                        <input type="button" className="btn btn-success mr-4 " value="login"
-                                               onClick={() => {
-                                                   this.copyText("login")
-                                               }}/>
-                                        <input className="dis-hid" type="text" value="http://my.playstation.com/"
-                                               id="playstation"/>
-                                        <input type="button" className="btn btn-primary mr-4" value="playstation"
-                                               onClick={() => {
-                                                   this.copyText("playstation")
-                                               }}/>
-                                        <input className="dis-hid" type="text"
-                                               value="https://id.sonyentertainmentnetwork.com/id/tv/signin/?ui=ds&hidePageElements=noAccountSection%2CtroubleSigningInLink&service_logo=ps&smcid=tv%3Apsvue#/signin"
-                                               id="email"/>
-                                        <input type="button" className="btn btn-danger mr-4" value="email"
-                                               onClick={() => {
-                                                   this.copyText("email")
-                                               }}/>
+                                        <div className="col-lg-2 col-md-3 col-sm-2 w-25 mx-2">
+                                            <input className="dis-hid" type="text"
+                                                   value="https://id.sonyentertainmentnetwork.com/id/tv/signin/?ui=ds&hidePageElements=noAccountSection%2CtroubleSigningInLink&service_logo=ps&smcid=tv%3Apsvue#/signin"
+                                                   id="email"/>
+                                            <input type="button" className="btn btn-danger mr-4" value="email"
+                                                   onClick={() => {
+                                                       this.copyText("email")
+                                                   }}/>
+                                        </div>
+
+                                        <div className="col-lg-2 col-md-3 col-sm-2 w-25 mx-2">
+                                            <input className="dis-hid" type="text"
+                                                   value="https://account.sonyentertainmentnetwork.com/liquid/cam/devices/device-list.action?category=psn&displayNavigation=false"
+                                                   id="login"/>
+                                            <input type="button" className="btn btn-success mr-4 " value="login"
+                                                   onClick={() => {
+                                                       this.copyText("login")
+                                                   }}/>
+                                        </div>
+
+                                        <div className="col-lg-3 col-md-4 col-sm-1 w-25 mx-2">
+
+                                            <input className="dis-hid" type="text" value="http://my.playstation.com/"
+                                                   id="playstation"/>
+                                            <input type="button" className="btn btn-primary mr-4" value="playstation"
+                                                   onClick={() => {
+                                                       this.copyText("playstation")
+                                                   }}/>
+                                        </div>
+
+
                                     </div>
                                     : null
                             }
@@ -160,20 +171,32 @@ class ShowPost extends Component {
                                     ))}
 
                                 {sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi" ?
-                                    <div className="form-group col-12 col-sm-6 col-md-3 float-right"
+                                    <div className="form-group col-12 col-sm-6 col-md-3 float-right "
                                          style={{marginTop: "32px"}}>
-                                        {console.log(this.state.attributes)}
                                         {this.state.attributes.length !== 0 ?
-                                            <div>
-                                                <input className="dis-hid" type="text"
-                                                       value={this.state.attributes[0].value + ":" + this.state.attributes[1].value}
-                                                       id="copy"/>
-                                                <input type="button" className="btn btn-warning" style={{height: "95%"}}
-                                                       value="copy"
-                                                       onClick={() => {
-                                                           this.copyText("copy")
-                                                       }}/>
-                                            </div>
+                                            this.state.attributes[1]?
+                                                <div>
+                                                    <input className="dis-hid" type="text"
+                                                           value={this.state.attributes[0].value + ":" + this.state.attributes[1].value}
+                                                           id="copy"/>
+                                                    <input type="button" className="btn btn-warning" style={{height: "95%"}}
+                                                           value="copy"
+                                                           onClick={() => {
+                                                               this.copyText("copy")
+                                                           }}/>
+                                                </div>
+                                                    :
+                                                <div>
+                                                    <input className="dis-hid" type="text"
+                                                           value={this.state.attributes[0].value}
+                                                           id="copy"/>
+                                                    <input type="button" className="btn btn-warning" style={{height: "95%"}}
+                                                           value="copy"
+                                                           onClick={() => {
+                                                               this.copyText("copy")
+                                                           }}/>
+                                                </div>
+
                                             : null}
 
                                     </div>

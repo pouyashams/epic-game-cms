@@ -91,7 +91,7 @@ class AddPost extends Component {
         if (sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi") {
             const content = this.state.content + "<p><br></p>".concat("🌐" + this.state.region + "\n".concat("💵" + this.state.price + "\xa0\xa0" + this.state.dolar + "$".concat("\xa0".concat("WMZ/BTC").concat("\n".concat("👨‍💻@EGseller")))));
             data = {
-                originalContent: this.delDiv(content),
+                originalContent: content,
                 content: this.makeContent(content),
                 favourite: this.state.favoriteType,
                 amount: parseInt(this.state.price.split(',').join('')),
@@ -100,7 +100,7 @@ class AddPost extends Component {
         } else {
             const content = this.state.content;
             data = {
-                originalContent: this.delDiv(content),
+                originalContent: content,
                 content: this.makeContent(content),
                 favourite: this.state.favoriteType,
                 amount: parseInt(this.state.price.split(',').join('')),
@@ -113,38 +113,40 @@ class AddPost extends Component {
     makeContent = (content) => {
 
         return content.toString()
-            // .replace(/<\s*a[^>]*>/gi, "")
-            // .split("</a>").join("")
-            // .split("<div>").join("<p>")
-            // .split("</div>").join("</p>")
+            .split("<div></div>").join("")
+            .replace(/<div><\s*a[^>]*>/gi, "")
+            .split("</a></div>").join("\n")
+            .replace(/<\s*a[^>]*>/gi, "")
+            .replace(/<\s*span[^>]*>/gi, "")
+            .split("</a>").join("")
+            .split("</span>").join("")
+            .split("<h1>").join("")
+            .split("<h2>").join("<p>")
+            .split("<h3>").join("<p>")
+            .split("<h4>").join("<p>")
+            .split("<h5>").join("<p>")
+            .split("<h6>").join("<p>")
+            .split("<h7>").join("<p>")
+            .split("</h1>").join("\n")
+            .split("</h2>").join("</p>")
+            .split("</h3>").join("</p>")
+            .split("</h4>").join("</p>")
+            .split("</h5>").join("</p>")
+            .split("</h6>").join("</p>")
+            .split("</h7>").join("</p>")
+            .split("<div>").join("<p>")
+            .split("</div>").join("</p>")
             .split("<p><br></p>").join("\n")
-            // .split("<h1>").join("<p>")
-            // .split("<h2>").join("<p>")
-            // .split("<h3>").join("<p>")
-            // .split("<h4>").join("<p>")
-            // .split("<h5>").join("<p>")
-            // .split("<h6>").join("<p>")
-            // .split("<h7>").join("<p>")
-            // .split("<h8>").join("<p>")
-            // .split("</h1>").join("</p>")
-            // .split("</h2>").join("</p>")
-            // .split("</h3>").join("</p>")
-            // .split("</h4>").join("</p>")
-            // .split("</h5>").join("</p>")
-            // .split("</h6>").join("</p>")
-            // .split("</h7>").join("</p>")
-            // .split("</h8>").join("</p>")
-            // .split("<div><br></div>").join("")
             .split("<em><br></em>").join("")
             .split("<ins><br></ins>").join("")
             .split("<strong><br></strong>").join("")
             .split("<del><br></del>").join("")
             .split("<em></em>").join("")
-            // .split("<div></div>").join("")
-            // .split("<p></p>").join("")
             .split("<ins></ins>").join("")
             .split("<strong></strong>").join("")
             .split("<del></del>").join("")
+            .split("<div></div>").join("")
+            .split("<p></p>").join("")
             .split("<p>").join("")
             .split("</p>").join("\n")
             .split("<br>").join("")
@@ -172,10 +174,6 @@ class AddPost extends Component {
     cancel = () => {
         window.history.back();
     };
-    delDiv = (content) => {
-        return content.toString()
-            .split("<div><br></div>").join("")
-    };
 
     addTitle = () => {
         const inputList = [];
@@ -193,13 +191,14 @@ class AddPost extends Component {
         });
         this.setState({inputList})
     };
+
     handleChange = (content) => {
         this.setState({
             content: content
         })
     };
 
-    deletTitle = (id) => {
+    deleteTitle = (id) => {
         const inputList = this.state.inputList.filter(info => info.id !== id);
         this.setState({inputList});
     };
@@ -292,9 +291,9 @@ class AddPost extends Component {
                             <div className="rtl m-0 float-right row w-100 justify-content-start my-1 pb-3">
                                 {this.state.inputList.map(
                                     (input) => (
-                                        <div className={input.id % 2 === 0 ? "col-6 border-right" : "col-6"}
+                                        <div className={input.id % 2 === 0 ? "col-lg-6 col-md-12 border-right" : "col-lg-6 col-md-12"}
                                              key={input.id}>
-                                            <div className="form-group col-12 col-sm-6 col-md-5 float-right ">
+                                            <div className="form-group col-5 float-right ">
                                                 <label>عنوان :</label>
                                                 <input className="form-control text-center w-100 "
                                                        type={"input"}
@@ -302,7 +301,7 @@ class AddPost extends Component {
                                                        value={input.title}
                                                 />
                                             </div>
-                                            <div className="form-group col-12 col-sm-6 col-md-5 float-right">
+                                            <div className="form-group col-5 float-right">
                                                 <label>متن :</label>
                                                 <input className="form-control text-center w-100"
                                                        type={"input"}
@@ -310,10 +309,10 @@ class AddPost extends Component {
                                                        value={input.value}
                                                 />
                                             </div>
-                                            <div className="form-group col-12 col-sm-6 col-md-2 float-right m-t">
+                                            <div className="form-group col-2 float-right m-t">
                                                 <button className="btn btn-danger rounded-circle "
                                                         onClick={() => {
-                                                            this.deletTitle(input.id)
+                                                            this.deleteTitle(input.id)
                                                         }}
                                                 ><i className="fa fa-trash pt-1"/></button>
                                             </div>
@@ -334,15 +333,15 @@ class AddPost extends Component {
                         </div>
 
                         <div className="col-12 p-3 text-center">
-                            <input type="button" className="btn btn-success mr-3" value="انجام عملیات"
+                            <input type="button" className="btn btn-success mr-3 my-2" value="انجام عملیات"
                                    onClick={() => {
                                        this.sendAccountInfo()
                                    }}/>
-                            <input type="button" className="btn btn-warning mr-3" value="اضافه کردن"
+                            <input type="button" className="btn btn-warning mr-3 my-2" value="اضافه کردن"
                                    onClick={() => {
                                        this.addTitle()
                                    }}/>
-                            <input type="button" className="btn btn-danger mr-3" value="بازگشت"
+                            <input type="button" className="btn btn-danger mr-3 my-2" value="بازگشت"
                                    onClick={() => {
                                        this.cancel()
                                    }}/>

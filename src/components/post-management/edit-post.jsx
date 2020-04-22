@@ -23,10 +23,10 @@ class EditPost extends Component {
     };
 
     componentDidMount() {
-        const {acountInfo} = this.props.location;
-        if (!acountInfo) return window.history.back();
+        const {accountInfo} = this.props.location;
+        if (!accountInfo) return window.history.back();
         let attributes = [];
-        this.getValue(acountInfo.attributes).forEach((attribute) => {
+        this.getValue(accountInfo.attributes).forEach((attribute) => {
             attributes.push(
                 {
                     "id": attributes.length + 1,
@@ -36,11 +36,11 @@ class EditPost extends Component {
             )
         });
         this.setState({
-            contentText: this.getValue(acountInfo.originalContent),
+            contentText: this.getValue(accountInfo.originalContent),
             inputList: attributes,
-            favoriteType: this.getValue(acountInfo.favourite),
-            price: this.getValue(acountInfo.amount),
-            id: this.getValue(acountInfo.identifier),
+            favoriteType: this.getValue(accountInfo.favourite),
+            price: this.getValue(accountInfo.amount),
+            id: this.getValue(accountInfo.identifier),
         });
     }
 
@@ -83,7 +83,6 @@ class EditPost extends Component {
     };
 
     makeData = () => {
-        console.log(1)
         let data = "";
         let attributes = [];
         this.state.inputList.forEach((attribute) => {
@@ -93,7 +92,6 @@ class EditPost extends Component {
             });
         });
         const content = this.state.content;
-        console.log(this.makeContent(content),11111111);
         data = {
             identifier: this.state.id,
             originalContent: content,
@@ -115,7 +113,6 @@ class EditPost extends Component {
             .replace(/<\s*span[^>]*>/gi, "")
             .split("</a>").join("")
             .split("</span>").join("")
-
             .split("<h1>").join("")
             .split("<h2>").join("<p>")
             .split("<h3>").join("<p>")
@@ -130,43 +127,32 @@ class EditPost extends Component {
             .split("</h5>").join("</p>")
             .split("</h6>").join("</p>")
             .split("</h7>").join("</p>")
-
             .split("<div>").join("<p>")
             .split("</div>").join("</p>")
-
             .split("<p><br></p>").join("\n")
-
             .split("<em><br></em>").join("")
             .split("<ins><br></ins>").join("")
             .split("<strong><br></strong>").join("")
             .split("<del><br></del>").join("")
-
             .split("<em></em>").join("")
             .split("<ins></ins>").join("")
             .split("<strong></strong>").join("")
             .split("<del></del>").join("")
-
             .split("<div></div>").join("")
-
             .split("<p></p>").join("")
-
             .split("<p>").join("")
             .split("</p>").join("\n")
-
             .split("<br>").join("")
             .split("&nbsp;").join(" ");
     };
 
-
-
-
-    sendAcountInfo = async () => {
+    sendAccountInfo = async () => {
         this.setState({progress: true});
         const data = this.makeData();
         try {
             const result = await editAcount(data);
             if (result.status === 200) {
-                toast.success('تغییرات با موفقیت ثبDSFLIOGYUAYSIHDOPK[BLPFDJOHSVGHCت شد');
+                toast.success('تغییرات با موفقیت ثبت شد');
                 window.history.back();
                 this.setState({progress: false});
             }
@@ -249,9 +235,9 @@ class EditPost extends Component {
                             <div className="rtl m-0 float-right row w-100 justify-content-start my-1 pb-3">
                                 {this.state.inputList.map(
                                     (input) => (
-                                        <div className={input.id % 2 === 0 ? "col-6 border-right" : "col-6"}
+                                        <div className={input.id % 2 === 0 ? "col-lg-6 col-md-12 border-right" : "col-lg-6 col-md-12"}
                                              key={input.id}>
-                                            <div className="form-group col-12 col-sm-6 col-md-5 float-right ">
+                                            <div className="form-group col-5 float-right ">
                                                 <label>عنوان :</label>
                                                 <input className="form-control text-center w-100 "
                                                        type={"input"}
@@ -259,7 +245,7 @@ class EditPost extends Component {
                                                        value={input.title}
                                                 />
                                             </div>
-                                            <div className="form-group col-12 col-sm-6 col-md-5 float-right">
+                                            <div className="form-group col-5 float-right">
                                                 <label>متن :</label>
                                                 <input className="form-control text-center w-100"
                                                        type={"input"}
@@ -267,7 +253,7 @@ class EditPost extends Component {
                                                        value={input.value}
                                                 />
                                             </div>
-                                            <div className="form-group col-12 col-sm-6 col-md-2 float-right m-t">
+                                            <div className="form-group col-2 float-right m-t">
                                                 <button className="btn btn-danger rounded-circle "
                                                         onClick={() => {
                                                             this.deletTitle(input.id)
@@ -281,9 +267,9 @@ class EditPost extends Component {
                                 <SunEditor
                                     onChange={this.handleChange}
                                     setContents={this.state.contentText}
-                                    // setOptions={{
-                                    //     buttonList: [["undo", "redo"], ["bold", "underline", "italic", "strike"]]
-                                    // }}
+                                    setOptions={{
+                                        buttonList: [["undo", "redo"], ["bold", "underline", "italic", "strike"]]
+                                    }}
                                     setDefaultStyle="direction: ltr !important; min-height: 200px;"
                                 />
                                 </div>
@@ -291,15 +277,15 @@ class EditPost extends Component {
                         </div>
 
                         <div className="col-12 p-3 text-center">
-                            <input type="button" className="btn btn-success mr-3" value="انجام عملیات"
+                            <input type="button" className="btn btn-success mr-3 my-2" value="انجام عملیات"
                                    onClick={() => {
-                                       this.sendAcountInfo()
+                                       this.sendAccountInfo()
                                    }}/>
-                            <input type="button" className="btn btn-warning mr-3" value="اضافه کردن"
+                            <input type="button" className="btn btn-warning mr-3 my-2" value="اضافه کردن"
                                    onClick={() => {
                                        this.addTitle()
                                    }}/>
-                            <input type="button" className="btn btn-danger mr-3" value="بازگشت"
+                            <input type="button" className="btn btn-danger mr-3 my-2" value="بازگشت"
                                    onClick={() => {
                                        this.cancel()
                                    }}/>

@@ -223,6 +223,7 @@ body {
     background: url('../images/dark-grey-terrazzo.jpeg') repeat center center fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x:hidden!important;
 }
 
 code {
@@ -439,3 +440,31 @@ table, th, td {
 .scroll-x-off {
     overflow-x: hidden !important;
 }
+
+@media (max-width: 1200px) {
+    .t-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+

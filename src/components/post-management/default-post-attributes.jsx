@@ -114,9 +114,9 @@ class DefaultPostAttributes extends Component {
                                 {
                                     this.state.inputList.map(
                                         (input) => (
-                                            <div className={input.id % 2 === 0 ? "col-3 border-right" : "col-3"}
+                                            <div className={input.id % 2 === 0 ? "col-sm-6 col-md-3 border-right" : "col-sm-6 col-md-3"}
                                                  key={input.id}>
-                                                <div className="form-group col-12 col-sm-8 col-md-8 float-right ">
+                                                <div className="form-group col-10 float-right ">
                                                     <label>عنوان :</label>
                                                     <input className="form-control text-center w-100 "
                                                            type={"input"}
@@ -124,7 +124,7 @@ class DefaultPostAttributes extends Component {
                                                            value={input.title}
                                                     />
                                                 </div>
-                                                <div className="form-group col-12 col-sm-6 col-md-2 float-right m-t">
+                                                <div className="form-group col-2 float-right m-t">
                                                     <button className="btn btn-danger rounded-circle "
                                                             onClick={() => {
                                                                 this.deletTitle(input.id)

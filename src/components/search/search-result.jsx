@@ -22,6 +22,13 @@ class SearchResult extends Component {
         return subSearchResultList;
     };
 
+    isPhone = () => {
+        return !!(navigator.userAgent.match(/iPhone/i)
+            || navigator.userAgent.match(/iPad/i)
+            || navigator.userAgent.match(/iPod/i)
+            || navigator.userAgent.match(/Android/i));
+    };
+
     render() {
         const {currentPage} = this.props;
         const {headerInfo, searchResultList, pageSize} = this.props;
@@ -33,9 +40,10 @@ class SearchResult extends Component {
         let counter = (num - 1) * pageSize;
         let loopCounter = 1;
         return (
-            <div className="col-12 justify-content-center align-items-center text-center  pt-3 sc-y-h scroll-x-off"
+            <div className="col-12 justify-content-center align-items-center text-center pt-3  scroll-x-off"
             >
-                <table className="table table-responsive table-bordered table-striped ">
+                <table
+                    className="table t-responsive table-bordered table-striped sc-y-h">
                     <thead className="bg-dark">
                     <tr>
                         <th className="hidden-xs table-counter"/>

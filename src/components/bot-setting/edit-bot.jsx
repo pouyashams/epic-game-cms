@@ -24,7 +24,6 @@ class EditBot extends Component {
         try {
             const result = await fetchSchedule({});
             if (result.status === 200) {
-                console.log(result.data.data)
                 if (this.hasValue(result.data.data)) {
                     this.setState({
                         interval: result.data.data.interval,
@@ -72,13 +71,12 @@ class EditBot extends Component {
 
     sendBotInfo = async () => {
         const data = {
-            "interval": this.state.interval,
-            "numberOfNormalPost": this.state.numberOfNormalPost,
-            "numberOfFavouritePost": this.state.numberOfFavouritePost,
+            "interval": parseInt(this.state.interval),
+            "numberOfNormalPost": parseInt(this.state.numberOfNormalPost),
+            "numberOfFavouritePost": parseInt(this.state.numberOfFavouritePost),
             "silent": (this.state.silent === "true" || this.state.silent === true),
             "active": (this.state.active === "true" || this.state.active === true)
         };
-        console.log(data)
         if (this.isValidToSend(data)) {
             this.setState({progress: true});
             try {

@@ -44,14 +44,14 @@ class PostManagement extends Component {
     onShow(searchResult) {
         this.props.history.push({
             pathname: '/show-post',
-            acountInfo: searchResult
+            accountInfo: searchResult
         });
     }
 
     onEdit(searchResult) {
         this.props.history.push({
             pathname: '/edit-post',
-            acountInfo: searchResult
+            accountInfo: searchResult
         });
     }
 
@@ -178,6 +178,7 @@ class PostManagement extends Component {
         }
         this.search();
     };
+
     hasValue(field) {
         return field !== null && field !== undefined && field !== "";
     };

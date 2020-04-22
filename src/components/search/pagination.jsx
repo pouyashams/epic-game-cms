@@ -1,43 +1,50 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
 import _ from 'lodash';
-import PropTypes from 'prop-types';
-import {withRouter} from "react-router-dom";
 
-const Pagination = ({itemCount, pageSize, onPageChange, currentPage}) => {
-    const pageCount = Math.ceil(itemCount / pageSize);
+class Pagination extends Component {
 
-    if (pageCount === 1) return null;
-    const pages = _.range(1, pageCount + 1);
-    return (
-        <div className="table-responsive">
-            <ul className=" col-12 pagination justify-content-center pr-0">
-                {pages.map(page => (
-                    <li
-                        className={
-                            page === parseInt(currentPage)
-                                ? 'page-item active'
-                                : 'page-item'
-                        }
-                        key={page}
-                    >
-                        <button
-                            className="page-link rounded-0"
-                            onClick={() => onPageChange(page)}
+    constructor(props) {
+        super(props);
+        this.state = {};
+    };
+
+    makePageList = () => {
+        const pageCount = Math.ceil(this.props.itemCount / this.props.pageSize);
+        if (pageCount === 1) return [];
+        return _.range(1, pageCount + 1);
+    };
+
+
+    render() {
+        return (
+            <div>
+                <ul className=" col-12 pagination flex-wrap justify-content-center pr-0">
+                    {this.makePageList().map(page => (
+                        <li
+                            className={
+                                page === parseInt(this.props.currentPage)
+                                    ? 'page-item active'
+                                    : 'page-item'
+                            }
+                            key={page}
                         >
-                            {page}
-                        </button>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-};
+                            <button
+                                className="page-link rounded-0"
+                                onClick={() => this.props.onPageChange(page)}
+                            >
+                                {page}
+                            </button>
+                        </li>
 
-Pagination.propTypes = {
-    itemCount: PropTypes.number.isRequired,
-    pageSize: PropTypes.number.isRequired,
-    onPageChange: PropTypes.func.isRequired,
-    currentPage: PropTypes.number.isRequired
-};
+                    ))}
+                </ul>
+
+            </div>
+        );
+    };
+}
 
 export default withRouter(Pagination);
+
+

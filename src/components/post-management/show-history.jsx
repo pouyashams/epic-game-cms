@@ -17,7 +17,6 @@ class ShowHistory extends Component {
     componentDidMount() {
         const {historyInfo} = this.props.location;
         if (!historyInfo) return window.history.back();
-        console.log(historyInfo)
         const historyList = [];
         this.getValue(historyInfo.publishHistory).forEach((history) => {
 

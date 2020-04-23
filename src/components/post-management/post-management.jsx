@@ -296,7 +296,8 @@ class PostManagement extends Component {
                 },
                 "shouldReturnCount": true
             };
-        } else if (sessionStorage.getItem('parameters') !== null) {
+        }
+        else if (sessionStorage.getItem('parameters') !== null) {
             let parameter = JSON.parse(sessionStorage.parameters);
             let status = null;
             let pageNumber = 1;
@@ -403,34 +404,45 @@ class PostManagement extends Component {
     searchAuto = async () => {
         this.setState({progress: true});
         const data = this.searchDataAuto();
+        console.log(data)
         try {
             const result = await searchAcount(data);
-            let searchResultList = [];
-            if (result.status === 200) {
-                this.setState({count: result.data.data.count});
-                result.data.data.searchResultArray.forEach((dataInfo) => {
-                    const dataForTable = this.makeDataForTable(dataInfo);
-                    searchResultList.push(
-                        {
-                            originalContent: dataInfo.originalContent,
-                            identifier: dataInfo.identifier,
-                            publishHistory: dataInfo.publishHistory,
-                            content: dataInfo.content,
-                            attributes: dataInfo.attributes,
-                            favourite: dataInfo.favourite,
-                            amount: dataInfo.amount,
-                            creationDateTime: dataInfo.creationDateTime,
-                            lastUpdateDateTime: dataInfo.lastUpdateDateTime,
-                            status: dataInfo.status.name,
-                            postStatus: dataForTable.postStatus,
-                            postFavourite: dataForTable.postFavourite,
-                        }
-                    )
-                });
-
-
-                this.setState({searchResultList, progress: false});
+            if (result.data.data.searchResultArray.length===0){
+                this.setState({
+                    currentPage: 1
+                }, () => {
+                    this.searchAuto();
+                })
             }
+            else if (result.data.data.searchResultArray.length!==0){
+                let searchResultList = [];
+                if (result.status === 200) {
+                    this.setState({count: result.data.data.count});
+                    result.data.data.searchResultArray.forEach((dataInfo) => {
+                        const dataForTable = this.makeDataForTable(dataInfo);
+                        searchResultList.push(
+                            {
+                                originalContent: dataInfo.originalContent,
+                                identifier: dataInfo.identifier,
+                                publishHistory: dataInfo.publishHistory,
+                                content: dataInfo.content,
+                                attributes: dataInfo.attributes,
+                                favourite: dataInfo.favourite,
+                                amount: dataInfo.amount,
+                                creationDateTime: dataInfo.creationDateTime,
+                                lastUpdateDateTime: dataInfo.lastUpdateDateTime,
+                                status: dataInfo.status.name,
+                                postStatus: dataForTable.postStatus,
+                                postFavourite: dataForTable.postFavourite,
+                            }
+                        )
+                    });
+
+
+                    this.setState({searchResultList, progress: false});
+                }
+            }
+
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
                 toast.error('مشکلی در برقراری با سرور ایجاد شده است');

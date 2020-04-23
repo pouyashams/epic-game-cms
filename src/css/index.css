@@ -381,6 +381,7 @@ table, th, td {
     border-radius: 7px;
 }
 
+
 .btn-color {
     background-color: #ff6ae9 !important;
 }
@@ -466,5 +467,25 @@ table, th, td {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.bg-spinner{
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.25);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+.centered {
+    z-index: 999;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
 }
 

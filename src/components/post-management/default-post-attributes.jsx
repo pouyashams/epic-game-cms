@@ -3,6 +3,7 @@ import "../../css/textArea.css"
 import {withRouter} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {fetchUserDefaultPostAttributes, saveOrUpdateDefaultPostAttributes} from '../../services/acountService';
+import Loading from "../loading/loading";
 
 
 class DefaultPostAttributes extends Component {
@@ -151,15 +152,9 @@ class DefaultPostAttributes extends Component {
                         </div>
                     </div>
                 </div>
-                {
-                    this.state.progress ?
-                        <span className="col-12 py-2">
-                      <div className="progress">
-    <div className="progress-bar progress-bar-striped progress-bar-animated bg-warning radius-line"
-         style={{width: "100%", height: "75%"}}/>
-                      </div>
-                </span>
-                        : null
+                {this.state.progress ?
+                    <Loading/>
+                    : null
                 }
             </div>
         );

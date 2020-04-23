@@ -25,17 +25,10 @@ class App extends Component {
         sessionStorage.setItem('activeSearch', "true");
     }
 
-    isPhone = () => {
-        return !!(navigator.userAgent.match(/iPhone/i)
-            || navigator.userAgent.match(/iPad/i)
-            || navigator.userAgent.match(/iPod/i)
-            || navigator.userAgent.match(/Android/i));
-    };
-
     render() {
 
         return (
-            <div className={this.isPhone() ? "rtl" : "container-fluid rtl"}>
+            <div className="container-fluid rtl">
                 <Navbar/>
                 <ToastContainer/>
                 <div className="row">
@@ -46,7 +39,8 @@ class App extends Component {
                     >
                         <Router history={this.props.history}>
                             <Switch>
-                                <PrivateRoute path="/default-post-attributes" exact={false} component={defaultPostAttributes}/>
+                                <PrivateRoute path="/default-post-attributes" exact={false}
+                                              component={defaultPostAttributes}/>
                                 <PrivateRoute path="/post-management" exact={false} component={postManagement}/>
                                 <PrivateRoute path="/profile" exact={false} component={profile}/>
                                 <PrivateRoute path="/add-post" exact={false} component={addPost}/>

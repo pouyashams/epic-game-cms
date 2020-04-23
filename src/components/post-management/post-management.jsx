@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import SearchCriteria from "../search/search-criteria";
 import SearchResult from "../search/search-result";
 import {toast} from 'react-toastify';
+import Loading from '../loading/loading';
+import "../../css/loading.css"
 import {withRouter} from 'react-router-dom';
 import {
     onActive,
@@ -28,11 +30,12 @@ class PostManagement extends Component {
         this.onAdd = this.onAdd.bind(this);
         this.onShow = this.onShow.bind(this);
         this.search = this.search.bind(this);
+        this.searchAuto = this.searchAuto.bind(this);
         this.onShowHistory = this.onShowHistory.bind(this);
     }
 
     async componentDidMount() {
-        this.search();
+        this.searchAuto();
     };
 
     onAdd() {
@@ -77,7 +80,7 @@ class PostManagement extends Component {
                     this.setState({progress: false});
                 }
             }
-            this.search();
+            this.searchAuto();
         } else {
             toast.error('پست حذف شده قابل فروش نیست');
         }
@@ -88,7 +91,7 @@ class PostManagement extends Component {
         this.setState({
             currentPage: page
         }, () => {
-            this.search();
+            this.searchAuto();
         })
     };
 
@@ -106,7 +109,7 @@ class PostManagement extends Component {
                 this.setState({progress: false});
             }
         }
-        this.search();
+        this.searchAuto();
     };
 
     onActiveInfo = async (searchResult) => {
@@ -131,7 +134,7 @@ class PostManagement extends Component {
                         this.setState({progress: false});
                     }
                 }
-                this.search();
+                this.searchAuto();
         }
     };
 
@@ -157,12 +160,20 @@ class PostManagement extends Component {
                         this.setState({progress: false});
                     }
                 }
-                this.search();
+                this.searchAuto();
         }
 
     };
 
     onRemoveInfo = async (searchResult) => {
+        switch (searchResult.status) {
+            case "DELETED_POST_STATUS":
+                toast.error('پست حذف شده را نمیتوان از کانال حذف کرد');
+                break;
+            case "SOLD_POST_STATUS":
+                toast.error('پست فروخته شده را نمیتوان از کانال حذف کرد');
+                break;
+            default:
         this.setState({progress: true});
         try {
             const result = await onRemove({identifier: parseInt(searchResult.identifier)});
@@ -176,7 +187,8 @@ class PostManagement extends Component {
                 this.setState({progress: false});
             }
         }
-        this.search();
+        this.searchAuto();
+        }
     };
 
     hasValue(field) {
@@ -197,8 +209,7 @@ class PostManagement extends Component {
                 },
                 "shouldReturnCount": true
             };
-        }
-        else if (sessionStorage.getItem('parameters') === null && parameters !== undefined) {
+        } else if (sessionStorage.getItem('parameters') === null && parameters !== undefined) {
             let status = null;
             let pageNumber = 1;
             if (parameters.name !== "" && parameters.name !== undefined) {
@@ -221,8 +232,7 @@ class PostManagement extends Component {
                 "shouldReturnCount": true
             };
             sessionStorage.parameters = JSON.stringify(parameters);
-        }
-        else if (sessionStorage.getItem('parameters') !== null && parameters === undefined) {
+        } else if (sessionStorage.getItem('parameters') !== null && parameters === undefined) {
             let parameter = JSON.parse(sessionStorage.parameters);
             let status = null;
             let pageNumber = 1;
@@ -245,8 +255,7 @@ class PostManagement extends Component {
                 "status": status,
                 "shouldReturnCount": true
             };
-        }
-        else if (sessionStorage.getItem('parameters') !== null && parameters !== undefined) {
+        } else if (sessionStorage.getItem('parameters') !== null && parameters !== undefined) {
             let status = null;
             let pageNumber = 1;
             if (parameters.name !== "" && parameters.name !== undefined) {
@@ -269,6 +278,47 @@ class PostManagement extends Component {
                 "shouldReturnCount": true
             };
             sessionStorage.parameters = JSON.stringify(parameters);
+        }
+        return data;
+    };
+
+    searchDataAuto = () => {
+        let data = "";
+        if (sessionStorage.getItem('parameters') === null) {
+            let pageNumber = 1;
+            if (this.hasValue(this.state.currentPage)) {
+                pageNumber = this.state.currentPage
+            }
+            data = {
+                "pagination": {
+                    "maxResult": this.state.pageSize,
+                    "pageNumber": pageNumber
+                },
+                "shouldReturnCount": true
+            };
+        } else if (sessionStorage.getItem('parameters') !== null) {
+            let parameter = JSON.parse(sessionStorage.parameters);
+            let status = null;
+            let pageNumber = 1;
+            if (parameter.name !== "" && parameter.name !== undefined) {
+                status = {
+                    name: parameter.name
+                }
+            }
+            if (this.hasValue(this.state.currentPage)) {
+                pageNumber = this.state.currentPage
+            }
+            data = {
+                "identifier": parameter.identifier,
+                "content": parameter.content,
+                "favourite": parameter.favourite,
+                "pagination": {
+                    "maxResult": this.state.pageSize,
+                    "pageNumber": pageNumber
+                },
+                "status": status,
+                "shouldReturnCount": true
+            };
         }
         return data;
     };
@@ -306,8 +356,53 @@ class PostManagement extends Component {
     };
 
     search = async (parameters) => {
+
+        this.setState({
+            currentPage: 1
+        }, async () => {
+            this.setState({progress: true});
+            const data = this.searchData(parameters);
+            try {
+                const result = await searchAcount(data);
+                let searchResultList = [];
+                if (result.status === 200) {
+                    this.setState({count: result.data.data.count});
+                    result.data.data.searchResultArray.forEach((dataInfo) => {
+                        const dataForTable = this.makeDataForTable(dataInfo);
+                        searchResultList.push(
+                            {
+                                originalContent: dataInfo.originalContent,
+                                identifier: dataInfo.identifier,
+                                publishHistory: dataInfo.publishHistory,
+                                content: dataInfo.content,
+                                attributes: dataInfo.attributes,
+                                favourite: dataInfo.favourite,
+                                amount: dataInfo.amount,
+                                creationDateTime: dataInfo.creationDateTime,
+                                lastUpdateDateTime: dataInfo.lastUpdateDateTime,
+                                status: dataInfo.status.name,
+                                postStatus: dataForTable.postStatus,
+                                postFavourite: dataForTable.postFavourite,
+                            }
+                        )
+                    });
+
+
+                    this.setState({searchResultList, progress: false});
+                }
+            } catch (ex) {
+                if (ex.response && ex.response.status === 400) {
+                    toast.error('مشکلی در برقراری با سرور ایجاد شده است');
+                    this.setState({progress: false});
+                }
+            }
+        });
+
+    };
+
+    searchAuto = async () => {
         this.setState({progress: true});
-        const data = this.searchData(parameters);
+        const data = this.searchDataAuto();
         try {
             const result = await searchAcount(data);
             let searchResultList = [];
@@ -332,6 +427,8 @@ class PostManagement extends Component {
                         }
                     )
                 });
+
+
                 this.setState({searchResultList, progress: false});
             }
         } catch (ex) {
@@ -341,6 +438,7 @@ class PostManagement extends Component {
             }
         }
     };
+
 
     getSearchCriteriaArray() {
         return [
@@ -511,14 +609,11 @@ class PostManagement extends Component {
                            onClick={this.onAdd}/>
                 </span>
                 {this.state.progress ?
-                    <span className="col-12 py-2">
-                      <div className="progress">
-    <div className="progress-bar progress-bar-striped progress-bar-animated bg-warning radius-line"
-         style={{width: "100%", height: "75%"}}/>
-                      </div>
-                </span>
+                    <Loading/>
                     : null
                 }
+
+
             </div>
         );
     }

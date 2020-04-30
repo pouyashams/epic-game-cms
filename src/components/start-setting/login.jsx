@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import "../../css/login.css"
-import ps4 from "./ps4.png"
+import ps4 from "./ps4.gif"
 import Reaptcha from 'reaptcha';
 import Timer from "../timer/timer"
 import Progress from "../progress/progress";

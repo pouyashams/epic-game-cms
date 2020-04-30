@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import "../../css/textArea.css"
 import {withRouter} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {fetchUserDefaultPostAttributes, saveOrUpdateDefaultPostAttributes} from '../../services/acountService';

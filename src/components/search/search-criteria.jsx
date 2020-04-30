@@ -28,6 +28,7 @@ class SearchCriteria extends Component {
     render() {
 
         const {searchCriteriaArray, extraActions} = this.props;
+
         let index = 1;
         return (
             <div className="col-12 justify-content-center align-items-center text-center ">

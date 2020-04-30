@@ -32,7 +32,7 @@ class PostManagement extends Component {
         this.search = this.search.bind(this);
         this.searchAuto = this.searchAuto.bind(this);
         this.onShowHistory = this.onShowHistory.bind(this);
-    }
+    };
 
     async componentDidMount() {
         this.searchAuto();
@@ -42,28 +42,28 @@ class PostManagement extends Component {
         this.props.history.push({
             pathname: '/add-post',
         });
-    }
+    };
 
     onShow(searchResult) {
         this.props.history.push({
             pathname: '/show-post',
             accountInfo: searchResult
         });
-    }
+    };
 
     onEdit(searchResult) {
         this.props.history.push({
             pathname: '/edit-post',
             accountInfo: searchResult
         });
-    }
+    };
 
     onShowHistory(searchResult) {
         this.props.history.push({
             pathname: '/show-history',
             historyInfo: searchResult
         });
-    }
+    };
 
     onDeActiveInfo = async (searchResult) => {
         if (searchResult.status !== "DELETED_POST_STATUS") {
@@ -174,20 +174,20 @@ class PostManagement extends Component {
                 toast.error('پست فروخته شده را نمیتوان از کانال حذف کرد');
                 break;
             default:
-        this.setState({progress: true});
-        try {
-            const result = await onRemove({identifier: parseInt(searchResult.identifier)});
-            if (result.status === 200) {
-                toast.success('پست با موفقیت از کانال حذف شد');
-                this.setState({progress: false});
-            }
-        } catch (ex) {
-            if (ex.response && ex.response.status === 400) {
-                toast.error('ارتباط با سرور برقرار نشد');
-                this.setState({progress: false});
-            }
-        }
-        this.searchAuto();
+                this.setState({progress: true});
+                try {
+                    const result = await onRemove({identifier: parseInt(searchResult.identifier)});
+                    if (result.status === 200) {
+                        toast.success('پست با موفقیت از کانال حذف شد');
+                        this.setState({progress: false});
+                    }
+                } catch (ex) {
+                    if (ex.response && ex.response.status === 400) {
+                        toast.error('ارتباط با سرور برقرار نشد');
+                        this.setState({progress: false});
+                    }
+                }
+                this.searchAuto();
         }
     };
 
@@ -296,8 +296,7 @@ class PostManagement extends Component {
                 },
                 "shouldReturnCount": true
             };
-        }
-        else if (sessionStorage.getItem('parameters') !== null) {
+        } else if (sessionStorage.getItem('parameters') !== null) {
             let parameter = JSON.parse(sessionStorage.parameters);
             let status = null;
             let pageNumber = 1;
@@ -357,7 +356,7 @@ class PostManagement extends Component {
     };
 
     search = async (parameters) => {
-
+        console.log(parameters)
         this.setState({
             currentPage: 1
         }, async () => {
@@ -404,17 +403,23 @@ class PostManagement extends Component {
     searchAuto = async () => {
         this.setState({progress: true});
         const data = this.searchDataAuto();
-        console.log(data)
         try {
             const result = await searchAcount(data);
-            if (result.data.data.searchResultArray.length===0){
+            if (this.state.currentPage === 1 && result.data.data.searchResultArray.length === 0) {
+                const parameters = {
+                    content: "",
+                    favourite: "",
+                    identifier: "",
+                    name: "",
+                };
+                this.search(parameters)
+            } else if (result.data.data.searchResultArray.length === 0) {
                 this.setState({
                     currentPage: 1
                 }, () => {
                     this.searchAuto();
                 })
-            }
-            else if (result.data.data.searchResultArray.length!==0){
+            } else if (result.data.data.searchResultArray.length !== 0) {
                 let searchResultList = [];
                 if (result.status === 200) {
                     this.setState({count: result.data.data.count});
@@ -450,7 +455,6 @@ class PostManagement extends Component {
             }
         }
     };
-
 
     getSearchCriteriaArray() {
         return [
@@ -520,7 +524,7 @@ class PostManagement extends Component {
                 ]
             }
         ];
-    }
+    };
 
 
     getResultTableHeader() {
@@ -594,7 +598,7 @@ class PostManagement extends Component {
             ]
         };
         return headerInfo;
-    }
+    };
 
     render() {
         const {searchResultList, pageSize, currentPage} = this.state;
@@ -602,8 +606,7 @@ class PostManagement extends Component {
         const headerInfo = this.getResultTableHeader();
 
         return (
-            <div
-                className="rtl bg border shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
+            <div className="rtl bg border shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
                 <div
                     className="col-12 justify-content-center align-items-center text-center header-box text-light header-color">
                     <h4 className="py-2">مدیریت کانال</h4>
@@ -628,7 +631,7 @@ class PostManagement extends Component {
 
             </div>
         );
-    }
+    };
 }
 
 export default withRouter(PostManagement);

@@ -223,7 +223,7 @@ body {
     background: url('../images/dark-grey-terrazzo.jpeg') repeat center center fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-x:hidden!important;
+    overflow-x: hidden !important;
 }
 
 code {
@@ -393,6 +393,7 @@ table, th, td {
 .dis-hid {
     opacity: 0;
     width: 1%;
+    height: 1%;
 }
 
 .timer {
@@ -469,7 +470,7 @@ table, th, td {
     background: #555;
 }
 
-.bg-spinner{
+.bg-spinner {
     z-index: 999;
     width: 100%;
     height: 100%;
@@ -480,6 +481,7 @@ table, th, td {
     margin-right: -50%;
     transform: translate(-50%, -50%)
 }
+
 .centered {
     z-index: 999;
     position: fixed;
@@ -487,5 +489,83 @@ table, th, td {
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%, -50%)
+}
+
+.centered-phone {
+    z-index: 999;
+    position: fixed;
+    top: 50%;
+    left: 75%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+textarea {
+    text-align: center!important;
+    direction: ltr!important;
+    line-height: 35px!important;
+    width: 500px!important;
+    height: 100px!important;
+    border-radius: 10px!important;
+}
+
+
+
+.thumbnail {
+    display: block;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 6px solid #D9D9D9;
+    border-radius: 15px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.bg-game{
+    background-image: url("../images/game.jpg");}
+
+.searchbar{
+    margin-bottom: auto;
+    margin-top: auto;
+    height: 60px;
+    background-color: #353b48;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+.search_input{
+    color: white;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    caret-color:transparent;
+    line-height: 40px;
+    transition: width 0.4s linear;
+}
+
+.searchbar:hover > .search_input{
+    padding: 0 10px;
+    width: 250px;
+    caret-color:red;
+    transition: width 0.4s linear;
+
+}
+
+.searchbar:hover > .search_icon{
+    background: white;
+    color: #e74c3c;
+}
+
+.search_icon{
+    height: 40px;
+    width: 40px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color:white;
+    text-decoration:none;
 }
 

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import "../../css/textArea.css"
 import {withRouter} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {editAcount} from '../../services/acountService';
@@ -268,9 +267,9 @@ class EditPost extends Component {
                                 <SunEditor
                                     onChange={this.handleChange}
                                     setContents={this.state.contentText}
-                                    setOptions={{
-                                        buttonList: [["undo", "redo"], ["bold", "underline", "italic", "strike"]]
-                                    }}
+                                    // setOptions={{
+                                    //     buttonList: [["undo", "redo"], ["bold", "underline", "italic", "strike"]]
+                                    // }}
                                     setDefaultStyle="direction: ltr !important; min-height: 200px;"
                                 />
                                 </div>

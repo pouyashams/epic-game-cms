@@ -13,6 +13,7 @@ import editPost from "./components/post-management/edit-post"
 import editBot from "./components/bot-setting/edit-bot"
 import defaultPostAttributes from "./components/post-management/default-post-attributes"
 import profile from "./components/profile/profile"
+import advancedSearch from "./components/advanced-search/advanced-search"
 
 
 class App extends Component {
@@ -42,6 +43,7 @@ class App extends Component {
                                 <PrivateRoute path="/default-post-attributes" exact={false}
                                               component={defaultPostAttributes}/>
                                 <PrivateRoute path="/post-management" exact={false} component={postManagement}/>
+                                <PrivateRoute path="/advanced-search" exact={false} component={advancedSearch}/>
                                 <PrivateRoute path="/profile" exact={false} component={profile}/>
                                 <PrivateRoute path="/add-post" exact={false} component={addPost}/>
                                 <PrivateRoute path="/show-post" exact={false} component={showPost}/>

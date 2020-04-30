@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import "../../css/textArea.css"
 import {withRouter} from 'react-router-dom';
 import 'suneditor/dist/css/suneditor.min.css';
 import Table from "../table/table";

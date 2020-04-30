@@ -3,10 +3,15 @@ import React, {Component} from 'react';
 
 class Loading extends Component {
 
+    isPhone = () => {
+        return !!(navigator.userAgent.match(/iPhone/i)
+            || navigator.userAgent.match(/Android/i));
+    };
+
     render() {
         return (
             <div className="bg-spinner">
-                <div className="centered">
+                <div className={this.isPhone() ? "centered-phone" : "centered"}>
                     <div id="loader">
                         <div className="dot"/>
                         <div className="dot"/>

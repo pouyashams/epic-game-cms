@@ -7,6 +7,12 @@ const navLinks = [
         type: "telegram-management",
     },
     {
+        path: "/advanced-search",
+        name: "جستجو پیشرفته",
+        icon: "fa fa-search",
+        type: "telegram-management",
+    },
+    {
         path: "/default-post-attributes",
         name: "مشخصات پیش فرض پست",
         icon: "fa fa-archive",
@@ -18,6 +24,7 @@ const navLinks = [
         icon: "fa fa-cog",
         type: "telegram-management",
     },
+
     // {
     //     path: "/not-found",
     //     name: "به زودی",

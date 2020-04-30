@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import "../../css/textArea.css"
 import {withRouter} from 'react-router-dom';
 import SunEditor from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
@@ -145,7 +144,14 @@ class ShowPost extends Component {
                                                    }}/>
                                         </div>
 
-
+                                        <input className="dis-hid col-4" type="text"
+                                               value="https://id.sonyentertainmentnetwork.com/id/tv/signin/?ui=ds&hidePageElements=noAccountSection%2CtroubleSigningInLink&service_logo=ps&smcid=tv%3Apsvue#/signin"
+                                               id="email"/>
+                                        <input className="dis-hid col-4" type="text" value="http://my.playstation.com/"
+                                               id="playstation"/>
+                                        <input className="dis-hid col-4" type="text"
+                                               value="https://account.sonyentertainmentnetwork.com/liquid/cam/devices/device-list.action?category=psn&displayNavigation=false"
+                                               id="login"/>
                                     </div>
                                     : null
                             }
@@ -170,27 +176,27 @@ class ShowPost extends Component {
                                         {this.state.attributes.length !== 0 ?
                                             this.state.attributes[1] ?
                                                 <div>
-                                                    <input className="dis-hid" type="text"
-                                                           value={this.state.attributes[0].value + ":" + this.state.attributes[1].value}
-                                                           id="copy"/>
                                                     <input type="button" className="btn btn-warning"
                                                            style={{height: "95%"}}
                                                            value="copy"
                                                            onClick={() => {
                                                                this.copyText("copy")
                                                            }}/>
+                                                    <input className="dis-hid col-4" type="text"
+                                                           value={this.state.attributes[0].value + ":" + this.state.attributes[1].value}
+                                                           id="copy"/>
                                                 </div>
                                                 :
                                                 <div>
-                                                    <input className="dis-hid" type="text"
-                                                           value={this.state.attributes[0].value}
-                                                           id="copy"/>
                                                     <input type="button" className="btn btn-warning"
                                                            style={{height: "95%"}}
                                                            value="copy"
                                                            onClick={() => {
                                                                this.copyText("copy")
                                                            }}/>
+                                                    <input className="col-4 dis-hid" type="text"
+                                                           value={this.state.attributes[0].value}
+                                                           id="copy"/>
                                                 </div>
 
                                             : null}
@@ -228,19 +234,6 @@ class ShowPost extends Component {
                     <Loading/>
                     : null
                 }
-                {sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi" ?
-                    <div>
-                        <input className="dis-hid" type="text"
-                               value="https://id.sonyentertainmentnetwork.com/id/tv/signin/?ui=ds&hidePageElements=noAccountSection%2CtroubleSigningInLink&service_logo=ps&smcid=tv%3Apsvue#/signin"
-                               id="email"/>
-                        <input className="dis-hid" type="text" value="http://my.playstation.com/"
-                               id="playstation"/>
-                        <input className="dis-hid" type="text"
-                               value="https://account.sonyentertainmentnetwork.com/liquid/cam/devices/device-list.action?category=psn&displayNavigation=false"
-                               id="login"/>
-                    </div>
-                    : null}
-
             </div>
         );
     };

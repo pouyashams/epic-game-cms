@@ -136,8 +136,6 @@ class ShowPost extends Component {
                                         </div>
 
                                         <div className="col-lg-3 col-md-4 col-sm-1 w-25 mx-2">
-
-
                                             <input type="button" className="btn btn-primary mr-4" value="playstation"
                                                    onClick={() => {
                                                        this.copyText("playstation")
@@ -152,6 +150,17 @@ class ShowPost extends Component {
                                         <input className="dis-hid col-4" type="text"
                                                value="https://account.sonyentertainmentnetwork.com/liquid/cam/devices/device-list.action?category=psn&displayNavigation=false"
                                                id="login"/>
+                                        {this.state.attributes.length !== 0 ?
+                                            this.state.attributes[1] ?
+
+                                                <input className="dis-hid col-4" type="text"
+                                                       value={this.state.attributes[0].value + ":" + this.state.attributes[1].value}
+                                                       id="copy"/>
+                                                :
+                                                <input className="dis-hid col-4" type="text"
+                                                       value={this.state.attributes[0].value}
+                                                       id="copy"/>
+                                            : null}
                                     </div>
                                     : null
                             }
@@ -173,34 +182,12 @@ class ShowPost extends Component {
                                 {sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi" ?
                                     <div className="form-group col-12 col-sm-6 col-md-3 float-right "
                                          style={{marginTop: "32px"}}>
-                                        {this.state.attributes.length !== 0 ?
-                                            this.state.attributes[1] ?
-                                                <div>
-                                                    <input type="button" className="btn btn-warning"
-                                                           style={{height: "95%"}}
-                                                           value="copy"
-                                                           onClick={() => {
-                                                               this.copyText("copy")
-                                                           }}/>
-                                                    <input className="dis-hid col-12" type="text"
-                                                           value={this.state.attributes[0].value + ":" + this.state.attributes[1].value}
-                                                           id="copy"/>
-                                                </div>
-                                                :
-                                                <div>
-                                                    <input type="button" className="btn btn-warning"
-                                                           style={{height: "95%"}}
-                                                           value="copy"
-                                                           onClick={() => {
-                                                               this.copyText("copy")
-                                                           }}/>
-                                                    <input className="dis-hid col-12" type="text"
-                                                           value={this.state.attributes[0].value}
-                                                           id="copy"/>
-                                                </div>
-
-                                            : null}
-
+                                        <input type="button" className="btn btn-warning"
+                                               style={{height: "95%"}}
+                                               value="copy"
+                                               onClick={() => {
+                                                   this.copyText("copy")
+                                               }}/>
                                     </div>
                                     : null}
 

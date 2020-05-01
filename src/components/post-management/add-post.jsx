@@ -291,8 +291,9 @@ class AddPost extends Component {
                             <div className="rtl m-0 float-right row w-100 justify-content-start my-1 pb-3">
                                 {this.state.inputList.map(
                                     (input) => (
-                                        <div className={input.id % 2 === 0 ? "col-lg-6 col-md-12 border-right" : "col-lg-6 col-md-12"}
-                                             key={input.id}>
+                                        <div
+                                            className={input.id % 2 === 0 ? "col-lg-6 col-md-12 border-right" : "col-lg-6 col-md-12"}
+                                            key={input.id}>
                                             <div className="form-group col-5 float-right ">
                                                 <label>عنوان :</label>
                                                 <input className="form-control text-center w-100 "
@@ -324,7 +325,13 @@ class AddPost extends Component {
                                         onChange={this.handleChange}
                                         setContents={this.state.contentText}
                                         setOptions={{
-                                            buttonList: [["undo", "redo"], ["bold", "underline", "italic", "strike"]]
+                                            buttonList: [
+                                                ['undo', 'redo'],
+                                                ['link'],
+                                                ['formatBlock'],
+                                                ['bold', 'underline', 'italic', 'strike'],
+                                                ['removeFormat'],
+                                            ]
                                         }}
                                         setDefaultStyle="direction: ltr !important; min-height: 200px;"
                                     />

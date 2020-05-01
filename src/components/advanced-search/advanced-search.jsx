@@ -4,7 +4,6 @@ import {searchAcount} from "../../services/acountService";
 import {toast} from "react-toastify";
 import SunEditor from "suneditor-react";
 
-
 class AdvancedSearch extends Component {
     constructor(props) {
         super(props);
@@ -65,6 +64,7 @@ class AdvancedSearch extends Component {
     };
 
     render() {
+
         return (
             <div
                 className="rtl bg border shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color bg-game">
@@ -85,8 +85,14 @@ class AdvancedSearch extends Component {
                                    type="text"
                                    placeholder="بخشی از متن پست مورد نظر بنویسید!"
                                    onChange={(e) => this.fillParameterValue(e.target.value, "content")}
+                                   onKeyPress={event => {
+                                       if (event.key === 'Enter') {
+                                           this.search()
+                                       }
+                                   }}
                             />
                         </div>
+
                     </div>
                 </div>
 

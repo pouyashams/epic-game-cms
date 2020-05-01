@@ -39,6 +39,11 @@ class SearchCriteria extends Component {
                                     <div className="form-group col-12 col-sm-6 col-md-3 float-right py-3" key={index++}>
                                         <label>{searchCriteria.label} :</label>
                                         <input className="form-control text-center"
+                                               onKeyPress={event => {
+                                                   if (event.key === 'Enter') {
+                                                       this.search()
+                                                   }
+                                               }}
                                                type={searchCriteria.type}
                                                placeholder={searchCriteria.placeholder}
                                                value={this.state[searchCriteria.name]}
@@ -52,6 +57,11 @@ class SearchCriteria extends Component {
                                     <div className="form-group col-12 col-sm-6 col-md-3 float-right py-3" key={index++}>
                                         <label>{searchCriteria.label} :</label>
                                         <input className="form-control text-center"
+                                               onKeyPress={event => {
+                                                   if (event.key === 'Enter') {
+                                                       this.search()
+                                                   }
+                                               }}
                                                type={searchCriteria.type}
                                                placeholder={searchCriteria.placeholder}
                                                value={this.state[searchCriteria.name]}

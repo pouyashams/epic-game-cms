@@ -113,14 +113,14 @@ class EditPost extends Component {
             .replace(/<\s*span[^>]*>/gi, "")
             .split("</a>").join("")
             .split("</span>").join("")
-            .split("<h1>").join("")
+            .split("<h1>").join("<p>")
             .split("<h2>").join("<p>")
             .split("<h3>").join("<p>")
             .split("<h4>").join("<p>")
             .split("<h5>").join("<p>")
             .split("<h6>").join("<p>")
             .split("<h7>").join("<p>")
-            .split("</h1>").join("\n")
+            .split("</h1>").join("</p>")
             .split("</h2>").join("</p>")
             .split("</h3>").join("</p>")
             .split("</h4>").join("</p>")
@@ -235,8 +235,9 @@ class EditPost extends Component {
                             <div className="rtl m-0 float-right row w-100 justify-content-start my-1 pb-3">
                                 {this.state.inputList.map(
                                     (input) => (
-                                        <div className={input.id % 2 === 0 ? "col-lg-6 col-md-12 border-right" : "col-lg-6 col-md-12"}
-                                             key={input.id}>
+                                        <div
+                                            className={input.id % 2 === 0 ? "col-lg-6 col-md-12 border-right" : "col-lg-6 col-md-12"}
+                                            key={input.id}>
                                             <div className="form-group col-5 float-right ">
                                                 <label>عنوان :</label>
                                                 <input className="form-control text-center w-100 "
@@ -264,14 +265,20 @@ class EditPost extends Component {
                                     ))}
                                 <div className="form-group col-12 float-right pt-5">
                                     <label>متن پست :</label>
-                                <SunEditor
-                                    onChange={this.handleChange}
-                                    setContents={this.state.contentText}
-                                    // setOptions={{
-                                    //     buttonList: [["undo", "redo"], ["bold", "underline", "italic", "strike"]]
-                                    // }}
-                                    setDefaultStyle="direction: ltr !important; min-height: 200px;"
-                                />
+                                    <SunEditor
+                                        onChange={this.handleChange}
+                                        setContents={this.state.contentText}
+                                        setOptions={{
+                                            buttonList: [
+                                                ['undo', 'redo'],
+                                                ['link'],
+                                                ['formatBlock'],
+                                                ['bold', 'underline', 'italic', 'strike'],
+                                                ['removeFormat'],
+                                            ]
+                                        }}
+                                        setDefaultStyle="direction: ltr !important; min-height: 200px;"
+                                    />
                                 </div>
                             </div>
                         </div>

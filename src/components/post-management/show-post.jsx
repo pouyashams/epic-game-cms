@@ -182,7 +182,7 @@ class ShowPost extends Component {
                                                            onClick={() => {
                                                                this.copyText("copy")
                                                            }}/>
-                                                    <input className="dis-hid col-4" type="text"
+                                                    <input className="dis-hid col-12" type="text"
                                                            value={this.state.attributes[0].value + ":" + this.state.attributes[1].value}
                                                            id="copy"/>
                                                 </div>
@@ -194,7 +194,7 @@ class ShowPost extends Component {
                                                            onClick={() => {
                                                                this.copyText("copy")
                                                            }}/>
-                                                    <input className="col-4 dis-hid" type="text"
+                                                    <input className="dis-hid col-12" type="text"
                                                            value={this.state.attributes[0].value}
                                                            id="copy"/>
                                                 </div>
@@ -213,7 +213,13 @@ class ShowPost extends Component {
                                 <SunEditor
                                     setContents={this.state.content}
                                     setOptions={{
-                                        buttonList: [["undo", "redo"], ["bold", "underline", "italic", "strike"]]
+                                        buttonList: [
+                                            ['undo', 'redo'],
+                                            ['link'],
+                                            ['formatBlock'],
+                                            ['bold', 'underline', 'italic', 'strike'],
+                                            ['removeFormat'],
+                                        ]
                                     }}
                                     disable={true}
                                     enableToolbar={false}

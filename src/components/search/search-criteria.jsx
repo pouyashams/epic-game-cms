@@ -28,11 +28,17 @@ class SearchCriteria extends Component {
     render() {
 
         const {searchCriteriaArray, extraActions} = this.props;
-
+        let dir = null;
+        if (this.props.language.rtl) {
+            dir = "rtl"
+        } else {
+            dir = "ltr"
+        }
         let index = 1;
         return (
             <div className="col-12 justify-content-center align-items-center text-center ">
-                <form className="rtl border m-0  shadow float-right row w-100 justify-content-center my-3 pb-3 body-color">
+                <form
+                    className={dir + " border m-0  shadow float-right row w-100 justify-content-center my-3 pb-3 body-color"}>
                     {searchCriteriaArray.map((searchCriteria) => {
                             if (searchCriteria.element === 'input') {
                                 return (
@@ -106,17 +112,20 @@ class SearchCriteria extends Component {
                         <div className="row">
                             <div className="col-4 text-right py-3">
                                 {extraActions && extraActions.rightActions.length !== 0 ? extraActions.rightActions.map((rightAction) => (
-                                    <button className={rightAction.style} data-title={rightAction.title} onClick={rightAction.onclick} key={index++}>
+                                    <button className={rightAction.style} data-title={rightAction.title}
+                                            onClick={rightAction.onclick} key={index++}>
                                         <span className={rightAction.icon}></span>
                                     </button>
                                 )) : null}
                             </div>
                             <div className="col-4 text-center ">
-                                <input type="button" className="btn btn-dark" value="جستجو" onClick={this.search}/>
+                                <input type="button" className="btn btn-dark" value={this.props.language.search}
+                                       onClick={this.search}/>
                             </div>
                             <div className="col-4 text-left">
                                 {extraActions && extraActions.leftActions.length !== 0 ? extraActions.leftActions.map((leftAction) => (
-                                    <button className={leftAction.style} data-title={leftAction.title} onClick={leftAction.onclick} key={index++}>
+                                    <button className={leftAction.style} data-title={leftAction.title}
+                                            onClick={leftAction.onclick} key={index++}>
                                         <span className={leftAction.icon} title={leftAction.title}></span>
                                     </button>
                                 )) : null}

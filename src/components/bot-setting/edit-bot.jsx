@@ -166,7 +166,7 @@ class EditBot extends Component {
                             </div>
                             <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
                                 <label>زمان چرخه پست :</label>
-                                <input className="form-control text-center w-100 dir-text-left"
+                                <input className="form-control text-center w-100 ltr"
                                        type={"input"}
                                        value={this.state.interval}
                                        onChange={(e) => this.handelChangeInput(e.target.value, "interval")}
@@ -174,7 +174,7 @@ class EditBot extends Component {
                             </div>
                             <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
                                 <label>تعداد پست عادی :</label>
-                                <input className="form-control text-center w-100 dir-text-left"
+                                <input className="form-control text-center w-100 ltr"
                                        type={"input"}
                                        value={this.state.numberOfNormalPost}
                                        onChange={(e) => this.handelChangeInput(e.target.value, "numberOfNormalPost")}
@@ -182,7 +182,7 @@ class EditBot extends Component {
                             </div>
                             <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
                                 <label>تعداد پست برگزیده :</label>
-                                <input className="form-control text-center w-100 dir-text-left"
+                                <input className="form-control text-center w-100 ltr"
                                        type={"input"}
                                        value={this.state.numberOfFavouritePost}
                                        onChange={(e) => this.handelChangeInput(e.target.value, "numberOfFavouritePost")}

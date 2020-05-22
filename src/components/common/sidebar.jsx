@@ -6,14 +6,14 @@ import "bootstrap-v4-rtl/dist/css/bootstrap.min.css"
 class Sidebar extends Component {
     render() {
         let count = 1;
-        const navLinks = getNavLinks();
+        const navLinks = getNavLinks(this.props.language);
         return (
             <nav className="col-2 position-fixed d-none d-md-block sidebar side-back">
                 <div className="sidebar-sticky">
-                    <div className="sidebar-header pb-3 pt-1 justify-content-center">
-                        <div className="user-info justify-content-center text-center">
-                            <span className="user-name justify-content-center text-white">
-                                <strong>تیم اپیک گیم</strong>
+                    <div className={this.props.language.rtl?"sidebar-header pb-3 pt-1 justify-content-center":"sidebar-header py-2 justify-content-center"}>
+                        <div className="user-info justify-content-center text-center ">
+                            <span className="user-name justify-content-center text-white ">
+                                <strong>{this.props.language.epicGameTeam}</strong>
                             </span>
                         </div>
                     </div>
@@ -24,7 +24,8 @@ class Sidebar extends Component {
                                      key={count++}>
                                  <span className="nav-link pointer">
                                      <span className="fa fa-unsorted text-warning"/>
-                                    <span className="icon-title m-2 font-weight-bold text-warning ">مدیریت تلگرام</span>
+                                    <span
+                                        className="icon-title m-2 font-weight-bold text-warning ">{this.props.language.manageTelegram}</span>
                                 </span>
                             </li>
                                 {navLinks.map(nav =>

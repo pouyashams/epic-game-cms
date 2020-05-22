@@ -48,7 +48,6 @@ class AdvancedSearch extends Component {
                             }
                         )
                     });
-                    console.log(searchResultList)
                     this.setState({searchResultList, progress: false});
                 }
             } catch (ex) {
@@ -70,12 +69,12 @@ class AdvancedSearch extends Component {
                 className="rtl bg border shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color bg-game">
                 <div
                     className="col-12 justify-content-center align-items-center text-center header-box text-light header-color">
-                    <h4 className="py-2">جستجو پیشرفته</h4>
+                    <h4 className="py-2">{this.props.language.advancedSearch}</h4>
                 </div>
 
                 <div className="col-12 py-3">
                     <div className="d-flex justify-content-center h-100">
-                        <div className="searchbar">
+                        <div className={this.props.language.rtl ? "searchbar" : "searchbar ltr"}>
                             <span className="search_icon pointer"
                                   onClick={() => {
                                       this.search()
@@ -83,7 +82,7 @@ class AdvancedSearch extends Component {
                             ><i className="fa fa-search"/></span>
                             <input className="search_input text-white"
                                    type="text"
-                                   placeholder="بخشی از متن پست مورد نظر بنویسید!"
+                                   placeholder={this.props.language.writePartOfYourPostContent}
                                    onChange={(e) => this.fillParameterValue(e.target.value, "content")}
                                    onKeyPress={event => {
                                        if (event.key === 'Enter') {

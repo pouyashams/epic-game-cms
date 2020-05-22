@@ -33,9 +33,9 @@ class ShowPost extends Component {
         let attributes = [];
         let favoriteType;
         if (this.getValue(accountInfo.favourite)) {
-            favoriteType = "برگزیده"
+            favoriteType = this.props.language.favourite
         } else {
-            favoriteType = "عادی"
+            favoriteType = this.props.language.normal
         }
         this.getValue(accountInfo.attributes).forEach((attribute) => {
             attributes.push(
@@ -88,29 +88,29 @@ class ShowPost extends Component {
                 className="rtl border bg-light shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
                 <div
                     className=" col-12 justify-content-center align-items-center text-center header-box  text-light header-color">
-                    <h4 className="py-2 ">نمایش پست</h4>
+                    <h4 className="py-2 ">{this.props.language.displayPost}</h4>
                 </div>
                 <div className="col-12 justify-content-center align-items-center text-center body-color">
                     <div
                         className="rtl m-0 float-right row w-100 justify-content-start body-color box-shadow my-4 border radius-line">
                         <div className="form-group col-12 justify-content-center">
                             <div className="form-group col-lg-2 col-md-3 col-sm-12  float-right pt-3 ml-2">
-                                <label>نوع پست :</label>
-                                <input className="form-control text-center w-100 dir-text-left"
+                                <label>{this.props.language.type}</label>
+                                <input className="form-control text-center w-100 ltr"
                                        type={"input"}
                                        value={this.state.favoriteType}
                                 />
                             </div>
                             <div className="form-group  col-lg-2 col-md-3 col-sm-12 float-right pt-3 ml-2">
-                                <label>قیمت :</label>
-                                <input className="form-control text-center w-100 dir-text-left"
+                                <label>{this.props.language.price}</label>
+                                <input className="form-control text-center w-100 ltr"
                                        type={"input"}
                                        value={this.state.price}
                                 />
                             </div>
                             <div className="form-group  col-lg-2 col-md-3 col-sm-12 col-md-2 float-right pt-3 ml-2">
-                                <label>کد پست :</label>
-                                <input className="form-control text-center w-100 dir-text-left"
+                                <label>{this.props.language.code}</label>
+                                <input className="form-control text-center w-100 ltr"
                                        type={"input"}
                                        value={this.state.id}
                                 />
@@ -196,7 +196,7 @@ class ShowPost extends Component {
                         </div>
                         <div className="form-group col-12 ">
                             <div className="form-group col-12 float-right">
-                                <label>متن پست :</label>
+                                <label>{this.props.language.content}</label>
                                 <SunEditor
                                     setContents={this.state.content}
                                     setOptions={{
@@ -216,7 +216,7 @@ class ShowPost extends Component {
                         </div>
 
                         <div className="col-12 p-3 text-center">
-                            <input type="button" className="btn btn-danger mr-3" value="بازگشت"
+                            <input type="button" className="btn btn-danger mr-3" value={this.props.language.back}
                                    onClick={() => {
                                        this.cancel()
                                    }}/>

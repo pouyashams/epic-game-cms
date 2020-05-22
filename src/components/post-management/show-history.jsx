@@ -21,16 +21,16 @@ class ShowHistory extends Component {
 
             let active = "";
             if (history.active) {
-                active = <label className="text-success">فعال</label>
+                active = <label className="text-success">{this.props.language.active}</label>
             } else {
-                active = <label className="text-danger">غیرفعال</label>
+                active = <label className="text-danger">{this.props.language.inactive}</label>
             }
             historyList.push(
                 {
-                    "identifier":history.identifier,
-                    "creationDateTime":history.creationDateTime,
-                    "lastUpdateDateTime":history.lastUpdateDateTime,
-                    "active":active
+                    "identifier": history.identifier,
+                    "creationDateTime": history.creationDateTime,
+                    "lastUpdateDateTime": history.lastUpdateDateTime,
+                    "active": active
                 }
             )
         });
@@ -59,10 +59,10 @@ class ShowHistory extends Component {
             showCheckBox: false,
             actions: [],
             headerTitleInfos: [
-                {name: "identifier", title: "کد"},
-                {name: "creationDateTime", title: "تاریخ ایجاد"},
-                {name: "lastUpdateDateTime", title: "تاریخ بروز رسانی"},
-                {name: "active", title: "وضعیت"}
+                {name: "identifier", title: this.props.language.code},
+                {name: "creationDateTime", title: this.props.language.creationDate},
+                {name: "lastUpdateDateTime", title: this.props.language.updateDate},
+                {name: "active", title: this.props.language.status}
             ]
         };
         return headerInfo;
@@ -76,12 +76,14 @@ class ShowHistory extends Component {
                 className="rtl border bg-light shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
                 <div
                     className=" col-12 justify-content-center align-items-center text-center header-box  text-light header-color">
-                    <h4 className="py-2 ">نمایش تاریخچه</h4>
+                    <h4 className="py-2 ">{this.props.language.showHistory}</h4>
                 </div>
                 <div className="col-12 justify-content-center align-items-center text-center body-color py-3">
-                    <Table headerInfo={headerInfo} searchResultList={this.state.historyList} pageSize={5}/>
+                    <Table headerInfo={headerInfo} searchResultList={this.state.historyList} pageSize={5}
+                           language={this.props.language}
+                    />
                     <div className="col-12 p-3 text-center">
-                        <input type="button" className="btn btn-danger mr-3" value="بازگشت"
+                        <input type="button" className="btn btn-danger mr-3" value={this.props.language.back}
                                onClick={() => {
                                    this.cancel()
                                }}/>

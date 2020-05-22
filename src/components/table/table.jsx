@@ -55,7 +55,7 @@ class Table extends Component {
                             (
                                 <tr key={loopCounter++}>
                                     <td colSpan={headerInfo.headerTitleInfos.length + headerInfo.actions.length + 1}>
-                                        موردی یافت نشد.
+                                        {this.props.language.tableResult}
                                     </td>
                                 </tr>
                             )

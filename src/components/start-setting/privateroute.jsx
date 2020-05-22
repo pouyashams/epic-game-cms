@@ -15,12 +15,14 @@ const getWithExpiry = (key) => {
     return item.value
 };
 
-export const PrivateRoute = ({path, component: Component, exact}) => {
+export const PrivateRoute = ({path, component: Component, exact,language}) => {
     return <Route
         exact={exact}
         path={path}
         render={() => {
-            if (getWithExpiry("valid")) return <Component/>;
+            if (getWithExpiry("valid")) return <Component
+                language={language}
+            />;
             else return <Redirect to="/login"/>;
         }}
     />

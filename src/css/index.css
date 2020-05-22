@@ -58,6 +58,10 @@
     margin-right: -126px !important;
 }
 
+.dropdown-menu-m-eng {
+    margin-left: -126px !important;
+}
+
 .dropdown-menu-hover:hover {
     background-color: rgba(7, 7, 7, 0.35) !important;
 }
@@ -171,8 +175,9 @@
 }
 
 
-.dir-text-left {
+.ltr {
     direction: ltr !important;
+    text-align: left !important;
 }
 
 .dir-text-right {
@@ -214,12 +219,21 @@
     font-style: normal;
 }
 
+.body-font-per {
+    font-family: BlinkMacSystemFont, 'yekan', 'Segoe UI',
+    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif !important;
+}
+
+.body-font-eng {
+    font-family: BlinkMacSystemFont, 'Segoe UI',
+    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif !important;
+}
+
 body {
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'yekan', 'Segoe UI',
-    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-    'Helvetica Neue', sans-serif !important;
     background: url('../images/dark-grey-terrazzo.jpeg') repeat center center fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -355,6 +369,10 @@ svg.custom path.link {
 
 .pl-10 {
     padding-left: 10px;
+}
+
+.pr-10 {
+    padding-right: 10px;
 }
 
 table {
@@ -501,14 +519,13 @@ table, th, td {
 }
 
 textarea {
-    text-align: center!important;
-    direction: ltr!important;
-    line-height: 35px!important;
-    width: 500px!important;
-    height: 100px!important;
-    border-radius: 10px!important;
+    text-align: center !important;
+    direction: ltr !important;
+    line-height: 35px !important;
+    width: 500px !important;
+    height: 100px !important;
+    border-radius: 10px !important;
 }
-
 
 
 .thumbnail {
@@ -521,10 +538,12 @@ textarea {
     padding-left: 0px;
     padding-right: 0px;
 }
-.bg-game{
-    background-image: url("../images/game.jpg");}
 
-.searchbar{
+.bg-game {
+    background-image: url("../images/game.jpg");
+}
+
+.searchbar {
     margin-bottom: auto;
     margin-top: auto;
     height: 60px;
@@ -533,31 +552,31 @@ textarea {
     padding: 10px;
 }
 
-.search_input{
+.search_input {
     color: white;
     border: 0;
     outline: 0;
     background: none;
     width: 0;
-    caret-color:transparent;
+    caret-color: transparent;
     line-height: 40px;
     transition: width 0.4s linear;
 }
 
-.searchbar:hover > .search_input{
+.searchbar:hover > .search_input {
     padding: 0 10px;
     width: 250px;
-    caret-color:red;
+    caret-color: red;
     transition: width 0.4s linear;
 
 }
 
-.searchbar:hover > .search_icon{
+.searchbar:hover > .search_icon {
     background: white;
     color: #e74c3c;
 }
 
-.search_icon{
+.search_icon {
     height: 40px;
     width: 40px;
     float: right;
@@ -565,7 +584,6 @@ textarea {
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    color:white;
-    text-decoration:none;
+    color: white;
+    text-decoration: none;
 }
-

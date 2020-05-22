@@ -211,22 +211,22 @@ class AddPost extends Component {
         ];
 
         const favoriteTypes = [
-            {value: true, title: "برگزیده"},
-            {value: false, title: "عادی"},
+            {value: true, title: this.props.language.favourite},
+            {value: false, title: this.props.language.normal},
         ];
         return (
             <div
                 className="rtl border bg-light shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
                 <div
                     className=" col-12 justify-content-center align-items-center text-center header-box  text-light header-color">
-                    <h4 className="py-2 ">اضافه کردن پست</h4>
+                    <h4 className="py-2 ">{this.props.language.addPost}</h4>
                 </div>
                 <div className="col-12 justify-content-center align-items-center text-center body-color">
                     <div
                         className="rtl m-0 float-right row w-100 justify-content-start body-color box-shadow my-4 border radius-line">
                         <div className="form-group col-12 justify-content-center">
                             <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
-                                <label>نوع پست :</label>
+                                <label>{this.props.language.type}</label>
                                 <select
                                     className="form-control text-center"
                                     onChange={(e) => this.handelChangeInput(e.target.value, "favoriteType")}
@@ -242,9 +242,9 @@ class AddPost extends Component {
                                 sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi" ?
                                     <div className="col-12">
                                         <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
-                                            <label>ریجن :</label>
+                                            <label>{this.props.language.region}</label>
                                             <select
-                                                className="form-control text-center dir-text-left"
+                                                className="form-control text-center ltr"
                                                 onChange={(e) => this.handelChangeInput(e.target.value, "region")}
                                             >
                                                 {options.map(
@@ -257,16 +257,16 @@ class AddPost extends Component {
                                             </select>
                                         </div>
                                         <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
-                                            <label>قیمت دلار :</label>
-                                            <input className="form-control text-center w-100 dir-text-left"
+                                            <label>{this.props.language.priceDollar}</label>
+                                            <input className="form-control text-center w-100 ltr"
                                                    type={"input"}
                                                    value={this.state.dolar}
                                                    onChange={(e) => this.handelChangeInput(e.target.value, "dolar")}
                                             />
                                         </div>
                                         <div className="form-group col-12 col-sm-6 col-md-2 float-right pt-3 ml-2">
-                                            <label>قیمت :</label>
-                                            <input className="form-control text-center w-100 dir-text-left"
+                                            <label>{this.props.language.price}</label>
+                                            <input className="form-control text-center w-100 ltr"
                                                    type={"input"}
                                                    value={this.state.price}
                                                    onChange={(e) => this.handelChangeInput(e.target.value, "price")}
@@ -276,7 +276,7 @@ class AddPost extends Component {
                                     </div>
                                     : <div className="form-group col-12 col-sm-6 col-md-2 float-right pt-3 ml-2">
                                         <label>قیمت :</label>
-                                        <input className="form-control text-center w-100 dir-text-left"
+                                        <input className="form-control text-center w-100 ltr"
                                                type={"input"}
                                                value={this.state.price}
                                                onChange={(e) => this.handelChangeInput(e.target.value, "price")}
@@ -295,7 +295,7 @@ class AddPost extends Component {
                                             className={input.id % 2 === 0 ? "col-lg-6 col-md-12 border-right" : "col-lg-6 col-md-12"}
                                             key={input.id}>
                                             <div className="form-group col-5 float-right ">
-                                                <label>عنوان :</label>
+                                                <label>{this.props.language.title}</label>
                                                 <input className="form-control text-center w-100 "
                                                        type={"input"}
                                                        onChange={(e) => this.handelChangeInputList(e.target.value, input.id, true)}
@@ -303,7 +303,7 @@ class AddPost extends Component {
                                                 />
                                             </div>
                                             <div className="form-group col-5 float-right">
-                                                <label>متن :</label>
+                                                <label>{this.props.language.text}</label>
                                                 <input className="form-control text-center w-100"
                                                        type={"input"}
                                                        onChange={(e) => this.handelChangeInputList(e.target.value, input.id, false)}
@@ -320,7 +320,7 @@ class AddPost extends Component {
                                         </div>
                                     ))}
                                 <div className="form-group col-12 float-right pt-5">
-                                    <label>متن پست :</label>
+                                    <label>{this.props.language.content}</label>
                                     <SunEditor
                                         onChange={this.handleChange}
                                         setContents={this.state.contentText}
@@ -340,15 +340,15 @@ class AddPost extends Component {
                         </div>
 
                         <div className="col-12 p-3 text-center">
-                            <input type="button" className="btn btn-success mr-3 my-2" value="انجام عملیات"
+                            <input type="button" className="btn btn-success mr-3 my-2" value={this.props.language.done}
                                    onClick={() => {
                                        this.sendAccountInfo()
                                    }}/>
-                            <input type="button" className="btn btn-warning mr-3 my-2" value="اضافه کردن"
+                            <input type="button" className="btn btn-warning mr-3 my-2" value={this.props.language.add}
                                    onClick={() => {
                                        this.addTitle()
                                    }}/>
-                            <input type="button" className="btn btn-danger mr-3 my-2" value="بازگشت"
+                            <input type="button" className="btn btn-danger mr-3 my-2" value={this.props.language.back}
                                    onClick={() => {
                                        this.cancel()
                                    }}/>

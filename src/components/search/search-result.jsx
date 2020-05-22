@@ -42,108 +42,201 @@ class SearchResult extends Component {
         return (
             <div className="col-12 justify-content-center align-items-center text-center pt-3  scroll-x-off"
             >
-                <table
-                    className="table t-responsive table-bordered table-striped sc-y-h">
-                    <thead className="bg-dark">
-                    <tr>
-                        <th className="hidden-xs table-counter"/>
-                        {headerInfo.showCheckBox ? (
-                            <th>
-                                <input type="checkbox" id="checkAll"/>
-                            </th>
-                        ) : null}
-                        {headerInfo.headerTitleInfos.map((headerTitleInfo) => (
-                            <th className="text-center text-light" key={loopCounter++}>{headerTitleInfo.title}</th>
-                        ))}
-                        {headerInfo.actions.map((action) =>
+                {this.props.language.rtl ?
+                    <table className="table t-responsive table-bordered table-striped sc-y-h">
+                        <thead className="bg-dark">
+                        <tr>
+                            <th className="hidden-xs table-counter"/>
+                            {headerInfo.showCheckBox ? (
+                                <th>
+                                    <input type="checkbox" id="checkAll"/>
+                                </th>
+                            ) : null}
+                            {headerInfo.headerTitleInfos.map((headerTitleInfo) => (
+                                <th className="text-center text-light" key={loopCounter++}>{headerTitleInfo.title}</th>
+                            ))}
+                            {headerInfo.actions.map((action) =>
+                                (
+                                    <th className="text-center text-light" key={loopCounter++}>{action.title}</th>
+                                )
+                            )} {headerInfo.dropdowns.map((dropdown) =>
                             (
-                                <th className="text-center text-light" key={loopCounter++}>{action.title}</th>
+                                <th className="text-center text-light" key={loopCounter++}>{dropdown.title}</th>
                             )
-                        )} {headerInfo.dropdowns.map((dropdown) =>
-                        (
-                            <th className="text-center text-light" key={loopCounter++}>{dropdown.title}</th>
-                        )
-                    )}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {this.props.searchResultList.length === 0 ?
-                        (
-                            <tr key={loopCounter++}>
-                                <td colSpan={headerInfo.headerTitleInfos.length + headerInfo.actions.length + headerInfo.dropdowns.length + 1}>
-                                    موردی یافت نشد.
-                                </td>
-                            </tr>
-                        )
-                        : this.props.searchResultList.map((searchResult) =>
+                        )}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {this.props.searchResultList.length === 0 ?
                             (
                                 <tr key={loopCounter++}>
-                                    <td className="hidden-xs table-counter">
-                                        {++counter}
+                                    <td colSpan={headerInfo.headerTitleInfos.length + headerInfo.actions.length + headerInfo.dropdowns.length + 1}>
+                                        {this.props.language.tableResult}
                                     </td>
-                                    {headerInfo.showCheckBox ? (
-                                        <td>
-                                            <input type="checkbox" className="check"/>
-                                        </td>
-                                    ) : null}
-                                    {headerInfo.headerTitleInfos.map((headerTitleInfo) =>
-                                        (
-                                            <td key={loopCounter++}>{searchResult[headerTitleInfo.name]}</td>
-                                        )
-                                    )}
-                                    {headerInfo.actions.map((action) =>
-                                        (
-                                            <td key={loopCounter++}>
-                                                <button className={action.style} data-title={action.title}
-                                                        onClick={() => {
-                                                            action.onclick(searchResult)
-                                                        }}>
-                                                    <span className={action.icon} title={action.title}/>
-                                                </button>
-                                            </td>
-                                        )
-                                    )}
-                                    {headerInfo.dropdowns.map((dropdown) =>
-                                        (
-                                            <td key={loopCounter++}>
-                                                <div className="dropdown">
-                                                    <button className={`w-38 ${dropdown.style}`}
-                                                            id={dropdown.id}
-                                                            data-title={dropdown.title}
-                                                            data-toggle="dropdown"
-                                                            aria-haspopup="true"
-                                                            aria-expanded="false"
-                                                    >
-                                                        <span className={dropdown.icon} title={dropdown.title}/>
-                                                    </button>
-                                                    <div className="dropdown-menu" aria-labelledby={dropdown.id}>
-                                                        {dropdown.item.map((itemInfo) =>
-                                                            (
-                                                                <label className="dropdown-item pointer"
-                                                                       onClick={() => {
-                                                                           itemInfo.onclick(searchResult)
-                                                                       }}
-                                                                >
-                                                                    <span className={`pl-10 ${itemInfo.icon}`}/>
-                                                                    {itemInfo.itemTitle}
-                                                                </label>
-
-
-                                                            )
-                                                        )
-                                                        }
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        )
-                                    )}
                                 </tr>
                             )
-                        )
-                    }
-                    </tbody>
-                </table>
+                            : this.props.searchResultList.map((searchResult) =>
+                                (
+                                    <tr key={loopCounter++}>
+                                        <td className="hidden-xs table-counter">
+                                            {++counter}
+                                        </td>
+                                        {headerInfo.showCheckBox ? (
+                                            <td>
+                                                <input type="checkbox" className="check"/>
+                                            </td>
+                                        ) : null}
+                                        {headerInfo.headerTitleInfos.map((headerTitleInfo) =>
+                                            (
+                                                <td key={loopCounter++}>{searchResult[headerTitleInfo.name]}</td>
+                                            )
+                                        )}
+                                        {headerInfo.actions.map((action) =>
+                                            (
+                                                <td key={loopCounter++}>
+                                                    <button className={action.style} data-title={action.title}
+                                                            onClick={() => {
+                                                                action.onclick(searchResult)
+                                                            }}>
+                                                        <span className={action.icon} title={action.title}/>
+                                                    </button>
+                                                </td>
+                                            )
+                                        )}
+                                        {headerInfo.dropdowns.map((dropdown) =>
+                                            (
+                                                <td key={loopCounter++}>
+                                                    <div className="dropdown">
+                                                        <button className={`w-38 ${dropdown.style}`}
+                                                                id={dropdown.id}
+                                                                data-title={dropdown.title}
+                                                                data-toggle="dropdown"
+                                                                aria-haspopup="true"
+                                                                aria-expanded="false"
+                                                        >
+                                                            <span className={dropdown.icon} title={dropdown.title}/>
+                                                        </button>
+                                                        <div className="dropdown-menu" aria-labelledby={dropdown.id}>
+                                                            {dropdown.item.map((itemInfo) =>
+                                                                (
+                                                                    <label className="dropdown-item pointer"
+                                                                           onClick={() => {
+                                                                               itemInfo.onclick(searchResult)
+                                                                           }}
+                                                                    >
+                                                                        <span className={`pl-10 ${itemInfo.icon}`}/>
+                                                                        {itemInfo.itemTitle}
+                                                                    </label>
 
+
+                                                                )
+                                                            )
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            )
+                                        )}
+                                    </tr>
+                                )
+                            )
+                        }
+                        </tbody>
+                    </table>
+                    :
+                    <table className="table t-responsive table-bordered table-striped sc-y-h">
+                        <thead className="bg-dark">
+                        <tr>
+                            {headerInfo.dropdowns.map((dropdown) =>
+                                (
+                                    <th className="text-center text-light" key={loopCounter++}>{dropdown.title}</th>
+                                )
+                            )}
+                            {headerInfo.actions.map((action) =>
+                                (
+                                    <th className="text-center text-light" key={loopCounter++}>{action.title}</th>
+                                )
+                            )}
+                            {headerInfo.headerTitleInfos.map((headerTitleInfo) => (
+                                <th className="text-center text-light" key={loopCounter++}>{headerTitleInfo.title}</th>
+                            ))}
+                            <th className="hidden-xs table-counter"/>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {this.props.searchResultList.length === 0 ?
+                            (
+                                <tr key={loopCounter++}>
+                                    <td colSpan={headerInfo.headerTitleInfos.length + headerInfo.actions.length + headerInfo.dropdowns.length + 1}>
+                                        {this.props.language.tableResult}
+                                    </td>
+                                </tr>
+                            )
+                            : this.props.searchResultList.map((searchResult) =>
+                                (
+                                    <tr key={loopCounter++}>
+
+                                        {headerInfo.dropdowns.map((dropdown) =>
+                                            (
+                                                <td key={loopCounter++}>
+                                                    <div className="dropdown">
+                                                        <button className={`w-38 ${dropdown.style}`}
+                                                                id={dropdown.id}
+                                                                data-title={dropdown.title}
+                                                                data-toggle="dropdown"
+                                                                aria-haspopup="true"
+                                                                aria-expanded="false"
+                                                        >
+                                                            <span className={dropdown.icon} title={dropdown.title}/>
+                                                        </button>
+                                                        <div className="dropdown-menu ltr" aria-labelledby={dropdown.id}>
+                                                            {dropdown.item.map((itemInfo) =>
+                                                                (
+                                                                    <label className="dropdown-item pointer"
+                                                                           onClick={() => {
+                                                                               itemInfo.onclick(searchResult)
+                                                                           }}
+                                                                    >
+                                                                        <span className={`pr-10 ${itemInfo.icon}`}/>
+                                                                        {itemInfo.itemTitle}
+                                                                    </label>
+
+
+                                                                )
+                                                            )
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            )
+                                        )}
+                                        {headerInfo.actions.map((action) =>
+                                            (
+                                                <td key={loopCounter++}>
+                                                    <button className={action.style} data-title={action.title}
+                                                            onClick={() => {
+                                                                action.onclick(searchResult)
+                                                            }}>
+                                                        <span className={action.icon} title={action.title}/>
+                                                    </button>
+                                                </td>
+                                            )
+                                        )}
+                                        {headerInfo.headerTitleInfos.map((headerTitleInfo) =>
+                                            (
+                                                <td key={loopCounter++}>{searchResult[headerTitleInfo.name]}</td>
+                                            )
+                                        )}
+                                        <td className="hidden-xs table-counter">
+                                            {++counter}
+                                        </td>
+                                    </tr>
+                                )
+                            )
+                        }
+                        </tbody>
+                    </table>
+                }
                 {searchResultList.length !== 0 ? (
                     <Pagination
                         itemCount={this.props.count}

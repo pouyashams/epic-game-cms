@@ -328,27 +328,25 @@ class PostManagement extends Component {
         let postFavourite = "";
         switch (dataInfo.status.name) {
             case "REGISTERED_POST_STATUS":
-                postStatus = <label className="text-warning">ثبت شده</label>;
+                postStatus = <label className="text-warning">{this.props.language.registered}</label>;
                 break;
             case "SENT_POST_STATUS":
-                postStatus = <label className="text-success">پست شده</label>;
+                postStatus = <label className="text-success">{this.props.language.posted}</label>;
                 break;
             case "DELETED_POST_STATUS":
-                postStatus = <label className="text-primary">حذف شده</label>;
+                postStatus = <label className="text-primary">{this.props.language.removed}</label>;
                 break;
             case "SOLD_POST_STATUS":
-                postStatus = <label className="text-danger">فروخته شده</label>;
+                postStatus = <label className="text-danger">{this.props.language.sold}</label>;
                 break;
             default:
         }
         switch (dataInfo.favourite) {
             case true:
-                postFavourite = <label className="text-success">
-                    برگزیده
-                </label>;
+                postFavourite = <label className="text-success">{this.props.language.favourite}</label>;
                 break;
             case false:
-                postFavourite = <label className="text-danger">عادی</label>;
+                postFavourite = <label className="text-danger">{this.props.language.normal}</label>;
                 break;
             default:
         }
@@ -356,7 +354,6 @@ class PostManagement extends Component {
     };
 
     search = async (parameters) => {
-        console.log(parameters)
         this.setState({
             currentPage: 1
         }, async () => {
@@ -463,14 +460,15 @@ class PostManagement extends Component {
                 element: "input",
                 type: "text",
                 placeholder: "---",
-                label: "کد پست",
+                label: this.props.language.code
+                ,
                 defaultValue: ""
             }, {
                 name: "content",
                 element: "input",
                 type: "text",
                 placeholder: "---",
-                label: "متن پست",
+                label: this.props.language.content,
                 defaultValue: ""
             },
             {
@@ -478,27 +476,27 @@ class PostManagement extends Component {
                 element: "select",
                 placeholder: "---",
                 defaultValue: "",
-                label: "وضعیت پست",
+                label: this.props.language.status,
                 options: [
                     {
                         value: "",
-                        title: "انتخاب کنید"
+                        title: this.props.language.choose
                     },
                     {
                         value: "SENT_POST_STATUS",
-                        title: "پست شده"
+                        title: this.props.language.posted
                     },
                     {
                         value: "SOLD_POST_STATUS",
-                        title: "فروخته شده"
+                        title: this.props.language.sold
                     },
                     {
                         value: "REGISTERED_POST_STATUS",
-                        title: "ثبت شده"
+                        title: this.props.language.registered
                     },
                     {
                         value: "DELETED_POST_STATUS",
-                        title: "حذف شده"
+                        title: this.props.language.removed
                     },
                 ]
             },
@@ -507,19 +505,19 @@ class PostManagement extends Component {
                 element: "select",
                 placeholder: "---",
                 defaultValue: "",
-                label: "نوع پست",
+                label: this.props.language.type,
                 options: [
                     {
                         value: "",
-                        title: "انتخاب کنید"
+                        title: this.props.language.choose
                     },
                     {
                         value: "true",
-                        title: "برگزیده"
+                        title: this.props.language.favourite
                     },
                     {
                         value: "false",
-                        title: "عادی"
+                        title: this.props.language.normal
                     },
                 ]
             }
@@ -528,75 +526,148 @@ class PostManagement extends Component {
 
 
     getResultTableHeader() {
-        let headerInfo = {
-            showCheckBox: false,
-            dropdowns: [
-                {
-                    style: 'btn btn-dark btn-xs',
-                    title: 'بیشتر',
-                    icon: "fa fa-ellipsis-v",
-                    id: "1",
-                    item: [
-                        {
-                            itemTitle: "پست کردن بی صدا",
-                            onclick: this.onActiveInfoSilent,
-                            icon: 'fa fa-bell-slash text-success',
+        let headerInfo = null;
+        if (this.props.language.rtl) {
+            headerInfo = {
+                dropdowns: [
+                    {
+                        style: 'btn btn-dark btn-xs',
+                        title: this.props.language.more,
+                        icon: "fa fa-ellipsis-v",
+                        id: "1",
+                        item: [
+                            {
+                                itemTitle: this.props.language.silentPosting,
+                                onclick: this.onActiveInfoSilent,
+                                icon: 'fa fa-bell-slash text-success',
 
-                        }, {
-                            itemTitle: "ویرایش پست",
-                            onclick: this.onEdit,
-                            icon: 'fa fa-edit text-primary',
+                            }, {
+                                itemTitle: this.props.language.edit,
+                                onclick: this.onEdit,
+                                icon: 'fa fa-edit text-primary',
 
-                        }, {
-                            itemTitle: "حذف از کانال ",
-                            icon: 'fa fa-remove text-info',
-                            onclick: this.onRemoveInfo
-                        },
-                        {
-                            itemTitle: "حذف پست",
-                            icon: 'fa fa-trash text-danger',
-                            onclick: this.onDeleteInfo
-                        },
-                    ]
-                }
-            ],
-            actions: [
-                {
-                    name: 'post',
-                    title: 'پست کردن',
-                    icon: 'fa fa-sign-in text-dark',
-                    style: 'btn btn-success btn-xs',
-                    onclick: this.onActiveInfo
-                }, {
-                    name: 'show',
-                    title: 'مشاهده',
-                    icon: 'fa fa-eye',
-                    style: 'btn btn-warning btn-xs',
-                    onclick: this.onShow
-                },
-                {
-                    name: 'remove',
-                    title: 'فروخته شده',
-                    icon: 'fa fa-download text-dark',
-                    style: 'btn btn-danger btn-xs',
-                    onclick: this.onDeActiveInfo
-                },
-                {
-                    name: 'history',
-                    title: 'تاریخچه',
-                    icon: 'fa fa-book text-dark',
-                    style: 'btn btn-primary btn-xs',
-                    onclick: this.onShowHistory
-                },
-            ],
-            headerTitleInfos: [
-                {name: "identifier", title: "کد پست"},
-                {name: "creationDateTime", title: "تاریخ ایجاد پست"},
-                {name: "lastUpdateDateTime", title: "تاریخ اخرین بروزرسانی"},
-                {name: "postFavourite", title: "نوع پست"},
-                {name: "postStatus", title: "وضعیت پست"},
-            ]
-        };
+                            }, {
+                                itemTitle: this.props.language.removeFromChannel,
+                                icon: 'fa fa-remove text-info',
+                                onclick: this.onRemoveInfo
+                            },
+                            {
+                                itemTitle: this.props.language.delete,
+                                icon: 'fa fa-trash text-danger',
+                                onclick: this.onDeleteInfo
+                            },
+                        ]
+                    }
+                ],
+                actions: [
+                    {
+                        name: 'post',
+                        title: this.props.language.post,
+                        icon: 'fa fa-sign-in text-dark',
+                        style: 'btn btn-success btn-xs',
+                        onclick: this.onActiveInfo
+                    }, {
+                        name: 'show',
+                        title: this.props.language.show,
+                        icon: 'fa fa-eye',
+                        style: 'btn btn-warning btn-xs',
+                        onclick: this.onShow
+                    },
+                    {
+                        name: 'remove',
+                        title: this.props.language.sold,
+                        icon: 'fa fa-download text-dark',
+                        style: 'btn btn-danger btn-xs',
+                        onclick: this.onDeActiveInfo
+                    },
+                    {
+                        name: 'history',
+                        title: this.props.language.history,
+                        icon: 'fa fa-book text-dark',
+                        style: 'btn btn-primary btn-xs',
+                        onclick: this.onShowHistory
+                    },
+                ],
+                headerTitleInfos: [
+                    {name: "identifier", title: this.props.language.code},
+                    {name: "creationDateTime", title: this.props.language.creationDate},
+                    {name: "lastUpdateDateTime", title: this.props.language.lastUpdateDate},
+                    {name: "postFavourite", title: this.props.language.type},
+                    {name: "postStatus", title: this.props.language.status},
+                ]
+            };
+        } else {
+            headerInfo = {
+                dropdowns: [
+                    {
+                        style: 'btn btn-dark btn-xs',
+                        title: this.props.language.more,
+                        icon: "fa fa-ellipsis-v",
+                        id: "1",
+                        item: [
+                            {
+                                itemTitle: this.props.language.silentPosting,
+                                onclick: this.onActiveInfoSilent,
+                                icon: 'fa fa-bell-slash text-success',
+
+                            }, {
+                                itemTitle: this.props.language.edit,
+                                onclick: this.onEdit,
+                                icon: 'fa fa-edit text-primary',
+
+                            }, {
+                                itemTitle: this.props.language.removeFromChannel,
+                                icon: 'fa fa-remove text-info',
+                                onclick: this.onRemoveInfo
+                            },
+                            {
+                                itemTitle: this.props.language.delete,
+                                icon: 'fa fa-trash text-danger',
+                                onclick: this.onDeleteInfo
+                            },
+                        ]
+                    }
+                ],
+                actions: [
+                    {
+                        name: 'history',
+                        title: this.props.language.history,
+                        icon: 'fa fa-book text-dark',
+                        style: 'btn btn-primary btn-xs',
+                        onclick: this.onShowHistory
+                    },
+                    {
+                        name: 'remove',
+                        title: this.props.language.sold,
+                        icon: 'fa fa-download text-dark',
+                        style: 'btn btn-danger btn-xs',
+                        onclick: this.onDeActiveInfo
+                    },
+                    {
+                        name: 'show',
+                        title: this.props.language.show,
+                        icon: 'fa fa-eye',
+                        style: 'btn btn-warning btn-xs',
+                        onclick: this.onShow
+                    },
+                    {
+                        name: 'post',
+                        title: this.props.language.post,
+                        icon: 'fa fa-sign-in text-dark',
+                        style: 'btn btn-success btn-xs',
+                        onclick: this.onActiveInfo
+                    },
+                ],
+                headerTitleInfos: [
+                    {name: "postStatus", title: this.props.language.status},
+                    {name: "postFavourite", title: this.props.language.type},
+                    {name: "creationDateTime", title: this.props.language.creationDate},
+                    {name: "lastUpdateDateTime", title: this.props.language.lastUpdateDate},
+                    {name: "identifier", title: this.props.language.code},
+
+                ]
+            };
+        }
         return headerInfo;
     };
 
@@ -606,21 +677,26 @@ class PostManagement extends Component {
         const headerInfo = this.getResultTableHeader();
 
         return (
-            <div className="rtl bg border shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
+            <div
+                className="rtl bg border shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
                 <div
                     className="col-12 justify-content-center align-items-center text-center header-box text-light header-color">
-                    <h4 className="py-2">مدیریت کانال</h4>
+                    <h4 className="py-2">{this.props.language.manageChannel}</h4>
                 </div>
-                <SearchCriteria onSearch={this.search}
-                                searchCriteriaArray={searchCriteriaArray}/>
-                <SearchResult headerInfo={headerInfo} searchResultList={searchResultList} pageSize={pageSize}
-                              currentPage={currentPage}
-                              setPage={this.setPage}
-                              count={this.state.count}
+                <SearchCriteria
+                    language={this.props.language}
+                    onSearch={this.search}
+                    searchCriteriaArray={searchCriteriaArray}/>
+                <SearchResult
+                    language={this.props.language}
+                    headerInfo={headerInfo} searchResultList={searchResultList} pageSize={pageSize}
+                    currentPage={currentPage}
+                    setPage={this.setPage}
+                    count={this.state.count}
                 />
                 <span className="col-8 pt-4 pb-2">
                     <input type="button" className="btn btn-success col-md-2 col-sm-6 mr-3 my-1"
-                           value="اضافه کردن پست"
+                           value={this.props.language.addPost}
                            onClick={this.onAdd}/>
                 </span>
                 {this.state.progress ?

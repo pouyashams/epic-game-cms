@@ -11,7 +11,7 @@ class Loading extends Component {
     render() {
         return (
             <div className="bg-spinner">
-                <div className={this.isPhone() ? "centered-phone" : "centered"}>
+                <div className={this.isPhone() ? "centered-phone" :this.props.language.rtl? "centered":"centered-ltr"}>
                     <div id="loader">
                         <div className="dot"/>
                         <div className="dot"/>

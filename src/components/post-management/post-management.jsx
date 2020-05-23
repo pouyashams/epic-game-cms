@@ -71,18 +71,18 @@ class PostManagement extends Component {
             try {
                 const result = await onDeActive({identifier: parseInt(searchResult.identifier)});
                 if (result.status === 200) {
-                    toast.success('پست با موفقیت به لیست فروخته شده اضافه شد');
+                    toast.success(this.props.language.notificationSold);
                     this.setState({progress: false});
                 }
             } catch (ex) {
                 if (ex.response && ex.response.status === 400) {
-                    toast.error('ارتباط با سرور برقرار نشد');
+                    toast.error(this.props.language.conError);
                     this.setState({progress: false});
                 }
             }
             this.searchAuto();
         } else {
-            toast.error('پست حذف شده قابل فروش نیست');
+            toast.error(this.props.language.delSoldError);
         }
 
     };
@@ -100,12 +100,12 @@ class PostManagement extends Component {
         try {
             const result = await onDelete({identifier: parseInt(searchResult.identifier)});
             if (result.status === 200) {
-                toast.success('پست با موفقیت حذف شد');
+                toast.success(this.props.language.delText);
                 this.setState({progress: false});
             }
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
-                toast.error('ارتباط با سرور برقرار نشد');
+                toast.error(this.props.language.conError);
                 this.setState({progress: false});
             }
         }
@@ -115,22 +115,22 @@ class PostManagement extends Component {
     onActiveInfo = async (searchResult) => {
         switch (searchResult.status) {
             case "DELETED_POST_STATUS":
-                toast.error('پست حذف شده قابل پست کردن نمی باشد');
+                toast.error(this.props.language.postDelError);
                 break;
             case "SOLD_POST_STATUS":
-                toast.error('پست فروخته شده قابل پست کردن نمی باشد');
+                toast.error(this.props.language.postSoldError);
                 break;
             default:
                 this.setState({progress: true});
                 try {
                     const result = await onActive({identifier: parseInt(searchResult.identifier), silent: false});
                     if (result.status === 200) {
-                        toast.success('پست با موفقیت پست شد');
+                        toast.success(this.props.language.postText);
                         this.setState({progress: false});
                     }
                 } catch (ex) {
                     if (ex.response && ex.response.status === 400) {
-                        toast.error('ارتباط با سرور برقرار نشد');
+                        toast.error(this.props.language.conError);
                         this.setState({progress: false});
                     }
                 }
@@ -141,22 +141,22 @@ class PostManagement extends Component {
     onActiveInfoSilent = async (searchResult) => {
         switch (searchResult.status) {
             case "DELETED_POST_STATUS":
-                toast.error('پست حذف شده قابل پست کردن نمی باشد');
+                toast.error(this.props.language.postDelError);
                 break;
             case "SOLD_POST_STATUS":
-                toast.error('پست فروخته شده قابل پست کردن نمی باشد');
+                toast.error(this.props.language.postSoldError);
                 break;
             default:
                 this.setState({progress: true});
                 try {
                     const result = await onActive({identifier: parseInt(searchResult.identifier), silent: true});
                     if (result.status === 200) {
-                        toast.success('پست با موفقیت پست شد');
+                        toast.success(this.props.language.postText);
                         this.setState({progress: false});
                     }
                 } catch (ex) {
                     if (ex.response && ex.response.status === 400) {
-                        toast.error('ارتباط با سرور برقرار نشد');
+                        toast.error(this.props.language.conError);
                         this.setState({progress: false});
                     }
                 }
@@ -168,22 +168,22 @@ class PostManagement extends Component {
     onRemoveInfo = async (searchResult) => {
         switch (searchResult.status) {
             case "DELETED_POST_STATUS":
-                toast.error('پست حذف شده را نمیتوان از کانال حذف کرد');
+                toast.error(this.props.language.delError);
                 break;
             case "SOLD_POST_STATUS":
-                toast.error('پست فروخته شده را نمیتوان از کانال حذف کرد');
+                toast.error(this.props.language.removeError);
                 break;
             default:
                 this.setState({progress: true});
                 try {
                     const result = await onRemove({identifier: parseInt(searchResult.identifier)});
                     if (result.status === 200) {
-                        toast.success('پست با موفقیت از کانال حذف شد');
+                        toast.success(this.props.language.removeText);
                         this.setState({progress: false});
                     }
                 } catch (ex) {
                     if (ex.response && ex.response.status === 400) {
-                        toast.error('ارتباط با سرور برقرار نشد');
+                        toast.error(this.props.language.conError);
                         this.setState({progress: false});
                     }
                 }
@@ -389,7 +389,7 @@ class PostManagement extends Component {
                 }
             } catch (ex) {
                 if (ex.response && ex.response.status === 400) {
-                    toast.error('مشکلی در برقراری با سرور ایجاد شده است');
+                    toast.error(this.props.language.svConError);
                     this.setState({progress: false});
                 }
             }
@@ -447,7 +447,7 @@ class PostManagement extends Component {
 
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
-                toast.error('مشکلی در برقراری با سرور ایجاد شده است');
+                toast.error(this.props.language.svConError);
                 this.setState({progress: false});
             }
         }
@@ -526,148 +526,74 @@ class PostManagement extends Component {
 
 
     getResultTableHeader() {
-        let headerInfo = null;
-        if (this.props.language.rtl) {
-            headerInfo = {
-                dropdowns: [
-                    {
-                        style: 'btn btn-dark btn-xs',
-                        title: this.props.language.more,
-                        icon: "fa fa-ellipsis-v",
-                        id: "1",
-                        item: [
-                            {
-                                itemTitle: this.props.language.silentPosting,
-                                onclick: this.onActiveInfoSilent,
-                                icon: 'fa fa-bell-slash text-success',
+        let headerInfo = {
+            dropdowns: [
+                {
+                    style: 'btn btn-dark btn-xs',
+                    title: this.props.language.more,
+                    icon: "fa fa-ellipsis-v",
+                    id: "1",
+                    item: [
+                        {
+                            itemTitle: this.props.language.silentPosting,
+                            onclick: this.onActiveInfoSilent,
+                            icon: 'fa fa-bell-slash text-success',
 
-                            }, {
-                                itemTitle: this.props.language.edit,
-                                onclick: this.onEdit,
-                                icon: 'fa fa-edit text-primary',
+                        }, {
+                            itemTitle: this.props.language.edit,
+                            onclick: this.onEdit,
+                            icon: 'fa fa-edit text-primary',
 
-                            }, {
-                                itemTitle: this.props.language.removeFromChannel,
-                                icon: 'fa fa-remove text-info',
-                                onclick: this.onRemoveInfo
-                            },
-                            {
-                                itemTitle: this.props.language.delete,
-                                icon: 'fa fa-trash text-danger',
-                                onclick: this.onDeleteInfo
-                            },
-                        ]
-                    }
-                ],
-                actions: [
-                    {
-                        name: 'post',
-                        title: this.props.language.post,
-                        icon: 'fa fa-sign-in text-dark',
-                        style: 'btn btn-success btn-xs',
-                        onclick: this.onActiveInfo
-                    }, {
-                        name: 'show',
-                        title: this.props.language.show,
-                        icon: 'fa fa-eye',
-                        style: 'btn btn-warning btn-xs',
-                        onclick: this.onShow
-                    },
-                    {
-                        name: 'remove',
-                        title: this.props.language.sold,
-                        icon: 'fa fa-download text-dark',
-                        style: 'btn btn-danger btn-xs',
-                        onclick: this.onDeActiveInfo
-                    },
-                    {
-                        name: 'history',
-                        title: this.props.language.history,
-                        icon: 'fa fa-book text-dark',
-                        style: 'btn btn-primary btn-xs',
-                        onclick: this.onShowHistory
-                    },
-                ],
-                headerTitleInfos: [
-                    {name: "identifier", title: this.props.language.code},
-                    {name: "creationDateTime", title: this.props.language.creationDate},
-                    {name: "lastUpdateDateTime", title: this.props.language.lastUpdateDate},
-                    {name: "postFavourite", title: this.props.language.type},
-                    {name: "postStatus", title: this.props.language.status},
-                ]
-            };
-        } else {
-            headerInfo = {
-                dropdowns: [
-                    {
-                        style: 'btn btn-dark btn-xs',
-                        title: this.props.language.more,
-                        icon: "fa fa-ellipsis-v",
-                        id: "1",
-                        item: [
-                            {
-                                itemTitle: this.props.language.silentPosting,
-                                onclick: this.onActiveInfoSilent,
-                                icon: 'fa fa-bell-slash text-success',
-
-                            }, {
-                                itemTitle: this.props.language.edit,
-                                onclick: this.onEdit,
-                                icon: 'fa fa-edit text-primary',
-
-                            }, {
-                                itemTitle: this.props.language.removeFromChannel,
-                                icon: 'fa fa-remove text-info',
-                                onclick: this.onRemoveInfo
-                            },
-                            {
-                                itemTitle: this.props.language.delete,
-                                icon: 'fa fa-trash text-danger',
-                                onclick: this.onDeleteInfo
-                            },
-                        ]
-                    }
-                ],
-                actions: [
-                    {
-                        name: 'history',
-                        title: this.props.language.history,
-                        icon: 'fa fa-book text-dark',
-                        style: 'btn btn-primary btn-xs',
-                        onclick: this.onShowHistory
-                    },
-                    {
-                        name: 'remove',
-                        title: this.props.language.sold,
-                        icon: 'fa fa-download text-dark',
-                        style: 'btn btn-danger btn-xs',
-                        onclick: this.onDeActiveInfo
-                    },
-                    {
-                        name: 'show',
-                        title: this.props.language.show,
-                        icon: 'fa fa-eye',
-                        style: 'btn btn-warning btn-xs',
-                        onclick: this.onShow
-                    },
-                    {
-                        name: 'post',
-                        title: this.props.language.post,
-                        icon: 'fa fa-sign-in text-dark',
-                        style: 'btn btn-success btn-xs',
-                        onclick: this.onActiveInfo
-                    },
-                ],
-                headerTitleInfos: [
-                    {name: "postStatus", title: this.props.language.status},
-                    {name: "postFavourite", title: this.props.language.type},
-                    {name: "creationDateTime", title: this.props.language.creationDate},
-                    {name: "lastUpdateDateTime", title: this.props.language.lastUpdateDate},
-                    {name: "identifier", title: this.props.language.code},
-
-                ]
-            };
-        }
+                        }, {
+                            itemTitle: this.props.language.removeFromChannel,
+                            icon: 'fa fa-remove text-info',
+                            onclick: this.onRemoveInfo
+                        },
+                        {
+                            itemTitle: this.props.language.delete,
+                            icon: 'fa fa-trash text-danger',
+                            onclick: this.onDeleteInfo
+                        },
+                    ]
+                }
+            ],
+            actions: [
+                {
+                    name: 'post',
+                    title: this.props.language.post,
+                    icon: 'fa fa-sign-in text-dark',
+                    style: 'btn btn-success btn-xs',
+                    onclick: this.onActiveInfo
+                }, {
+                    name: 'show',
+                    title: this.props.language.show,
+                    icon: 'fa fa-eye',
+                    style: 'btn btn-warning btn-xs',
+                    onclick: this.onShow
+                },
+                {
+                    name: 'remove',
+                    title: this.props.language.sold,
+                    icon: 'fa fa-download text-dark',
+                    style: 'btn btn-danger btn-xs',
+                    onclick: this.onDeActiveInfo
+                },
+                {
+                    name: 'history',
+                    title: this.props.language.history,
+                    icon: 'fa fa-book text-dark',
+                    style: 'btn btn-primary btn-xs',
+                    onclick: this.onShowHistory
+                },
+            ],
+            headerTitleInfos: [
+                {name: "identifier", title: this.props.language.code},
+                {name: "creationDateTime", title: this.props.language.creationDate},
+                {name: "lastUpdateDateTime", title: this.props.language.lastUpdateDate},
+                {name: "postFavourite", title: this.props.language.type},
+                {name: "postStatus", title: this.props.language.status},
+            ]
+        };
         return headerInfo;
     };
 
@@ -678,7 +604,7 @@ class PostManagement extends Component {
 
         return (
             <div
-                className="rtl bg border shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
+                className="bg row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
                 <div
                     className="col-12 justify-content-center align-items-center text-center header-box text-light header-color">
                     <h4 className="py-2">{this.props.language.manageChannel}</h4>
@@ -700,7 +626,9 @@ class PostManagement extends Component {
                            onClick={this.onAdd}/>
                 </span>
                 {this.state.progress ?
-                    <Loading/>
+                    <Loading
+                        language={this.props.language}
+                    />
                     : null
                 }
 

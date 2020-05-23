@@ -33,7 +33,7 @@ class DefaultPostAttributes extends Component {
             }
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
-                toast.error('ارتباط با سرور برقرار نشد');
+                toast.error(this.props.language.conError);
                 this.setState({progress: false});
             }
         }
@@ -67,20 +67,17 @@ class DefaultPostAttributes extends Component {
         try {
             const result = await saveOrUpdateDefaultPostAttributes(data);
             if (result.status === 200) {
-                toast.success('تغغیرات با موفقیت ثبت شد');
+                toast.success(this.props.language.changesSuccessfully);
                 this.setState({progress: false});
             }
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
-                toast.error('ارتباط با سرور برقرار نشد');
+                toast.error(this.props.language.conError);
                 this.setState({progress: false});
             }
         }
     };
 
-    cancel = () => {
-        window.history.back();
-    };
 
     addTitle = () => {
         const inputList = this.state.inputList;
@@ -183,7 +180,9 @@ class DefaultPostAttributes extends Component {
                     </div>
                 </div>
                 {this.state.progress ?
-                    <Loading/>
+                    <Loading
+                        language={this.props.language}
+                    />
                     : null
                 }
             </div>

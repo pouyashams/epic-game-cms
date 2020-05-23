@@ -37,14 +37,13 @@ class SearchCriteria extends Component {
         let index = 1;
         return (
             <div className="col-12 justify-content-center align-items-center text-center ">
-                <form
-                    className={dir + " border m-0  shadow float-right row w-100 justify-content-center my-3 pb-3 body-color"}>
+                <form className={dir + "  m-0  float-right row w-100 justify-content-center my-3 pb-3 body-color"}>
                     {searchCriteriaArray.map((searchCriteria) => {
                             if (searchCriteria.element === 'input') {
                                 return (
                                     <div className="form-group col-12 col-sm-6 col-md-3 float-right py-3" key={index++}>
                                         <label>{searchCriteria.label} :</label>
-                                        <input className="form-control text-center"
+                                        <input className="form-control text-center border p-radius"
                                                onKeyPress={event => {
                                                    if (event.key === 'Enter') {
                                                        this.search()
@@ -62,7 +61,7 @@ class SearchCriteria extends Component {
                                 return (
                                     <div className="form-group col-12 col-sm-6 col-md-3 float-right py-3" key={index++}>
                                         <label>{searchCriteria.label} :</label>
-                                        <input className="form-control text-center"
+                                        <input className="form-control text-center p-radius"
                                                onKeyPress={event => {
                                                    if (event.key === 'Enter') {
                                                        this.search()
@@ -81,7 +80,7 @@ class SearchCriteria extends Component {
                                     <div className="form-group col-12 col-sm-6 col-md-3 float-right py-3" key={index++}>
                                         <label>{searchCriteria.label} :</label>
                                         <select
-                                            className="form-control text-center"
+                                            className="form-control text-center p-radius"
                                             onChange={(e) => this.fillParameterValue(e.target.value, searchCriteria.name)}
                                         >
                                             {searchCriteria.options.map(
@@ -119,7 +118,7 @@ class SearchCriteria extends Component {
                                 )) : null}
                             </div>
                             <div className="col-4 text-center ">
-                                <input type="button" className="btn btn-dark" value={this.props.language.search}
+                                <input type="button" className="btn btn-dark pt-1" value={this.props.language.search}
                                        onClick={this.search}/>
                             </div>
                             <div className="col-4 text-left">

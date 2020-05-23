@@ -93,7 +93,9 @@ class App extends Component {
                         </Router>
                     </main>
                 </div>
-                <Footer/>
+                <Footer
+                    language={this.state.language}
+                />
 
             </div>
         );

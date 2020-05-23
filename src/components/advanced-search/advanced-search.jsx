@@ -52,18 +52,17 @@ class AdvancedSearch extends Component {
                 }
             } catch (ex) {
                 if (ex.response && ex.response.status === 400) {
-                    toast.error('مشکلی در برقراری با سرور ایجاد شده است');
+                    toast.error(this.props.language.svConError);
                     this.setState({progress: false});
                 }
             }
         } else {
-            toast.error('قسمتی از پست را بنویسید.');
+            toast.error(this.props.language.partOfThePost);
         }
 
     };
 
     render() {
-
         return (
             <div
                 className="rtl bg border shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color bg-game">
@@ -128,7 +127,9 @@ class AdvancedSearch extends Component {
 
 
                 {this.state.progress ?
-                    <Loading/>
+                    <Loading
+                        language={this.props.language}
+                    />
                     : null
                 }
             </div>

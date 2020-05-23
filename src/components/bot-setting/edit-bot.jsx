@@ -46,7 +46,7 @@ class EditBot extends Component {
             }
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
-                toast.error('ارتباط با سرور برقرار نشد');
+                toast.error(this.props.language.conError);
                 this.setState({progress: false});
             }
         }
@@ -82,12 +82,12 @@ class EditBot extends Component {
             try {
                 const result = await editBot(data);
                 if (result.status === 200) {
-                    toast.success('تنظیمات بات با موفقیت ثبت شد');
+                    toast.success(this.props.language.botText);
                     this.setState({progress: false});
                 }
             } catch (ex) {
                 if (ex.response && ex.response.status === 400) {
-                    toast.error('ارتباط با سرور برقرار نشد');
+                    toast.error(this.props.language.conError);
                     this.setState({progress: false});
                 }
             }
@@ -97,19 +97,19 @@ class EditBot extends Component {
 
     isValidToSend = (data) => {
         if (!this.hasValue(data.interval)) {
-            toast.error('زمان چرخه پست را وارد کنید');
+            toast.error(this.props.language.postCycleTimeText);
             return false
         } else if (!this.hasValue(data.numberOfNormalPost)) {
-            toast.error('تعداد پست عادی را وارد کنید');
+            toast.error(this.props.language.normalPostText);
             return false
         } else if (!this.hasValue(data.numberOfFavouritePost)) {
-            toast.error('تعداد پست برگزیده را وارد کنید');
+            toast.error(this.props.language.favouritePostText);
             return false
         } else if (!this.hasValue(data.silent)) {
-            toast.error('نوع نوتیفیکیشن را انتخاب کنید');
+            toast.error(this.props.language.notificationText);
             return false
         } else if (!this.hasValue(data.active)) {
-            toast.error('وضعیت بات را انتخاب کنید');
+            toast.error(this.props.language.botStatusText);
             return false
         } else {
             return true
@@ -125,11 +125,11 @@ class EditBot extends Component {
             {value: false, title: this.props.language.sound},
             {value: true, title: this.props.language.silent},
         ];
-        let dir= null;
-        if (this.props.language.rtl){
-            dir="rtl"
-        }else {
-            dir="ltr"
+        let dir = null;
+        if (this.props.language.rtl) {
+            dir = "rtl"
+        } else {
+            dir = "ltr"
         }
         return (
             <div className=" border bg-light shadow row w-100 m-0 my-3 body-color">
@@ -200,7 +200,9 @@ class EditBot extends Component {
                     </div>
                 </div>
                 {this.state.progress ?
-                    <Loading/>
+                    <Loading
+                        language={this.props.language}
+                    />
                     : null
                 }
             </div>

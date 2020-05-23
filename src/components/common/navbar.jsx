@@ -16,7 +16,7 @@ const logOut = async () => {
         }
     } catch (ex) {
         if (ex.response && ex.response.status === 400) {
-            toast.error('ارتباط با سرور برقرار نشد');
+            toast.error(this.props.language.conError);
         }
     }
 };

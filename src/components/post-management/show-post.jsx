@@ -76,7 +76,7 @@ class ShowPost extends Component {
         copyText.select();
         copyText.setSelectionRange(0, 99999);
         document.execCommand("copy");
-        toast.success('کپی شد');
+        toast.success(this.props.language.copy);
 
     };
 
@@ -90,14 +90,13 @@ class ShowPost extends Component {
         return (
             <div className="border bg-light shadow row w-100 m-0 my-3 body-color">
                 <div
-                    className=" col-12 justify-content-center align-items-center text-center header-box  text-light header-color">
+                    className="col-12 justify-content-center align-items-center text-center header-box  text-light header-color">
                     <h4 className="py-2 ">{this.props.language.displayPost}</h4>
                 </div>
                 <div className="col-12 body-color">
                     <div className={dir + " m-0  row w-100  body-color box-shadow my-4 border radius-line"}>
-                        <div className="form-group col-12 ">
-                            <div className="m-0 row w-100 my-1 pb-3 ml-2">
-
+                        <div className="col-12 form-group">
+                            <div className="m-0 row w-100 my-1 pb-3">
                                 <div className="form-group col-lg-2 col-md-3 col-sm-12  float-right pt-3 ml-2">
                                     <label>{this.props.language.type}</label>
                                     <input className="form-control text-center w-100 ltr"
@@ -172,8 +171,8 @@ class ShowPost extends Component {
                                 }
                             </div>
                         </div>
-                        <div className="form-group col-12 ">
-                            <div className="m-0  row w-100  my-1 pb-3 ml-2">
+                        <div className="form-group col-12">
+                            <div className="m-0 row w-100 my-1 pb-3 ml-2">
                                 {this.state.attributes.map(
                                     (attribute) => (
                                         <div className="form-group col-12 col-sm-6 col-md-3 float-right ">
@@ -220,16 +219,18 @@ class ShowPost extends Component {
                                 />
                             </div>
                         </div>
-                        <div className="col-12 p-3 text-center">
-                            <input type="button" className="btn btn-danger mr-3" value={this.props.language.back}
-                                   onClick={() => {
-                                       this.cancel()
-                                   }}/>
-                        </div>
+                    </div>
+                    <div className="col-12 p-3 text-center">
+                        <input type="button" className="btn btn-danger mr-3" value={this.props.language.back}
+                               onClick={() => {
+                                   this.cancel()
+                               }}/>
                     </div>
                 </div>
                 {this.state.progress ?
-                    <Loading/>
+                    <Loading
+                        language={this.props.language}
+                    />
                     : null
                 }
             </div>

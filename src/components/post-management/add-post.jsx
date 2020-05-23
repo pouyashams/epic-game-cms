@@ -41,7 +41,7 @@ class AddPost extends Component {
             }
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
-                toast.error('ارتباط با سرور برقرار نشد');
+                toast.error(this.props.language.conError);
                 this.setState({progress: false});
             }
         }
@@ -159,13 +159,13 @@ class AddPost extends Component {
         try {
             const result = await sendAcount(data);
             if (result.status === 200) {
-                toast.success('پست با موفقیت ثبت شد');
+                toast.success(this.props.language.postRegistered);
                 window.history.back();
                 this.setState({progress: false});
             }
         } catch (ex) {
             if (ex.response && ex.response.status === 400) {
-                toast.error('ارتباط با سرور برقرار نشد');
+                toast.error(this.props.language.conError);
                 this.setState({progress: false});
             }
         }
@@ -214,18 +214,28 @@ class AddPost extends Component {
             {value: true, title: this.props.language.favourite},
             {value: false, title: this.props.language.normal},
         ];
+        let dir = null;
+        if (this.props.language.rtl) {
+            dir = "rtl"
+        } else {
+            dir = "ltr"
+        }
+        let float = null;
+        if (this.props.language.rtl) {
+            float = "float-right"
+        } else {
+            float = "float-left"
+        }
         return (
             <div
-                className="rtl border bg-light shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
-                <div
-                    className=" col-12 justify-content-center align-items-center text-center header-box  text-light header-color">
+                className=" border bg-light shadow row w-100 m-0 my-3 body-color">
+                <div className="col-12 header-box  text-light header-color">
                     <h4 className="py-2 ">{this.props.language.addPost}</h4>
                 </div>
-                <div className="col-12 justify-content-center align-items-center text-center body-color">
-                    <div
-                        className="rtl m-0 float-right row w-100 justify-content-start body-color box-shadow my-4 border radius-line">
-                        <div className="form-group col-12 justify-content-center">
-                            <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
+                <div className="col-12 body-color">
+                    <div className={dir + " m-0 row w-100  body-color box-shadow my-4 border radius-line"}>
+                        <div className="col-12">
+                            <div className={"col-sm-6 col-md-2 pt-3 ml-2 " + float}>
                                 <label>{this.props.language.type}</label>
                                 <select
                                     className="form-control text-center"
@@ -241,10 +251,10 @@ class AddPost extends Component {
                             {
                                 sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi" ?
                                     <div className="col-12">
-                                        <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
+                                        <div className={"form-group  col-sm-6 col-md-2 pt-3 ml-2 " + float}>
                                             <label>{this.props.language.region}</label>
                                             <select
-                                                className="form-control text-center ltr"
+                                                className="form-control text-center "
                                                 onChange={(e) => this.handelChangeInput(e.target.value, "region")}
                                             >
                                                 {options.map(
@@ -256,17 +266,17 @@ class AddPost extends Component {
                                                 )}
                                             </select>
                                         </div>
-                                        <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
+                                        <div className={"form-group  col-sm-6 col-md-2 pt-3 ml-2 " + float}>
                                             <label>{this.props.language.priceDollar}</label>
-                                            <input className="form-control text-center w-100 ltr"
+                                            <input className="form-control text-center w-100 "
                                                    type={"input"}
                                                    value={this.state.dolar}
                                                    onChange={(e) => this.handelChangeInput(e.target.value, "dolar")}
                                             />
                                         </div>
-                                        <div className="form-group col-12 col-sm-6 col-md-2 float-right pt-3 ml-2">
+                                        <div className={"form-group col-12 col-sm-6 col-md-2  pt-3 ml-2 " + float}>
                                             <label>{this.props.language.price}</label>
-                                            <input className="form-control text-center w-100 ltr"
+                                            <input className="form-control text-center w-100 "
                                                    type={"input"}
                                                    value={this.state.price}
                                                    onChange={(e) => this.handelChangeInput(e.target.value, "price")}
@@ -274,9 +284,9 @@ class AddPost extends Component {
                                         </div>
 
                                     </div>
-                                    : <div className="form-group col-12 col-sm-6 col-md-2 float-right pt-3 ml-2">
+                                    : <div className={"col-12 col-sm-6 col-md-2  pt-3 ml-2 " + float}>
                                         <label>قیمت :</label>
-                                        <input className="form-control text-center w-100 ltr"
+                                        <input className="form-control text-center w-100 "
                                                type={"input"}
                                                value={this.state.price}
                                                onChange={(e) => this.handelChangeInput(e.target.value, "price")}
@@ -286,15 +296,14 @@ class AddPost extends Component {
 
                         </div>
 
-
-                        <div className="form-group col-12">
-                            <div className="rtl m-0 float-right row w-100 justify-content-start my-1 pb-3">
+                        <div className="ltr form-group col-12 py-5">
+                            <div className={"m-0 row w-100  my-1 pb-3 " + float}>
                                 {this.state.inputList.map(
                                     (input) => (
                                         <div
                                             className={input.id % 2 === 0 ? "col-lg-6 col-md-12 border-right" : "col-lg-6 col-md-12"}
                                             key={input.id}>
-                                            <div className="form-group col-5 float-right ">
+                                            <div className={"form-group col-5 " + float}>
                                                 <label>{this.props.language.title}</label>
                                                 <input className="form-control text-center w-100 "
                                                        type={"input"}
@@ -302,7 +311,7 @@ class AddPost extends Component {
                                                        value={input.title}
                                                 />
                                             </div>
-                                            <div className="form-group col-5 float-right">
+                                            <div className={"form-group col-5 " + float}>
                                                 <label>{this.props.language.text}</label>
                                                 <input className="form-control text-center w-100"
                                                        type={"input"}
@@ -310,7 +319,7 @@ class AddPost extends Component {
                                                        value={input.value}
                                                 />
                                             </div>
-                                            <div className="form-group col-2 float-right m-t">
+                                            <div className={"form-group col-2 m-t " + float}>
                                                 <button className="btn btn-danger rounded-circle "
                                                         onClick={() => {
                                                             this.deleteTitle(input.id)
@@ -319,7 +328,7 @@ class AddPost extends Component {
                                             </div>
                                         </div>
                                     ))}
-                                <div className="form-group col-12 float-right pt-5">
+                                <div className={"form-group col-12 pt-5 " + float}>
                                     <label>{this.props.language.content}</label>
                                     <SunEditor
                                         onChange={this.handleChange}
@@ -333,30 +342,33 @@ class AddPost extends Component {
                                                 ['removeFormat'],
                                             ]
                                         }}
-                                        setDefaultStyle="direction: ltr !important; min-height: 200px;"
+                                        setDefaultStyle="direction:  !important; min-height: 200px;"
                                     />
                                 </div>
                             </div>
                         </div>
 
-                        <div className="col-12 p-3 text-center">
-                            <input type="button" className="btn btn-success mr-3 my-2" value={this.props.language.done}
-                                   onClick={() => {
-                                       this.sendAccountInfo()
-                                   }}/>
-                            <input type="button" className="btn btn-warning mr-3 my-2" value={this.props.language.add}
-                                   onClick={() => {
-                                       this.addTitle()
-                                   }}/>
-                            <input type="button" className="btn btn-danger mr-3 my-2" value={this.props.language.back}
-                                   onClick={() => {
-                                       this.cancel()
-                                   }}/>
-                        </div>
                     </div>
+                    <div className="col-12 p-3 text-center">
+                        <input type="button" className="btn btn-success mr-3 my-2" value={this.props.language.done}
+                               onClick={() => {
+                                   this.sendAccountInfo()
+                               }}/>
+                        <input type="button" className="btn btn-warning mr-3 my-2" value={this.props.language.add}
+                               onClick={() => {
+                                   this.addTitle()
+                               }}/>
+                        <input type="button" className="btn btn-danger mr-3 my-2" value={this.props.language.back}
+                               onClick={() => {
+                                   this.cancel()
+                               }}/>
+                    </div>
+
                 </div>
                 {this.state.progress ?
-                    <Loading/>
+                    <Loading
+                        language={this.props.language}
+                    />
                     : null
                 }
             </div>

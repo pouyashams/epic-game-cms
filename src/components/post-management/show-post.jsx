@@ -17,8 +17,6 @@ class ShowPost extends Component {
             boldText: "",
             progress: "",
             price: "",
-            dolar: "",
-            region: "Region 1",
             favoriteType: "",
             inputList: [],
             attributes: [],
@@ -83,91 +81,99 @@ class ShowPost extends Component {
     };
 
     render() {
+        let dir = null;
+        if (this.props.language.rtl) {
+            dir = "rtl"
+        } else {
+            dir = "ltr"
+        }
         return (
-            <div
-                className="rtl border bg-light shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
+            <div className="border bg-light shadow row w-100 m-0 my-3 body-color">
                 <div
                     className=" col-12 justify-content-center align-items-center text-center header-box  text-light header-color">
                     <h4 className="py-2 ">{this.props.language.displayPost}</h4>
                 </div>
-                <div className="col-12 justify-content-center align-items-center text-center body-color">
-                    <div
-                        className="rtl m-0 float-right row w-100 justify-content-start body-color box-shadow my-4 border radius-line">
-                        <div className="form-group col-12 justify-content-center">
-                            <div className="form-group col-lg-2 col-md-3 col-sm-12  float-right pt-3 ml-2">
-                                <label>{this.props.language.type}</label>
-                                <input className="form-control text-center w-100 ltr"
-                                       type={"input"}
-                                       value={this.state.favoriteType}
-                                />
-                            </div>
-                            <div className="form-group  col-lg-2 col-md-3 col-sm-12 float-right pt-3 ml-2">
-                                <label>{this.props.language.price}</label>
-                                <input className="form-control text-center w-100 ltr"
-                                       type={"input"}
-                                       value={this.state.price}
-                                />
-                            </div>
-                            <div className="form-group  col-lg-2 col-md-3 col-sm-12 col-md-2 float-right pt-3 ml-2">
-                                <label>{this.props.language.code}</label>
-                                <input className="form-control text-center w-100 ltr"
-                                       type={"input"}
-                                       value={this.state.id}
-                                />
-                            </div>
-                            {
-                                sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi" ?
-                                    <div className="form-group col-md-6 float-right pt-4 row"
-                                         style={{
-                                             marginTop: "23px"
-                                         }}>
-                                        <div className="col-lg-2 col-md-3 col-sm-2 w-25 mx-2">
-                                            <input type="button" className="btn btn-danger mr-4" value="email"
-                                                   onClick={() => {
-                                                       this.copyText("email")
-                                                   }}/>
-                                        </div>
-
-                                        <div className="col-lg-2 col-md-3 col-sm-2 w-25 mx-2">
-                                            <input type="button" className="btn btn-success mr-4 " value="login"
-                                                   onClick={() => {
-                                                       this.copyText("login")
-                                                   }}/>
-                                        </div>
-
-                                        <div className="col-lg-3 col-md-4 col-sm-1 w-25 mx-2">
-                                            <input type="button" className="btn btn-primary mr-4" value="playstation"
-                                                   onClick={() => {
-                                                       this.copyText("playstation")
-                                                   }}/>
-                                        </div>
-
-                                        <input className="dis-hid col-4" type="text"
-                                               value="https://id.sonyentertainmentnetwork.com/id/tv/signin/?ui=ds&hidePageElements=noAccountSection%2CtroubleSigningInLink&service_logo=ps&smcid=tv%3Apsvue#/signin"
-                                               id="email"/>
-                                        <input className="dis-hid col-4" type="text" value="http://my.playstation.com/"
-                                               id="playstation"/>
-                                        <input className="dis-hid col-4" type="text"
-                                               value="https://account.sonyentertainmentnetwork.com/liquid/cam/devices/device-list.action?category=psn&displayNavigation=false"
-                                               id="login"/>
-                                        {this.state.attributes.length !== 0 ?
-                                            this.state.attributes[1] ?
-
-                                                <input className="dis-hid col-4" type="text"
-                                                       value={this.state.attributes[0].value + ":" + this.state.attributes[1].value}
-                                                       id="copy"/>
-                                                :
-                                                <input className="dis-hid col-4" type="text"
-                                                       value={this.state.attributes[0].value}
-                                                       id="copy"/>
-                                            : null}
-                                    </div>
-                                    : null
-                            }
-                        </div>
-
+                <div className="col-12 body-color">
+                    <div className={dir + " m-0  row w-100  body-color box-shadow my-4 border radius-line"}>
                         <div className="form-group col-12 ">
-                            <div className="rtl m-0 float-right row w-100 justify-content-start my-1 pb-3 ml-2">
+                            <div className="m-0 row w-100 my-1 pb-3 ml-2">
+
+                                <div className="form-group col-lg-2 col-md-3 col-sm-12  float-right pt-3 ml-2">
+                                    <label>{this.props.language.type}</label>
+                                    <input className="form-control text-center w-100 ltr"
+                                           type={"input"}
+                                           value={this.state.favoriteType}
+                                    />
+                                </div>
+                                <div className="form-group  col-lg-2 col-md-3 col-sm-12 float-right pt-3 ml-2">
+                                    <label>{this.props.language.price}</label>
+                                    <input className="form-control text-center w-100 ltr"
+                                           type={"input"}
+                                           value={this.state.price}
+                                    />
+                                </div>
+                                <div className="form-group  col-lg-2 col-md-3 col-sm-12 col-md-2 float-right pt-3 ml-2">
+                                    <label>{this.props.language.code}</label>
+                                    <input className="form-control text-center w-100 ltr"
+                                           type={"input"}
+                                           value={this.state.id}
+                                    />
+                                </div>
+                                {
+                                    sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi" ?
+                                        <div className="form-group col-md-6 float-right pt-4 row"
+                                             style={{
+                                                 marginTop: "23px"
+                                             }}>
+                                            <div className="col-lg-2 col-md-3 col-sm-2 w-25 mx-2">
+                                                <input type="button" className="btn btn-danger mr-4" value="email"
+                                                       onClick={() => {
+                                                           this.copyText("email")
+                                                       }}/>
+                                            </div>
+
+                                            <div className="col-lg-2 col-md-3 col-sm-2 w-25 mx-2">
+                                                <input type="button" className="btn btn-success mr-4 " value="login"
+                                                       onClick={() => {
+                                                           this.copyText("login")
+                                                       }}/>
+                                            </div>
+
+                                            <div className="col-lg-3 col-md-4 col-sm-1 w-25 mx-2">
+                                                <input type="button" className="btn btn-primary mr-4"
+                                                       value="playstation"
+                                                       onClick={() => {
+                                                           this.copyText("playstation")
+                                                       }}/>
+                                            </div>
+
+                                            <input className="dis-hid col-4" type="text"
+                                                   value="https://id.sonyentertainmentnetwork.com/id/tv/signin/?ui=ds&hidePageElements=noAccountSection%2CtroubleSigningInLink&service_logo=ps&smcid=tv%3Apsvue#/signin"
+                                                   id="email"/>
+                                            <input className="dis-hid col-4" type="text"
+                                                   value="http://my.playstation.com/"
+                                                   id="playstation"/>
+                                            <input className="dis-hid col-4" type="text"
+                                                   value="https://account.sonyentertainmentnetwork.com/liquid/cam/devices/device-list.action?category=psn&displayNavigation=false"
+                                                   id="login"/>
+                                            {this.state.attributes.length !== 0 ?
+                                                this.state.attributes[1] ?
+
+                                                    <input className="dis-hid col-4" type="text"
+                                                           value={this.state.attributes[0].value + ":" + this.state.attributes[1].value}
+                                                           id="copy"/>
+                                                    :
+                                                    <input className="dis-hid col-4" type="text"
+                                                           value={this.state.attributes[0].value}
+                                                           id="copy"/>
+                                                : null}
+                                        </div>
+                                        : null
+                                }
+                            </div>
+                        </div>
+                        <div className="form-group col-12 ">
+                            <div className="m-0  row w-100  my-1 pb-3 ml-2">
                                 {this.state.attributes.map(
                                     (attribute) => (
                                         <div className="form-group col-12 col-sm-6 col-md-3 float-right ">
@@ -195,7 +201,7 @@ class ShowPost extends Component {
 
                         </div>
                         <div className="form-group col-12 ">
-                            <div className="form-group col-12 float-right">
+                            <div className="form-group col-12 ">
                                 <label>{this.props.language.content}</label>
                                 <SunEditor
                                     setContents={this.state.content}
@@ -214,7 +220,6 @@ class ShowPost extends Component {
                                 />
                             </div>
                         </div>
-
                         <div className="col-12 p-3 text-center">
                             <input type="button" className="btn btn-danger mr-3" value={this.props.language.back}
                                    onClick={() => {

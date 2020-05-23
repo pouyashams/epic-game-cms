@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import Pagination from "./pagination";
-import {paginate} from "../../utils/paginate";
 import {withRouter} from "react-router-dom";
+import Pagination from "react-js-pagination";
 
 class SearchResult extends Component {
 
@@ -15,24 +14,9 @@ class SearchResult extends Component {
         this.props.setPage(page);
     };
 
-    getPageData = () => {
-        const {searchResultList, pageSize} = this.props;
-        const {currentPage} = this.props;
-        const subSearchResultList = paginate(searchResultList, currentPage, pageSize);
-        return subSearchResultList;
-    };
-
-    isPhone = () => {
-        return !!(navigator.userAgent.match(/iPhone/i)
-            || navigator.userAgent.match(/iPad/i)
-            || navigator.userAgent.match(/iPod/i)
-            || navigator.userAgent.match(/Android/i));
-    };
-
     render() {
         const {currentPage} = this.props;
         const {headerInfo, searchResultList, pageSize} = this.props;
-        // const searchResultForThisPage = this.getPageData();
         let num = currentPage;
         if (num === null || num === 0) {
             num = 1
@@ -40,8 +24,7 @@ class SearchResult extends Component {
         let counter = (num - 1) * pageSize;
         let loopCounter = 1;
         return (
-            <div className="col-12 justify-content-center align-items-center text-center pt-3  scroll-x-off"
-            >
+            <div className="col-12 justify-content-center align-items-center text-center pt-3 scroll-x-off">
                 {this.props.language.rtl ?
                     <table className="table t-responsive table-bordered table-striped sc-y-h">
                         <thead className="bg-dark">
@@ -189,7 +172,8 @@ class SearchResult extends Component {
                                                         >
                                                             <span className={dropdown.icon} title={dropdown.title}/>
                                                         </button>
-                                                        <div className="dropdown-menu ltr" aria-labelledby={dropdown.id}>
+                                                        <div className="dropdown-menu ltr"
+                                                             aria-labelledby={dropdown.id}>
                                                             {dropdown.item.map((itemInfo) =>
                                                                 (
                                                                     <label className="dropdown-item pointer"
@@ -238,13 +222,19 @@ class SearchResult extends Component {
                     </table>
                 }
                 {searchResultList.length !== 0 ? (
-                    <Pagination
-                        itemCount={this.props.count}
-                        pageSize={pageSize}
-                        currentPage={currentPage}
-                        onPageChange={this.handlePageChange}
-                    />
+                    <div className={this.props.language.rtl ? "rtl dis-inline-flex" : "ltr dis-inline-flex"}>
+                        <Pagination
+                            activePage={parseInt(currentPage)}
+                            itemsCountPerPage={pageSize}
+                            totalItemsCount={this.props.count}
+                            pageRangeDisplayed={5}
+                            itemClass="page-item"
+                            linkClass="page-link"
+                            onChange={this.handlePageChange.bind(this)}
+                        />
+                    </div>
                 ) : null}
+
             </div>
         );
     }

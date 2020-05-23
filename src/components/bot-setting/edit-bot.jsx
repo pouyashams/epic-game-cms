@@ -118,79 +118,81 @@ class EditBot extends Component {
 
     render() {
         const actives = [
-            {value: true, title: "فعال"},
-            {value: false, title: "غیرفعال"},
+            {value: true, title: this.props.language.active},
+            {value: false, title: this.props.language.inactive},
         ];
         const silents = [
-            {value: false, title: "با صدا"},
-            {value: true, title: "بی صدا"},
+            {value: false, title: this.props.language.sound},
+            {value: true, title: this.props.language.silent},
         ];
+        let dir= null;
+        if (this.props.language.rtl){
+            dir="rtl"
+        }else {
+            dir="ltr"
+        }
         return (
-            <div
-                className="rtl border bg-light shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
+            <div className=" border bg-light shadow row w-100 m-0 my-3 body-color">
                 <div
-                    className=" col-12 justify-content-center align-items-center text-center header-box  text-light header-color">
-                    <h4 className="py-2 ">تنظیمات بات</h4>
+                    className="col-12 justify-content-center align-items-center text-center header-box  text-light header-color">
+                    <h4 className="py-2 ">{this.props.language.botSetting}</h4>
                 </div>
                 <div className="col-12 justify-content-center align-items-center text-center body-color">
-                    <div
-                        className="rtl m-0 float-right row w-100 justify-content-start body-color box-shadow my-4 border radius-line">
-                        <div className="form-group col-12 justify-content-center">
-                            <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
-                                <label> وضعیت بات:</label>
-                                <select
-                                    className="form-control text-center"
-                                    onChange={(e) => this.handelChangeInput(e.target.value, "active")}
-                                >
-                                    {actives.map(
-                                        (option) => {
-                                            return (<option selected={this.state.active === option.value}
-                                                            value={option.value}>{option.title}</option>);
-                                        }
-                                    )}
-                                </select>
-                            </div>
-                            <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
-                                <label>نوتیفیکیشن:</label>
-                                <select
-                                    className="form-control text-center"
-                                    onChange={(e) => this.handelChangeInput(e.target.value, "silent")}
-                                >
-                                    {silents.map(
-                                        (option) => {
-                                            return (<option selected={this.state.silent === option.value}
-                                                            value={option.value}>{option.title}</option>);
-                                        }
-                                    )}
-                                </select>
-                            </div>
-                            <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
-                                <label>زمان چرخه پست :</label>
-                                <input className="form-control text-center w-100 ltr"
-                                       type={"input"}
-                                       value={this.state.interval}
-                                       onChange={(e) => this.handelChangeInput(e.target.value, "interval")}
-                                />
-                            </div>
-                            <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
-                                <label>تعداد پست عادی :</label>
-                                <input className="form-control text-center w-100 ltr"
-                                       type={"input"}
-                                       value={this.state.numberOfNormalPost}
-                                       onChange={(e) => this.handelChangeInput(e.target.value, "numberOfNormalPost")}
-                                />
-                            </div>
-                            <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
-                                <label>تعداد پست برگزیده :</label>
-                                <input className="form-control text-center w-100 ltr"
-                                       type={"input"}
-                                       value={this.state.numberOfFavouritePost}
-                                       onChange={(e) => this.handelChangeInput(e.target.value, "numberOfFavouritePost")}
-                                />
-                            </div>
+                    <div className={dir + " m-0 row w-100  body-color box-shadow my-4 border radius-line"}>
+                        <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
+                            <label>{this.props.language.botStatus}</label>
+                            <select
+                                className="form-control text-center"
+                                onChange={(e) => this.handelChangeInput(e.target.value, "active")}
+                            >
+                                {actives.map(
+                                    (option) => {
+                                        return (<option selected={this.state.active === option.value}
+                                                        value={option.value}>{option.title}</option>);
+                                    }
+                                )}
+                            </select>
+                        </div>
+                        <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
+                            <label>{this.props.language.notification}</label>
+                            <select
+                                className="form-control text-center"
+                                onChange={(e) => this.handelChangeInput(e.target.value, "silent")}
+                            >
+                                {silents.map(
+                                    (option) => {
+                                        return (<option selected={this.state.silent === option.value}
+                                                        value={option.value}>{option.title}</option>);
+                                    }
+                                )}
+                            </select>
+                        </div>
+                        <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
+                            <label>{this.props.language.postCycleTime}</label>
+                            <input className="form-control text-center w-100 ltr"
+                                   type={"input"}
+                                   value={this.state.interval}
+                                   onChange={(e) => this.handelChangeInput(e.target.value, "interval")}
+                            />
+                        </div>
+                        <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
+                            <label>{this.props.language.numberOfRegularPost}</label>
+                            <input className="form-control text-center w-100 ltr"
+                                   type={"input"}
+                                   value={this.state.numberOfNormalPost}
+                                   onChange={(e) => this.handelChangeInput(e.target.value, "numberOfNormalPost")}
+                            />
+                        </div>
+                        <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
+                            <label>{this.props.language.numberOfFavouritePost}</label>
+                            <input className="form-control text-center w-100 ltr"
+                                   type={"input"}
+                                   value={this.state.numberOfFavouritePost}
+                                   onChange={(e) => this.handelChangeInput(e.target.value, "numberOfFavouritePost")}
+                            />
                         </div>
                         <div className="col-12 p-3 text-center">
-                            <input type="button" className="btn btn-success mr-3" value="اعمال تغیییرات"
+                            <input type="button" className="btn btn-success mr-3" value={this.props.language.done}
                                    onClick={() => {
                                        this.sendBotInfo()
                                    }}/>

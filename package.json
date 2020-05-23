@@ -19,6 +19,7 @@
     "react-dom": "^16.6.0",
     "react-draft-wysiwyg": "^1.14.4",
     "react-file-base64": "^1.0.3",
+    "react-js-pagination": "^3.0.3",
     "react-notify-toast": "^0.5.1",
     "react-numeric-captcha": "^1.0.3",
     "react-recaptcha": "^2.3.10",

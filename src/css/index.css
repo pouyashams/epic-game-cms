@@ -174,6 +174,9 @@
     direction: ltr;
 }
 
+.dis-inline-flex {
+    display: inline-flex !important;
+}
 
 .ltr {
     direction: ltr !important;
@@ -238,6 +241,10 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden !important;
+}
+
+ul {
+    padding-inline-start: 0 !important;
 }
 
 code {

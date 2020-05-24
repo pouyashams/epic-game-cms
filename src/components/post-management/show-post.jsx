@@ -88,32 +88,35 @@ class ShowPost extends Component {
             dir = "ltr"
         }
         return (
-            <div className="border bg-light shadow row w-100 m-0 my-3 body-color">
+            <div className={this.props.theme === "day" ? "border-light-color row w-100 m-0 my-3 body-color-light" : "border-dark-color row w-100 m-0 my-3 body-color"}>
                 <div
-                    className="col-12 justify-content-center align-items-center text-center header-box  text-light header-color">
+                    className={this.props.theme === "day" ? "col-12 justify-content-center align-items-center text-center header-box  text-light header-color-light" : "col-12 justify-content-center align-items-center text-center header-box  text-light header-color"}>
                     <h4 className="py-2 ">{this.props.language.displayPost}</h4>
                 </div>
-                <div className="col-12 body-color">
-                    <div className={dir + " m-0  row w-100  body-color box-shadow my-4 border radius-line"}>
+                <div className={this.props.theme === "day" ? "col-12 body-color-light" : "col-12 body-color"}>
+                    <div className={this.props.theme === "day" ? dir + " m-0  row w-100  body-color-light-d box-shadow my-4 dark-shadow radius-line" : dir + " m-0  row w-100  body-color box-shadow my-4 white-shadow radius-line"}>
                         <div className="col-12 form-group">
                             <div className="m-0 row w-100 my-1 pb-3">
                                 <div className="form-group col-lg-2 col-md-3 col-sm-12  float-right pt-3 ml-2">
-                                    <label>{this.props.language.type}</label>
-                                    <input className="form-control text-center w-100 ltr"
+                                    <label
+                                        className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.type} :</label>
+                                    <input className="form-control text-center w-100 ltr p-radius"
                                            type={"input"}
                                            value={this.state.favoriteType}
                                     />
                                 </div>
                                 <div className="form-group  col-lg-2 col-md-3 col-sm-12 float-right pt-3 ml-2">
-                                    <label>{this.props.language.price}</label>
-                                    <input className="form-control text-center w-100 ltr"
+                                    <label
+                                        className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.price} :</label>
+                                    <input className="form-control text-center w-100 ltr p-radius"
                                            type={"input"}
                                            value={this.state.price}
                                     />
                                 </div>
                                 <div className="form-group  col-lg-2 col-md-3 col-sm-12 col-md-2 float-right pt-3 ml-2">
-                                    <label>{this.props.language.code}</label>
-                                    <input className="form-control text-center w-100 ltr"
+                                    <label
+                                        className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.code} :</label>
+                                    <input className="form-control text-center w-100 ltr p-radius"
                                            type={"input"}
                                            value={this.state.id}
                                     />
@@ -125,7 +128,7 @@ class ShowPost extends Component {
                                                  marginTop: "23px"
                                              }}>
                                             <div className="col-lg-2 col-md-3 col-sm-2 w-25 mx-2">
-                                                <input type="button" className="btn btn-danger mr-4" value="email"
+                                                <input type="button" className="btn btn-danger mr-4 " value="email"
                                                        onClick={() => {
                                                            this.copyText("email")
                                                        }}/>
@@ -139,7 +142,7 @@ class ShowPost extends Component {
                                             </div>
 
                                             <div className="col-lg-3 col-md-4 col-sm-1 w-25 mx-2">
-                                                <input type="button" className="btn btn-primary mr-4"
+                                                <input type="button" className="btn btn-primary mr-4 "
                                                        value="playstation"
                                                        onClick={() => {
                                                            this.copyText("playstation")
@@ -176,8 +179,9 @@ class ShowPost extends Component {
                                 {this.state.attributes.map(
                                     (attribute) => (
                                         <div className="form-group col-12 col-sm-6 col-md-3 float-right ">
-                                            <label>{attribute.title} :</label>
-                                            <input className="form-control text-center w-100 "
+                                            <label
+                                                className={this.props.theme === "day" ? "text-dark" : "text-white"}>{attribute.title} :</label>
+                                            <input className="form-control text-center w-100 p-radius"
                                                    type={"input"}
                                                    value={attribute.value}
                                             />
@@ -201,7 +205,8 @@ class ShowPost extends Component {
                         </div>
                         <div className="form-group col-12 ">
                             <div className="form-group col-12 ">
-                                <label>{this.props.language.content}</label>
+                                <label
+                                    className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.content} :</label>
                                 <SunEditor
                                     setContents={this.state.content}
                                     setOptions={{

@@ -19,7 +19,7 @@ import {createBrowserHistory} from "history";
 const history = createBrowserHistory();
 
 ReactDOM.render(
-    <div>
+    <div className="pouya">
         <div className="loading" id="loading" style={{display:"none"}}/>
         <Router history={history}>
             <Switch>

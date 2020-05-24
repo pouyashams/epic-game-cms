@@ -25,90 +25,79 @@ const showProfile = () => {
     window.location = "/profile";
 };
 
-const languages = [
-    {
-        title: "فارسی",
-        id: "persian",
-        icon: "fa fa-address-book text-info"
-    },
-    {
-        title: "English",
-        id: "English",
-        icon: "fa fa-sign-out text-danger"
-    },
-];
+let language = null;
+let textLanguage = null;
+if (localStorage.getItem("language") === "persian") {
+    language = "English";
+    textLanguage = "English";
+} else {
+    language = "persian";
+    textLanguage = "فارسی";
+}
+
 
 let count = 1;
 
 const Navbar = (props) => {
+    let theme = null;
+    let textTheme;
+    let iconTheme;
+    if (localStorage.getItem("theme") === "day") {
+        theme = "night";
+        textTheme = props.language.night;
+        iconTheme = "fa fa-moon"
+    } else {
+        theme = "day";
+        textTheme = props.language.day;
+        iconTheme = "fas fa-sun"
+
+    }
+
+
     const navLinks = getNavLinks(props.language);
-    const dropdown = [
-        {
-            onclick: showProfile,
-            title: props.language.profile,
-            icon: "fa fa-address-book text-info"
-        },
-        {
-            onclick: logOut,
-            title: props.language.logOut,
-            icon: "fa fa-sign-out text-danger"
-        }];
     return (
-        <nav className=" navbar navbar-dark fixed-top bg-color-dark flex-md-nowrap shadow py-2 tog-collapse">
-            <h5 className={props.language.rtl ? "ml-3 text-center text-warning" : "mt-2 ml-2 text-center text-warning"}>
+        <nav
+            className={props.theme === "day" ? "navbar fixed-top flex-md-nowrap shadow py-2 tog-collapse bg-color-green " : "navbar fixed-top flex-md-nowrap shadow py-2 tog-collapse bg-color-dark"}>
+            <h5 className={props.language.rtl ? props.theme === "day" ? "ml-3 text-center text-light-green" : "ml-3 text-center text-warning" : props.theme === "day" ? "mt-2 ml-2 text-center text-light-green" :"mt-2 ml-2 text-center text-warning"}>
                 {props.language.navTitle}
             </h5>
 
             <div className="row">
 
-
-                <div
-                    className="dropdown border-top border-bottom radius-circle border-warning py-1 px-user mb-auto mx-2">
-                    <span className="text-white pointer" data-toggle="dropdown">
-                     <i className="fa fa-globe"/>
+                <div className={props.theme==="day"?"radius-circle border-light-green py-1 px-user mb-auto mx-2 pointer":"border-bottom radius-circle border-warning py-1 px-user mb-auto mx-2 pointer"}
+                     onClick={((e) => props.handelChangeTheme(theme))}
+                >
+                    <span className="text-white pointer">
+                     <i className={iconTheme + " mb-1"} title={textTheme}/>
                     </span>
-                    <div
-                        className={props.language.rtl ? "dropdown-menu dropdown-menu-m bg-dark w-25" : "dropdown-menu dropdown-menu-m-eng bg-dark w-25"}>
-                        {languages.map((itemInfo) =>
-                            (
-                                <label className="dropdown-item pointer text-white dropdown-menu-hover"
-                                       onClick={((e) => props.handelChangeLanguage(itemInfo.id))}
-                                >
-                                    <span className={`pl-10 ${itemInfo.icon}`}/>
-                                    {itemInfo.title}
-                                </label>
-
-
-                            )
-                        )
-                        }
-                    </div>
                 </div>
 
-
-                <div className="dropdown border-top border-bottom radius-circle border-warning py-1 px-user mb-auto mx-2">
-                    <span className="text-white pointer" data-toggle="dropdown">
-                     <i className="fa fa-user"/>
+                <div className={props.theme==="day"?"radius-circle border-light-green py-1 px-user mb-auto mx-2 pointer":"border-bottom radius-circle border-warning py-1 px-user mb-auto mx-2 pointer"}
+                     onClick={((e) => props.handelChangeLanguage(language))}
+                >
+                    <span className="text-white pointer">
+                     <i className="fa fa-globe mb-1" title={textLanguage}/>
                     </span>
-                    <div
-                        className={props.language.rtl ? "dropdown-menu dropdown-menu-m bg-dark" : "dropdown-menu dropdown-menu-m-eng bg-dark"}>
-                        {dropdown.map((itemInfo) =>
-                            (
-                                <label className="dropdown-item pointer text-white dropdown-menu-hover"
-                                       onClick={itemInfo.onclick}
-                                >
-                                    <span className={`pl-10 ${itemInfo.icon}`}/>
-                                    {itemInfo.title}
-                                </label>
-
-
-                            )
-                        )
-                        }
-                    </div>
                 </div>
+                <div className={props.theme==="day"?"radius-circle border-light-green py-1 px-user mb-auto mx-2 pointer":"border-bottom radius-circle border-warning py-1 px-user mb-auto mx-2 pointer"}
+                     onClick={((e) => showProfile())}
+                >
+                    <span className="text-white pointer">
+                     <i className="fa fa-user mb-1" title={props.language.profile}/>
+                    </span>
+                </div>
+                <div className={props.theme==="day"?"radius-circle border-light-green py-1 px-user mb-auto mx-2 pointer":"border-bottom radius-circle border-warning py-1 px-user mb-auto mx-2 pointer"}
+                     onClick={((e) => logOut())}
+                >
+                    <span className="text-white pointer">
+                     <i className="fa fa-power-off mb-1" title={props.language.logOut}/>
+                    </span>
+                </div>
+
                 <span className="px-3">
-                      <button className="navbar-toggler mr-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <button className="navbar-toggler mr-2 text-white" type="button" data-toggle="collapse"
+                              data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                              aria-expanded="false" aria-label="Toggle navigation">
                                 <span className="fa fa-navicon mb-1"/>
                       </button>
                 </span>

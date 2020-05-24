@@ -65,9 +65,9 @@ class AdvancedSearch extends Component {
     render() {
         return (
             <div
-                className="rtl bg border shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color bg-game">
+                className={this.props.theme === "day" ? "rtl border-light-color shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color-light bg-game" : "rtl border-dark-color shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color bg-game"}>
                 <div
-                    className="col-12 justify-content-center align-items-center text-center header-box text-light header-color">
+                    className={this.props.theme === "day" ? "col-12 justify-content-center align-items-center text-center header-box text-light header-color-light" : "col-12 justify-content-center align-items-center text-center header-box text-light header-color"}>
                     <h4 className="py-2">{this.props.language.advancedSearch}</h4>
                 </div>
 

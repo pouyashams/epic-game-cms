@@ -21,9 +21,9 @@ class ShowHistory extends Component {
 
             let active = "";
             if (history.active) {
-                active = <label className="text-success">{this.props.language.active}</label>
+                active = <label className="text-success">{this.props.language.active} :</label>
             } else {
-                active = <label className="text-danger">{this.props.language.inactive}</label>
+                active = <label className="text-danger">{this.props.language.inactive} :</label>
             }
             historyList.push(
                 {
@@ -71,16 +71,23 @@ class ShowHistory extends Component {
 
     render() {
         const headerInfo = this.getResultTableHeader();
+        let dir = null;
+        if (this.props.language.rtl) {
+            dir = "rtl"
+        } else {
+            dir = "ltr"
+        }
         return (
             <div
-                className="rtl border bg-light shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
+                className={this.props.theme === "day" ? dir + "border-light-color row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color-light" : dir + "border-dark-color row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color"}>
                 <div
-                    className=" col-12 justify-content-center align-items-center text-center header-box  text-light header-color">
+                    className={this.props.theme === "day" ? " col-12 justify-content-center align-items-center text-center header-box  text-light header-color-light" : " col-12 justify-content-center align-items-center text-center header-box  text-light header-color"}>
                     <h4 className="py-2 ">{this.props.language.showHistory}</h4>
                 </div>
-                <div className="col-12 justify-content-center align-items-center text-center body-color py-3">
+                <div className={this.props.theme === "day" ? "col-12 justify-content-center align-items-center text-center body-color-light py-3" : "col-12 justify-content-center align-items-center text-center body-color py-3"}>
                     <Table headerInfo={headerInfo} searchResultList={this.state.historyList} pageSize={5}
                            language={this.props.language}
+                           theme={this.props.theme}
                     />
                     <div className="col-12 p-3 text-center">
                         <input type="button" className="btn btn-danger mr-3" value={this.props.language.back}

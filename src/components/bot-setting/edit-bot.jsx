@@ -56,14 +56,6 @@ class EditBot extends Component {
         return field !== null && field !== undefined && field !== "";
     };
 
-    getValue(field) {
-        if (this.hasValue(field)) {
-            return field;
-        } else {
-            return "";
-        }
-    };
-
     handelChangeInput = (value, name) => {
         this.setState({[name]: value});
     };
@@ -132,17 +124,20 @@ class EditBot extends Component {
             dir = "ltr"
         }
         return (
-            <div className=" border bg-light shadow row w-100 m-0 my-3 body-color">
+            <div
+                className={this.props.theme === "day" ? "border-light-color shadow row w-100 m-0 my-3 body-color-light" : "border-dark-color shadow row w-100 m-0 my-3 body-color"}>
                 <div
-                    className="col-12 justify-content-center align-items-center text-center header-box  text-light header-color">
+                    className={this.props.theme === "day" ? "col-12 justify-content-center align-items-center text-center header-box  text-light header-color-light" : "col-12 justify-content-center align-items-center text-center header-box  text-light header-color"}>
                     <h4 className="py-2 ">{this.props.language.botSetting}</h4>
                 </div>
-                <div className="col-12 justify-content-center align-items-center text-center body-color">
-                    <div className={dir + " m-0 row w-100  body-color box-shadow my-4 border radius-line"}>
+                <div
+                    className={this.props.theme === "day" ? "col-12 justify-content-center align-items-center text-center body-color-light" : "col-12 justify-content-center align-items-center text-center body-color"}>
+                    <div
+                        className={this.props.theme === "day" ? dir + " m-0 row w-100 body-color-light box-shadow my-4 dark-shadow radius-line" : dir + " m-0 row w-100  body-color box-shadow my-4 white-shadow radius-line"}>
                         <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
-                            <label>{this.props.language.botStatus}</label>
+                            <label className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.botStatus} :</label>
                             <select
-                                className="form-control text-center"
+                                className="form-control text-center p-radius"
                                 onChange={(e) => this.handelChangeInput(e.target.value, "active")}
                             >
                                 {actives.map(
@@ -154,9 +149,9 @@ class EditBot extends Component {
                             </select>
                         </div>
                         <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
-                            <label>{this.props.language.notification}</label>
+                            <label className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.notification} :</label>
                             <select
-                                className="form-control text-center"
+                                className="form-control text-center p-radius"
                                 onChange={(e) => this.handelChangeInput(e.target.value, "silent")}
                             >
                                 {silents.map(
@@ -168,24 +163,24 @@ class EditBot extends Component {
                             </select>
                         </div>
                         <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
-                            <label>{this.props.language.postCycleTime}</label>
-                            <input className="form-control text-center w-100 ltr"
+                            <label className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.postCycleTime} :</label>
+                            <input className="form-control text-center w-100 ltr p-radius"
                                    type={"input"}
                                    value={this.state.interval}
                                    onChange={(e) => this.handelChangeInput(e.target.value, "interval")}
                             />
                         </div>
                         <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
-                            <label>{this.props.language.numberOfRegularPost}</label>
-                            <input className="form-control text-center w-100 ltr"
+                            <label className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.numberOfRegularPost} :</label>
+                            <input className="form-control text-center w-100 ltr p-radius"
                                    type={"input"}
                                    value={this.state.numberOfNormalPost}
                                    onChange={(e) => this.handelChangeInput(e.target.value, "numberOfNormalPost")}
                             />
                         </div>
                         <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
-                            <label>{this.props.language.numberOfFavouritePost}</label>
-                            <input className="form-control text-center w-100 ltr"
+                            <label className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.numberOfFavouritePost} :</label>
+                            <input className="form-control text-center w-100 ltr p-radius"
                                    type={"input"}
                                    value={this.state.numberOfFavouritePost}
                                    onChange={(e) => this.handelChangeInput(e.target.value, "numberOfFavouritePost")}

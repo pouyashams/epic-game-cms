@@ -228,17 +228,19 @@ class AddPost extends Component {
         }
         return (
             <div
-                className=" border bg-light shadow row w-100 m-0 my-3 body-color">
-                <div className="col-12 header-box  text-light header-color">
+                className={this.props.theme === "day" ? "border-light-color row w-100 m-0 my-3 body-color-light" : "border-dark-color row w-100 m-0 my-3 body-color"}>
+                <div
+                    className={this.props.theme === "day" ? "col-12 header-box  text-light header-color-light" : "col-12 header-box  text-light header-color"}>
                     <h4 className="py-2 ">{this.props.language.addPost}</h4>
                 </div>
-                <div className="col-12 body-color">
-                    <div className={dir + " m-0 row w-100  body-color box-shadow my-4 border radius-line"}>
+                <div className={this.props.theme === "day" ? "col-12 body-color-light" : "col-12 body-color"}>
+                    <div className={this.props.theme === "day" ? dir + " m-0 row w-100 body-color-light-d box-shadow my-4 dark-shadow radius-line" : dir + " m-0 row w-100 body-color box-shadow my-4 white-shadow radius-line"}>
                         <div className="col-12">
                             <div className={"col-sm-6 col-md-2 pt-3 ml-2 " + float}>
-                                <label>{this.props.language.type}</label>
+                                <label
+                                    className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.type} :</label>
                                 <select
-                                    className="form-control text-center"
+                                    className="form-control text-center p-radius"
                                     onChange={(e) => this.handelChangeInput(e.target.value, "favoriteType")}
                                 >
                                     {favoriteTypes.map(
@@ -252,9 +254,10 @@ class AddPost extends Component {
                                 sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi" ?
                                     <div className="col-12">
                                         <div className={"form-group  col-sm-6 col-md-2 pt-3 ml-2 " + float}>
-                                            <label>{this.props.language.region}</label>
+                                            <label
+                                                className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.region} :</label>
                                             <select
-                                                className="form-control text-center "
+                                                className="form-control text-center p-radius"
                                                 onChange={(e) => this.handelChangeInput(e.target.value, "region")}
                                             >
                                                 {options.map(
@@ -267,16 +270,18 @@ class AddPost extends Component {
                                             </select>
                                         </div>
                                         <div className={"form-group  col-sm-6 col-md-2 pt-3 ml-2 " + float}>
-                                            <label>{this.props.language.priceDollar}</label>
-                                            <input className="form-control text-center w-100 "
+                                            <label
+                                                className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.priceDollar} :</label>
+                                            <input className="form-control text-center w-100 p-radius "
                                                    type={"input"}
                                                    value={this.state.dolar}
                                                    onChange={(e) => this.handelChangeInput(e.target.value, "dolar")}
                                             />
                                         </div>
                                         <div className={"form-group col-12 col-sm-6 col-md-2  pt-3 ml-2 " + float}>
-                                            <label>{this.props.language.price}</label>
-                                            <input className="form-control text-center w-100 "
+                                            <label
+                                                className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.price} :</label>
+                                            <input className="form-control text-center w-100 p-radius"
                                                    type={"input"}
                                                    value={this.state.price}
                                                    onChange={(e) => this.handelChangeInput(e.target.value, "price")}
@@ -285,8 +290,9 @@ class AddPost extends Component {
 
                                     </div>
                                     : <div className={"col-12 col-sm-6 col-md-2  pt-3 ml-2 " + float}>
-                                        <label>قیمت :</label>
-                                        <input className="form-control text-center w-100 "
+                                        <label className={this.props.theme === "day" ? "text-dark" : "text-white"}>قیمت
+                                            :</label>
+                                        <input className="form-control text-center w-100 p-radius"
                                                type={"input"}
                                                value={this.state.price}
                                                onChange={(e) => this.handelChangeInput(e.target.value, "price")}
@@ -296,7 +302,7 @@ class AddPost extends Component {
 
                         </div>
 
-                        <div className="ltr form-group col-12 py-5">
+                        <div className="form-group col-12 py-5">
                             <div className={"m-0 row w-100  my-1 pb-3 " + float}>
                                 {this.state.inputList.map(
                                     (input) => (
@@ -304,16 +310,18 @@ class AddPost extends Component {
                                             className={input.id % 2 === 0 ? "col-lg-6 col-md-12 border-right" : "col-lg-6 col-md-12"}
                                             key={input.id}>
                                             <div className={"form-group col-5 " + float}>
-                                                <label>{this.props.language.title}</label>
-                                                <input className="form-control text-center w-100 "
+                                                <label
+                                                    className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.title} :</label>
+                                                <input className="form-control text-center w-100 p-radius"
                                                        type={"input"}
                                                        onChange={(e) => this.handelChangeInputList(e.target.value, input.id, true)}
                                                        value={input.title}
                                                 />
                                             </div>
                                             <div className={"form-group col-5 " + float}>
-                                                <label>{this.props.language.text}</label>
-                                                <input className="form-control text-center w-100"
+                                                <label
+                                                    className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.text} :</label>
+                                                <input className="form-control text-center w-100 p-radius"
                                                        type={"input"}
                                                        onChange={(e) => this.handelChangeInputList(e.target.value, input.id, false)}
                                                        value={input.value}
@@ -329,7 +337,8 @@ class AddPost extends Component {
                                         </div>
                                     ))}
                                 <div className={"form-group col-12 pt-5 " + float}>
-                                    <label>{this.props.language.content}</label>
+                                    <label
+                                        className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.content} :</label>
                                     <SunEditor
                                         onChange={this.handleChange}
                                         setContents={this.state.contentText}
@@ -350,15 +359,15 @@ class AddPost extends Component {
 
                     </div>
                     <div className="col-12 p-3 text-center">
-                        <input type="button" className="btn btn-success mr-3 my-2" value={this.props.language.done}
+                        <input type="button" className="btn btn-success mr-3 my-2 " value={this.props.language.done}
                                onClick={() => {
                                    this.sendAccountInfo()
                                }}/>
-                        <input type="button" className="btn btn-warning mr-3 my-2" value={this.props.language.add}
+                        <input type="button" className="btn btn-warning mr-3 my-2 " value={this.props.language.add}
                                onClick={() => {
                                    this.addTitle()
                                }}/>
-                        <input type="button" className="btn btn-danger mr-3 my-2" value={this.props.language.back}
+                        <input type="button" className="btn btn-danger mr-3 my-2 " value={this.props.language.back}
                                onClick={() => {
                                    this.cancel()
                                }}/>

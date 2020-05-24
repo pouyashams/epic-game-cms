@@ -100,14 +100,15 @@ class DefaultPostAttributes extends Component {
 
         return (
             <div
-                className="border bg-light shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
+                className={this.props.theme === "day" ? "row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color-light border-light-color" : "row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color border-dark-color"}>
                 <div
-                    className=" col-12 justify-content-center align-items-center text-center header-box  text-light header-color">
+                    className={this.props.theme === "day" ? " col-12 justify-content-center align-items-center text-center header-box  text-light header-color-light" : " col-12 justify-content-center align-items-center text-center header-box  text-light header-color"}>
                     <h4 className="py-2 ">{this.props.language.defaultPostRegistration}</h4>
                 </div>
-                <div className="col-12 justify-content-center align-items-center text-center body-color">
+                <div
+                    className={this.props.theme === "day" ? "col-12 justify-content-center align-items-center text-center body-color-light" : "col-12  justify-content-center align-items-center text-center body-color"}>
                     <div
-                        className="m-0 float-right row w-100 justify-content-start body-color box-shadow my-4 border radius-line">
+                        className={this.props.theme === "day" ? "m-0 float-right row w-100 justify-content-start body-color-light box-shadow my-4 dark-shadow radius-line" : "m-0 float-right row w-100 justify-content-start body-color box-shadow my-4 white-shadow radius-line"}>
                         <div className="form-group col-12 ">
                             {this.props.language.rtl ?
                                 <div className="rtl m-0 float-right row w-100 justify-content-start my-1 pb-3">
@@ -118,8 +119,8 @@ class DefaultPostAttributes extends Component {
                                                     className={input.id % 2 === 0 ? "col-sm-6 col-md-3 border-right pt-3" : "col-sm-6 col-md-3 pt-3"}
                                                     key={input.id}>
                                                     <div className="form-group col-10 float-right ">
-                                                        <label>{this.props.language.title}</label>
-                                                        <input className="form-control text-center w-100 "
+                                                        <label className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.title} :</label>
+                                                        <input className="form-control text-center w-100 p-radius"
                                                                type={"input"}
                                                                onChange={(e) => this.handelChangeInputList(e.target.value, input.id, true)}
                                                                value={input.title}
@@ -151,8 +152,8 @@ class DefaultPostAttributes extends Component {
                                                         ><i className="fa fa-trash pt-1"/></button>
                                                     </div>
                                                     <div className="form-group col-10 float-right ">
-                                                        <label>{this.props.language.title} :</label>
-                                                        <input className="form-control text-center w-100 "
+                                                        <label className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.title} :</label>
+                                                        <input className="form-control text-center w-100 p-radius"
                                                                type={"input"}
                                                                onChange={(e) => this.handelChangeInputList(e.target.value, input.id, true)}
                                                                value={input.title}

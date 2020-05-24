@@ -604,13 +604,14 @@ class PostManagement extends Component {
 
         return (
             <div
-                className="bg row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
+                className={this.props.theme === "day" ? "border-light-color shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color-light" : "border-dark-color shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color"}>
                 <div
-                    className="col-12 justify-content-center align-items-center text-center header-box text-light header-color">
+                    className={this.props.theme === "day" ? "col-12 justify-content-center align-items-center text-center header-box text-light header-color-light" : "col-12 justify-content-center align-items-center text-center header-box text-light header-color"}>
                     <h4 className="py-2">{this.props.language.manageChannel}</h4>
                 </div>
                 <SearchCriteria
                     language={this.props.language}
+                    theme={this.props.theme}
                     onSearch={this.search}
                     searchCriteriaArray={searchCriteriaArray}/>
                 <SearchResult
@@ -618,6 +619,7 @@ class PostManagement extends Component {
                     headerInfo={headerInfo} searchResultList={searchResultList} pageSize={pageSize}
                     currentPage={currentPage}
                     setPage={this.setPage}
+                    theme={this.props.theme}
                     count={this.state.count}
                 />
                 <span className="col-8 pt-4 pb-2">

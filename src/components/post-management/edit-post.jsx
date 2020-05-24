@@ -211,19 +211,20 @@ class EditPost extends Component {
         }
         return (
             <div
-                className="border bg-light shadow row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color">
+                className={this.props.theme === "day" ? "border-light-color row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color-light" : "border-dark-color row w-100 m-0 text-center justify-content-center align-items-center my-3 body-color"}>
                 <div
-                    className="col-12 justify-content-center align-items-center text-center header-box  text-light header-color">
+                    className={this.props.theme === "day" ? "col-12 justify-content-center align-items-center text-center header-box  text-light header-color-light" : "col-12 justify-content-center align-items-center text-center header-box  text-light header-color"}>
                     <h4 className="py-2 ">{this.props.language.edit}</h4>
                 </div>
 
-                <div className="col-12 body-color">
-                    <div className={dir + " m-0 row w-100 body-color box-shadow my-4 border radius-line"}>
+                <div className={this.props.theme === "day" ? "col-12 body-color-light" : "col-12 body-color"}>
+                    <div className={this.props.theme === "day" ? dir + " m-0  row w-100  body-color-light-d box-shadow my-4 dark-shadow radius-line" : dir + " m-0  row w-100  body-color box-shadow my-4 white-shadow radius-line"}>
                         <div className=" form-group col-12 m-2">
                             <div className={" form-group  col-sm-6 col-md-2 pt-3 ml-2 " + float}>
-                                <label>{this.props.language.type}</label>
+                                <label
+                                    className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.type} :</label>
                                 <select
-                                    className="form-control text-center"
+                                    className="form-control text-center p-radius"
                                     onChange={(e) => this.handelChangeInput(e.target.value, "favoriteType")}
                                 >
                                     {favoriteTypes.map(
@@ -235,8 +236,9 @@ class EditPost extends Component {
                                 </select>
                             </div>
                             <div className={"form-group  col-sm-6 col-md-2 pt-3 ml-2 " + float}>
-                                <label>{this.props.language.price}</label>
-                                <input className="form-control text-center w-100 ltr"
+                                <label
+                                    className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.price} :</label>
+                                <input className="form-control text-center w-100 ltr p-radius"
                                        type={"input"}
                                        value={this.state.price}
                                        onChange={(e) => this.handelChangeInput(e.target.value, "price")}
@@ -251,16 +253,18 @@ class EditPost extends Component {
                                             className={input.id % 2 === 0 ? "col-lg-6 col-md-12 border-right" : "col-lg-6 col-md-12"}
                                             key={input.id}>
                                             <div className={"form-group col-5 " + float}>
-                                                <label>{this.props.language.title}</label>
-                                                <input className="form-control text-center w-100 "
+                                                <label
+                                                    className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.title} :</label>
+                                                <input className="form-control text-center w-100 p-radius"
                                                        type={"input"}
                                                        onChange={(e) => this.handelChangeInputList(e.target.value, input.id, true)}
                                                        value={input.title}
                                                 />
                                             </div>
                                             <div className={"form-group col-5 " + float}>
-                                                <label>{this.props.language.text}</label>
-                                                <input className="form-control text-center w-100"
+                                                <label
+                                                    className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.text} :</label>
+                                                <input className="form-control text-center w-100 p-radius"
                                                        type={"input"}
                                                        onChange={(e) => this.handelChangeInputList(e.target.value, input.id, false)}
                                                        value={input.value}
@@ -276,7 +280,8 @@ class EditPost extends Component {
                                         </div>
                                     ))}
                                 <div className={"form-group col-12 pt-5 " + float}>
-                                    <label>{this.props.language.content}</label>
+                                    <label
+                                        className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.content} :</label>
                                     <SunEditor
                                         onChange={this.handleChange}
                                         setContents={this.state.contentText}

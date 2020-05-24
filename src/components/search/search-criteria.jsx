@@ -37,12 +37,14 @@ class SearchCriteria extends Component {
         let index = 1;
         return (
             <div className="col-12 justify-content-center align-items-center text-center ">
-                <form className={dir + "  m-0  float-right row w-100 justify-content-center my-3 pb-3 body-color"}>
+                <form
+                    className={this.props.theme === "day" ? dir + " m-0 dark-shadow float-right row w-100 justify-content-center my-3 pb-3 body-color-light" : dir + " m-0 white-shadow float-right row w-100 justify-content-center my-3 pb-3 body-color"}>
                     {searchCriteriaArray.map((searchCriteria) => {
                             if (searchCriteria.element === 'input') {
                                 return (
                                     <div className="form-group col-12 col-sm-6 col-md-3 float-right py-3" key={index++}>
-                                        <label>{searchCriteria.label} :</label>
+                                        <label
+                                            className={this.props.theme === "day" ? "text-dark" : "text-white"}>{searchCriteria.label} :</label>
                                         <input className="form-control text-center border p-radius"
                                                onKeyPress={event => {
                                                    if (event.key === 'Enter') {
@@ -60,7 +62,7 @@ class SearchCriteria extends Component {
                             } else if (searchCriteria.element === 'number') {
                                 return (
                                     <div className="form-group col-12 col-sm-6 col-md-3 float-right py-3" key={index++}>
-                                        <label>{searchCriteria.label} :</label>
+                                        <label className={this.props.theme === "day" ? "text-dark" : "text-white"}>{searchCriteria.label} :</label>
                                         <input className="form-control text-center p-radius"
                                                onKeyPress={event => {
                                                    if (event.key === 'Enter') {
@@ -78,7 +80,7 @@ class SearchCriteria extends Component {
                             } else if (searchCriteria.element === 'select') {
                                 return (
                                     <div className="form-group col-12 col-sm-6 col-md-3 float-right py-3" key={index++}>
-                                        <label>{searchCriteria.label} :</label>
+                                        <label className={this.props.theme === "day" ? "text-dark" : "text-white"}>{searchCriteria.label} :</label>
                                         <select
                                             className="form-control text-center p-radius"
                                             onChange={(e) => this.fillParameterValue(e.target.value, searchCriteria.name)}
@@ -94,7 +96,7 @@ class SearchCriteria extends Component {
                             } else if (searchCriteria.element === 'date') {
                                 return (
                                     <div className="form-group col-12 col-sm-6 col-md-3 float-right py-3" key={index++}>
-                                        <label>{searchCriteria.label} :</label>
+                                        <label className={this.props.theme === "day" ? "text-dark" : "text-white"}>{searchCriteria.label} :</label>
                                         <DatePicker
                                             placeholder={searchCriteria.placeholder}
                                             onChange={this.fillParameterValue}

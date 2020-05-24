@@ -2,14 +2,20 @@ import React from 'react';
 
 const Footer = (props) => {
     let dir = null;
+    let theme = null;
     if (props.language.rtl) {
         dir = "rtl"
     } else {
         dir = "ltr"
     }
+    if (props.theme === "day") {
+        theme = "bg-color-green"
+    } else {
+        theme = "bg-color-dark"
+    }
     return (
         <footer
-            className={dir + "float-left fixed-bottom navbar navbar-dark bg-color-dark col-md-9 ml-sm-auto col-lg-10 px-4 shadow"}>
+            className={dir + " float-left fixed-bottom navbar bg-color-dark col-md-9 ml-sm-auto col-lg-10 px-4 shadow " + theme}>
             <div className="copyright">
                 <span className="fa fa-copyright m-1"/>
                 {

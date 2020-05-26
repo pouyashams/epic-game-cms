@@ -238,7 +238,7 @@ class EditPost extends Component {
                             <div className={"form-group  col-sm-6 col-md-2 pt-3 ml-2 " + float}>
                                 <label
                                     className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.price} :</label>
-                                <input className="form-control text-center w-100 ltr p-radius"
+                                <input className="form-control text-center w-100  p-radius"
                                        type={"input"}
                                        value={this.state.price}
                                        onChange={(e) => this.handelChangeInput(e.target.value, "price")}

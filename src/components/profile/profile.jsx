@@ -47,7 +47,7 @@ class Profile extends Component {
                                         <div className="rtl  float-right row   body-color box-shadow  border radius-line">
                                             <div className="form-group  col-sm-6 col-md-3 float-right pt-3 ml-2">
                                                 <label className=" float-right">شماره موبایل :</label>
-                                                <input className="form-control text-center w-100 ltr"
+                                                <input className="form-control text-center w-100 "
                                                        type={"input"}
                                                        value={this.state.interval}
                                                        onChange={(e) => this.handelChangeInput(e.target.value, "interval")}
@@ -55,7 +55,7 @@ class Profile extends Component {
                                             </div>
                                             <div className="form-group  col-sm-6 col-md-3 float-right pt-3 ml-2">
                                                 <label className=" float-right">نام کاربری :</label>
-                                                <input className="form-control text-center w-100 ltr"
+                                                <input className="form-control text-center w-100 "
                                                        type={"input"}
                                                        value={this.state.interval}
                                                        onChange={(e) => this.handelChangeInput(e.target.value, "interval")}
@@ -64,7 +64,7 @@ class Profile extends Component {
                                             <div className="form-group  col-sm-6 col-md-3 float-right pt-3 ml-2"/>
                                             <div className="form-group  col-sm-6 col-md-3 float-right pt-3 ml-2">
                                                 <label className=" float-right">پسورد جدید :</label>
-                                                <input className="form-control text-center w-100 ltr"
+                                                <input className="form-control text-center w-100 "
                                                        type={"input"}
                                                        value={this.state.interval}
                                                        onChange={(e) => this.handelChangeInput(e.target.value, "interval")}
@@ -72,7 +72,7 @@ class Profile extends Component {
                                             </div>
                                             <div className="form-group  col-sm-6 col-md-3 float-right pt-3 ml-2">
                                                 <label className=" float-right">تایید پسورد :</label>
-                                                <input className="form-control text-center w-100 ltr"
+                                                <input className="form-control text-center w-100 "
                                                        type={"input"}
                                                        value={this.state.interval}
                                                        onChange={(e) => this.handelChangeInput(e.target.value, "interval")}
@@ -80,7 +80,7 @@ class Profile extends Component {
                                             </div>
                                             <div className="form-group  col-sm-6 col-md-3 float-right pt-3 ml-2">
                                                 <label className=" float-right">پسورد قدیمی :</label>
-                                                <input className="form-control text-center w-100 ltr"
+                                                <input className="form-control text-center w-100 "
                                                        type={"input"}
                                                        value={this.state.interval}
                                                        onChange={(e) => this.handelChangeInput(e.target.value, "interval")}

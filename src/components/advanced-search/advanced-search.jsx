@@ -3,13 +3,14 @@ import Loading from "../loading/loading";
 import {searchAcount} from "../../services/acountService";
 import {toast} from "react-toastify";
 import SunEditor from "suneditor-react";
+import {withRouter} from 'react-router-dom';
 
 class AdvancedSearch extends Component {
     constructor(props) {
         super(props);
         this.state = {
             progress: false,
-            content: "",
+            originalContent: "",
             searchResultList: [],
         };
         this.search = this.search.bind(this);
@@ -20,10 +21,10 @@ class AdvancedSearch extends Component {
     };
 
     search = async () => {
-        if (this.state.content !== "") {
+        if (this.state.originalContent !== "") {
             this.setState({progress: true});
             const data = {
-                content: this.state.content,
+                content: this.state.originalContent,
                 favourite: "",
                 identifier: "",
                 status: {
@@ -43,8 +44,16 @@ class AdvancedSearch extends Component {
                     result.data.data.searchResultArray.forEach((dataInfo) => {
                         searchResultList.push(
                             {
+                                originalContent: dataInfo.originalContent,
                                 identifier: dataInfo.identifier,
-                                content: dataInfo.originalContent,
+                                publishHistory: dataInfo.publishHistory,
+                                content: dataInfo.content,
+                                attributes: dataInfo.attributes,
+                                favourite: dataInfo.favourite,
+                                amount: dataInfo.amount,
+                                creationDateTime: dataInfo.creationDateTime,
+                                lastUpdateDateTime: dataInfo.lastUpdateDateTime,
+                                status: dataInfo.status.name,
                             }
                         )
                     });
@@ -60,6 +69,13 @@ class AdvancedSearch extends Component {
             toast.error(this.props.language.partOfThePost);
         }
 
+    };
+
+    onShow = (searchResult) => {
+        this.props.history.push({
+            pathname: '/show-post',
+            accountInfo: searchResult
+        });
     };
 
     render() {
@@ -82,7 +98,7 @@ class AdvancedSearch extends Component {
                             <input className="search_input text-white"
                                    type="text"
                                    placeholder={this.props.language.writePartOfYourPostContent}
-                                   onChange={(e) => this.fillParameterValue(e.target.value, "content")}
+                                   onChange={(e) => this.fillParameterValue(e.target.value, "originalContent")}
                                    onKeyPress={event => {
                                        if (event.key === 'Enter') {
                                            this.search()
@@ -107,7 +123,7 @@ class AdvancedSearch extends Component {
 
                                     <div className='col-lg-12'>
                                         <SunEditor
-                                            setContents={result.content}
+                                            setContents={result.originalContent}
                                             setOptions={{
                                                 buttonList: []
                                             }}
@@ -115,6 +131,14 @@ class AdvancedSearch extends Component {
                                             enableToolbar={false}
                                             setDefaultStyle="direction: ltr !important; min-height: 200px; max-height: 400px!important; min-height: 400px!important;"
                                         /></div>
+
+                                    <div className="col-12 p-4 text-center">
+                                        <input type="button" className="btn btn-success "
+                                               value={this.props.language.show}
+                                               onClick={() => {
+                                                   this.onShow(result)
+                                               }}/>
+                                    </div>
                                     <span
                                         className='glyphicon glyphicon-exclamation-sign text-danger pull-right icon-style'/>
                                 </div>
@@ -137,4 +161,4 @@ class AdvancedSearch extends Component {
     }
 }
 
-export default AdvancedSearch;
+export default withRouter(AdvancedSearch);

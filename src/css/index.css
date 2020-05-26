@@ -671,3 +671,10 @@ textarea {
     border-radius: 7px;
 }
 
+.icon-hover:hover {
+    color: #7CE8DD !important;
+}
+.icon-hover-y:hover {
+    color: #d39e00 !important;
+}
+

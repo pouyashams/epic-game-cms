@@ -45,11 +45,11 @@ const Navbar = (props) => {
     if (localStorage.getItem("theme") === "day") {
         theme = "night";
         textTheme = props.language.night;
-        iconTheme = "fa fa-moon"
+        iconTheme = "fa fa-moon icon-hover"
     } else {
         theme = "day";
         textTheme = props.language.day;
-        iconTheme = "fas fa-sun"
+        iconTheme = "fas fa-sun icon-hover-y"
 
     }
 
@@ -58,47 +58,53 @@ const Navbar = (props) => {
     return (
         <nav
             className={props.theme === "day" ? "navbar fixed-top flex-md-nowrap shadow py-2 tog-collapse bg-color-green " : "navbar fixed-top flex-md-nowrap shadow py-2 tog-collapse bg-color-dark"}>
-            <h5 className={props.language.rtl ? props.theme === "day" ? "ml-3 text-center text-light-green" : "ml-3 text-center text-warning" : props.theme === "day" ? "mt-2 ml-2 text-center text-light-green" :"mt-2 ml-2 text-center text-warning"}>
+            <h5 className={props.language.rtl ? props.theme === "day" ? "ml-3 text-center text-light-green" : "ml-3 text-center text-warning" : props.theme === "day" ? "mt-2 ml-2 text-center text-light-green" : "mt-2 ml-2 text-center text-warning"}>
                 {props.language.navTitle}
             </h5>
 
             <div className="row">
 
-                <div className={props.theme==="day"?"radius-circle border-light-green py-1 px-user mb-auto mx-2 pointer":"border-bottom radius-circle border-warning py-1 px-user mb-auto mx-2 pointer"}
-                     onClick={((e) => props.handelChangeTheme(theme))}
+                <div
+                    className={props.theme === "day" ? "radius-circle border-light-green py-1 px-user mb-auto mx-2 pointer" : "border-bottom radius-circle border-warning py-1 px-user mb-auto mx-2 pointer"}
+                    onClick={((e) => props.handelChangeTheme(theme))}
                 >
                     <span className="text-white pointer">
                      <i className={iconTheme + " mb-1"} title={textTheme}/>
                     </span>
                 </div>
 
-                <div className={props.theme==="day"?"radius-circle border-light-green py-1 px-user mb-auto mx-2 pointer":"border-bottom radius-circle border-warning py-1 px-user mb-auto mx-2 pointer"}
-                     onClick={((e) => props.handelChangeLanguage(language))}
+                <div
+                    className={props.theme === "day" ? "radius-circle border-light-green py-1 px-user mb-auto mx-2 pointer" : "border-bottom radius-circle border-warning py-1 px-user mb-auto mx-2 pointer"}
+                    onClick={((e) => props.handelChangeLanguage(language))}
                 >
                     <span className="text-white pointer">
-                     <i className="fa fa-globe mb-1" title={textLanguage}/>
+                     <i className={props.theme === "day" ? "fa fa-globe mb-1 icon-hover" : "fa fa-globe mb-1 icon-hover-y"}
+                        title={textLanguage}/>
                     </span>
                 </div>
-                <div className={props.theme==="day"?"radius-circle border-light-green py-1 px-user mb-auto mx-2 pointer":"border-bottom radius-circle border-warning py-1 px-user mb-auto mx-2 pointer"}
-                     onClick={((e) => showProfile())}
+                <div
+                    className={props.theme === "day" ? "radius-circle border-light-green py-1 px-user mb-auto mx-2 pointer" : "border-bottom radius-circle border-warning py-1 px-user mb-auto mx-2 pointer"}
+                    onClick={((e) => showProfile())}
                 >
                     <span className="text-white pointer">
-                     <i className="fa fa-user mb-1" title={props.language.profile}/>
+                     <i className={props.theme === "day" ? "fa fa-user mb-1 icon-hover" : "fa fa-user mb-1 icon-hover-y"}
+                        title={props.language.profile}/>
                     </span>
                 </div>
-                <div className={props.theme==="day"?"radius-circle border-light-green py-1 px-user mb-auto mx-2 pointer":"border-bottom radius-circle border-warning py-1 px-user mb-auto mx-2 pointer"}
-                     onClick={((e) => logOut())}
+                <div
+                    className={props.theme === "day" ? "radius-circle border-light-green py-1 px-user mb-auto mx-2 pointer" : "border-bottom radius-circle border-warning py-1 px-user mb-auto mx-2 pointer"}
+                    onClick={((e) => logOut())}
                 >
                     <span className="text-white pointer">
-                     <i className="fa fa-power-off mb-1" title={props.language.logOut}/>
+                     <i className={props.theme === "day" ? "fa fa-power-off mb-1 icon-hover" : "fa fa-power-off mb-1 icon-hover-y"}
+                        title={props.language.logOut}/>
                     </span>
                 </div>
-
                 <span className="px-3">
                       <button className="navbar-toggler mr-2 text-white" type="button" data-toggle="collapse"
                               data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                               aria-expanded="false" aria-label="Toggle navigation">
-                                <span className="fa fa-navicon mb-1"/>
+                                <span className={props.theme==="day"?"fa fa-navicon mb-1 icon-hover":"fa fa-navicon mb-1 icon-hover-y"}/>
                       </button>
                 </span>
             </div>
@@ -107,9 +113,9 @@ const Navbar = (props) => {
                                  <span className="nav-item sidebar-dropdown" data-toggle="collapse" href="#collapseOne"
                                        key={count++}>
                                  <span className="nav-link pointer">
-                                     <span className="fa fa-unsorted text-warning"/>
+                                     <span className={props.theme==="day"?"fa fa-unsorted text-light-green icon-hover":"fa fa-unsorted text-warning icon-hover-y"}/>
                                     <span
-                                        className="icon-title m-2 font-weight-bold text-warning ">{props.language.manageTelegram}</span>
+                                        className={props.theme==="day"?"icon-title m-2 font-weight-bold text-light-green":"icon-title m-2 font-weight-bold text-warning"}>{props.language.manageTelegram}</span>
                                 </span>
                             </span>
                     {navLinks.map(nav =>

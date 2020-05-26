@@ -164,7 +164,7 @@ class EditBot extends Component {
                         </div>
                         <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
                             <label className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.postCycleTime} :</label>
-                            <input className="form-control text-center w-100 ltr p-radius"
+                            <input className="form-control text-center w-100 p-radius"
                                    type={"input"}
                                    value={this.state.interval}
                                    onChange={(e) => this.handelChangeInput(e.target.value, "interval")}
@@ -172,7 +172,7 @@ class EditBot extends Component {
                         </div>
                         <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
                             <label className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.numberOfRegularPost} :</label>
-                            <input className="form-control text-center w-100 ltr p-radius"
+                            <input className="form-control text-center w-100 p-radius"
                                    type={"input"}
                                    value={this.state.numberOfNormalPost}
                                    onChange={(e) => this.handelChangeInput(e.target.value, "numberOfNormalPost")}
@@ -180,7 +180,7 @@ class EditBot extends Component {
                         </div>
                         <div className="form-group  col-sm-6 col-md-2 float-right pt-3 ml-2">
                             <label className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.numberOfFavouritePost} :</label>
-                            <input className="form-control text-center w-100 ltr p-radius"
+                            <input className="form-control text-center w-100 p-radius"
                                    type={"input"}
                                    value={this.state.numberOfFavouritePost}
                                    onChange={(e) => this.handelChangeInput(e.target.value, "numberOfFavouritePost")}

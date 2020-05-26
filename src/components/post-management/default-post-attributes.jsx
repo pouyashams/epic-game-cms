@@ -139,7 +139,7 @@ class DefaultPostAttributes extends Component {
                                     }
                                 </div>
                                 :
-                                <div className="ltr m-0 float-right row w-100 justify-content-start my-1 pb-3">
+                                <div className="m-0 float-right row w-100 justify-content-start my-1 pb-3">
                                     {
                                         this.state.inputList.map(
                                             (input) => (

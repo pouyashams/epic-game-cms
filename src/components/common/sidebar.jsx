@@ -16,9 +16,8 @@ class Sidebar extends Component {
         return (
             <nav
                 className={this.props.theme === "day" ? "col-2 position-fixed d-none d-md-block sidebar side-back-light" : "col-2 position-fixed d-none d-md-block sidebar side-back"}>
-                <div className="sidebar-sticky">
-                    <div
-                        className={this.props.language.rtl ? "sidebar-header pb-3 pt-1 justify-content-center " + bgShadow : "sidebar-header py-2 justify-content-center " + bgShadow}>
+                <div className="sidebar-sticky py-0">
+                    <div className={this.props.language.rtl ? "sidebar-header py-3 justify-content-center " + bgShadow : "sidebar-header py-3 justify-content-center " + bgShadow}>
                         <div className="user-info justify-content-center text-center">
                             <span className="user-name justify-content-center text-white ">
                                 <strong>{this.props.language.epicGameTeam}</strong>

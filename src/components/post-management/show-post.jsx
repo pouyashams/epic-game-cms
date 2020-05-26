@@ -4,6 +4,7 @@ import SunEditor from 'suneditor-react';
 import 'suneditor/dist/css/suneditor.min.css';
 import {toast} from 'react-toastify';
 import Loading from "../loading/loading";
+import {onDeActive} from "../../services/acountService";
 
 
 class ShowPost extends Component {
@@ -20,6 +21,7 @@ class ShowPost extends Component {
             favoriteType: "",
             inputList: [],
             attributes: [],
+            result: "",
             favourite: "",
             id: ""
         };
@@ -28,6 +30,9 @@ class ShowPost extends Component {
     componentDidMount() {
         const {accountInfo} = this.props.location;
         if (!accountInfo) return window.history.back();
+        this.setState({
+            result: accountInfo
+        });
         let attributes = [];
         let favoriteType;
         if (this.getValue(accountInfo.favourite)) {
@@ -70,15 +75,28 @@ class ShowPost extends Component {
         window.history.back();
     };
 
-
-    copyText = (text) => {
-        let copyText = document.getElementById(text);
-        copyText.select();
-        copyText.setSelectionRange(0, 99999);
-        document.execCommand("copy");
-        toast.success(this.props.language.copy);
+    onDeActiveInfo = async (searchResult) => {
+        if (searchResult.status !== "DELETED_POST_STATUS") {
+            this.setState({progress: true});
+            try {
+                const result = await onDeActive({identifier: parseInt(searchResult.identifier)});
+                if (result.status === 200) {
+                    toast.success(this.props.language.notificationSold);
+                    this.setState({progress: false});
+                }
+            } catch (ex) {
+                if (ex.response && ex.response.status === 400) {
+                    toast.error(this.props.language.conError);
+                    this.setState({progress: false});
+                }
+            }
+            this.cancel();
+        } else {
+            toast.error(this.props.language.delSoldError);
+        }
 
     };
+
 
     render() {
         let dir = null;
@@ -88,19 +106,21 @@ class ShowPost extends Component {
             dir = "ltr"
         }
         return (
-            <div className={this.props.theme === "day" ? "border-light-color row w-100 m-0 my-3 body-color-light" : "border-dark-color row w-100 m-0 my-3 body-color"}>
+            <div
+                className={this.props.theme === "day" ? "border-light-color row w-100 m-0 my-3 body-color-light" : "border-dark-color row w-100 m-0 my-3 body-color"}>
                 <div
                     className={this.props.theme === "day" ? "col-12 justify-content-center align-items-center text-center header-box  text-light header-color-light" : "col-12 justify-content-center align-items-center text-center header-box  text-light header-color"}>
                     <h4 className="py-2 ">{this.props.language.displayPost}</h4>
                 </div>
                 <div className={this.props.theme === "day" ? "col-12 body-color-light" : "col-12 body-color"}>
-                    <div className={this.props.theme === "day" ? dir + " m-0  row w-100  body-color-light-d box-shadow my-4 dark-shadow radius-line" : dir + " m-0  row w-100  body-color box-shadow my-4 white-shadow radius-line"}>
+                    <div
+                        className={this.props.theme === "day" ? dir + " m-0  row w-100  body-color-light-d box-shadow my-4 dark-shadow radius-line" : dir + " m-0  row w-100  body-color box-shadow my-4 white-shadow radius-line"}>
                         <div className="col-12 form-group">
                             <div className="m-0 row w-100 my-1 pb-3">
                                 <div className="form-group col-lg-2 col-md-3 col-sm-12  float-right pt-3 ml-2">
                                     <label
                                         className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.type} :</label>
-                                    <input className="form-control text-center w-100 ltr p-radius"
+                                    <input className="form-control text-center w-100 p-radius"
                                            type={"input"}
                                            value={this.state.favoriteType}
                                     />
@@ -108,7 +128,7 @@ class ShowPost extends Component {
                                 <div className="form-group  col-lg-2 col-md-3 col-sm-12 float-right pt-3 ml-2">
                                     <label
                                         className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.price} :</label>
-                                    <input className="form-control text-center w-100 ltr p-radius"
+                                    <input className="form-control text-center w-100 p-radius"
                                            type={"input"}
                                            value={this.state.price}
                                     />
@@ -116,7 +136,7 @@ class ShowPost extends Component {
                                 <div className="form-group  col-lg-2 col-md-3 col-sm-12 col-md-2 float-right pt-3 ml-2">
                                     <label
                                         className={this.props.theme === "day" ? "text-dark" : "text-white"}>{this.props.language.code} :</label>
-                                    <input className="form-control text-center w-100 ltr p-radius"
+                                    <input className="form-control text-center w-100 p-radius"
                                            type={"input"}
                                            value={this.state.id}
                                     />
@@ -129,46 +149,22 @@ class ShowPost extends Component {
                                              }}>
                                             <div className="col-lg-2 col-md-3 col-sm-2 w-25 mx-2">
                                                 <input type="button" className="btn btn-danger mr-4 " value="email"
-                                                       onClick={() => {
-                                                           this.copyText("email")
-                                                       }}/>
+                                                       onClick={() => navigator.clipboard.writeText("https://id.sonyentertainmentnetwork.com/id/tv/signin/?ui=ds&hidePageElements=noAccountSection%2CtroubleSigningInLink&service_logo=ps&smcid=tv%3Apsvue#/signin")}
+                                                />
                                             </div>
 
                                             <div className="col-lg-2 col-md-3 col-sm-2 w-25 mx-2">
                                                 <input type="button" className="btn btn-success mr-4 " value="login"
-                                                       onClick={() => {
-                                                           this.copyText("login")
-                                                       }}/>
+                                                       onClick={() => navigator.clipboard.writeText("https://account.sonyentertainmentnetwork.com/liquid/cam/devices/device-list.action?category=psn&displayNavigation=false")}
+                                                />
                                             </div>
 
                                             <div className="col-lg-3 col-md-4 col-sm-1 w-25 mx-2">
                                                 <input type="button" className="btn btn-primary mr-4 "
                                                        value="playstation"
-                                                       onClick={() => {
-                                                           this.copyText("playstation")
-                                                       }}/>
+                                                       onClick={() => navigator.clipboard.writeText("http://my.playstation.com/")}
+                                                />
                                             </div>
-
-                                            <input className="dis-hid col-4" type="text"
-                                                   value="https://id.sonyentertainmentnetwork.com/id/tv/signin/?ui=ds&hidePageElements=noAccountSection%2CtroubleSigningInLink&service_logo=ps&smcid=tv%3Apsvue#/signin"
-                                                   id="email"/>
-                                            <input className="dis-hid col-4" type="text"
-                                                   value="http://my.playstation.com/"
-                                                   id="playstation"/>
-                                            <input className="dis-hid col-4" type="text"
-                                                   value="https://account.sonyentertainmentnetwork.com/liquid/cam/devices/device-list.action?category=psn&displayNavigation=false"
-                                                   id="login"/>
-                                            {this.state.attributes.length !== 0 ?
-                                                this.state.attributes[1] ?
-
-                                                    <input className="dis-hid col-4" type="text"
-                                                           value={this.state.attributes[0].value + ":" + this.state.attributes[1].value}
-                                                           id="copy"/>
-                                                    :
-                                                    <input className="dis-hid col-4" type="text"
-                                                           value={this.state.attributes[0].value}
-                                                           id="copy"/>
-                                                : null}
                                         </div>
                                         : null
                                 }
@@ -191,12 +187,23 @@ class ShowPost extends Component {
                                 {sessionStorage.getItem('username') === "sinashamsi" || "pouyashamsi" || "mahdimohamadi" ?
                                     <div className="form-group col-12 col-sm-6 col-md-3 float-right "
                                          style={{marginTop: "32px"}}>
-                                        <input type="button" className="btn btn-warning"
-                                               style={{height: "95%"}}
-                                               value="copy"
-                                               onClick={() => {
-                                                   this.copyText("copy")
-                                               }}/>
+
+                                        {this.state.attributes.length !== 0 ?
+                                            this.state.attributes[1] ?
+                                                <input type="button" className="btn btn-warning"
+                                                       style={{height: "95%"}}
+                                                       value="copy"
+                                                       onClick={() => navigator.clipboard.writeText(this.state.attributes[0].value + ":" + this.state.attributes[1].value)}
+
+                                                />
+                                                :
+                                                <input type="button" className="btn btn-warning"
+                                                       style={{height: "95%"}}
+                                                       value="copy"
+                                                       onClick={() => navigator.clipboard.writeText(this.state.attributes[0].value)}
+
+                                                />
+                                            : null}
                                     </div>
                                     : null}
 
@@ -226,6 +233,10 @@ class ShowPost extends Component {
                         </div>
                     </div>
                     <div className="col-12 p-3 text-center">
+                        <input type="button" className="btn btn-warning mr-3" value={this.props.language.sold}
+                               onClick={() => {
+                                   this.onDeActiveInfo(this.state.result)
+                               }}/>
                         <input type="button" className="btn btn-danger mr-3" value={this.props.language.back}
                                onClick={() => {
                                    this.cancel()

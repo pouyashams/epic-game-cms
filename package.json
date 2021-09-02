@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "base-64": "^0.1.0",
     "bootstrap-v4-rtl": "^4.1.1-0",
     "chrome-incognito-tools": "^1.0.2",
